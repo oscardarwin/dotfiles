@@ -14,8 +14,24 @@
   boot.kernelModules = [ ];
   boot.initrd.kernelModules = [ ];
   boot.extraModulePackages = [ ];
+  
+  # services.acpid.enable = true;
     
-  # microsoft-surface.kernelVersion = lib.mkForce "6.1.55";
+  #services.auto-cpufreq.enable = true;
+  #services.auto-cpufreq.settings = {
+  #  battery = {
+  #    governor = "powersave";
+  #    turbo = "never";
+  #  };
+  #  charger = {
+  #    governor = "performance";
+  #    turbo = "auto";
+  #  };
+  #};
+
+  services.tlp = {
+   enable = true;
+  };
 
   services.xserver.videoDrivers = [ "modesetting" ];    
   hardware.opengl.enable = true; 
