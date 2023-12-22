@@ -4,45 +4,22 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ 
-      (modulesPath + "/installer/scan/not-detected.nix")
-    ];  
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix")
+    ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "amdgpu" ];
-  boot.kernelParams = [ "amd_iommu=off" "iommu=off" ];
-  boot.kernelModules = [ ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  
-  # services.acpid.enable = true;
-    
-  #services.auto-cpufreq.enable = true;
-  #services.auto-cpufreq.settings = {
-  #  battery = {
-  #    governor = "powersave";
-  #    turbo = "never";
-  #  };
-  #  charger = {
-  #    governor = "performance";
-  #    turbo = "auto";
-  #  };
-  #};
-
-  services.tlp = {
-   enable = true;
-  };
-
-  services.xserver.videoDrivers = [ "modesetting" ];    
-  hardware.opengl.enable = true; 
-  hardware.opengl.driSupport32Bit = true;  
 
   fileSystems."/" =
-    { device = "/dev/nvme0n1p5";
+    { device = "/dev/disk/by-uuid/82f4eeb8-b8a2-4898-bf0b-b8e1026a5143";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/nvme0n1p1";
+    { device = "/dev/disk/by-uuid/5CD2-B7F2";
       fsType = "vfat";
     };
 
