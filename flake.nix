@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+  
+    home-manager = {
+      url = "github:nix-community/home-manager/release-23.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, ... }@inputs:
@@ -29,7 +34,12 @@
           inherit specialArgs;
           system = desktop-system;
           pkgs = desktop-pkgs;
-          modules = [ ./configuration.nix ./hardware/squirtle.nix ];
+          modules = [ 
+            ./configuration.nix
+            ./modules/window-manager.nix
+            ./modules/home-manager.nix 
+            ./hardware/squirtle.nix 
+          ];
         };
       };
     };
