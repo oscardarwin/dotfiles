@@ -29,7 +29,7 @@
           inherit specialArgs;
           system = desktop-system;
           pkgs = desktop-pkgs;
-          modules = [ ./configuration.nix ./hardware-configuration.nix ];
+          modules = [ ./configuration.nix ./hardware/squirtle.nix ];
         };
       };
     };
