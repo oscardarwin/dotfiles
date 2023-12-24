@@ -4,13 +4,7 @@
 
 { config, pkgs, ... }:
 
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      # <nixos-hardware/microsoft/surface/surface-laptop-amd>
-      ./hardware-configuration.nix
-    ];
-   
+{  
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
   #   substituters = ["https://hyprland.cachix.org"];
@@ -112,7 +106,6 @@
       lm_sensors
     #  thunderbird
     ];
-    initialPassword = "password";
   };
 
   # Allow unfree packages
