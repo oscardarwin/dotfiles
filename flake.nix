@@ -37,7 +37,8 @@
           modules = [ 
             ./configuration.nix
             ./modules/window-manager.nix
-            ./modules/home-manager.nix 
+            ./modules/home-manager.nix
+	    ./modules/password-manager.nix 
             ./hardware/squirtle.nix 
           ];
         };
