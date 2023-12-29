@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, pkgs-unstable, ... }:
 
 {
   home-manager.users.hallayus = {
@@ -7,7 +7,7 @@
       enable = true;
       profiles.hallayus = {
         bookmarks = { };
-        extensions = with pkgs.inputs.firefox-addons; [
+        extensions = with inputs.firefox-addons.packages."${pkgs-unstable.system}"; [
           ublock-origin
         ];
         bookmarks = { };
@@ -34,5 +34,5 @@
       "x-scheme-handler/http" = [ "firefox.desktop" ];
       "x-scheme-handler/https" = [ "firefox.desktop" ];
     };
-  }
+  };
 }

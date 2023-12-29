@@ -1,7 +1,7 @@
 { pkgs, inputs, config, lib, ... }: {
   hardware.opengl.enable = true;
   home-manager.users.hallayus = {
-    home.sessionsVariables = {
+    home.sessionVariables = {
       XDG_CURRENT_DESKTOP = "sway";
     };
     
