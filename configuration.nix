@@ -101,11 +101,6 @@
     isNormalUser = true;
     description = "Oscar";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      firefox
-      lm_sensors
-    #  thunderbird
-    ];
   };
 
   # Allow unfree packages
