@@ -57,6 +57,7 @@
 	    ./modules/password-manager.nix 
             ./modules/browser.nix
             ./modules/theme
+            ./modules/git.nix
             ./modules/audio.nix
             ./hardware/squirtle.nix
             inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd 
