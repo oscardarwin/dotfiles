@@ -7,6 +7,9 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs; };
-    users.hallayus.home.stateVersion = "21.11";
+    users.hallayus = {
+      nixpkgs.config.allowUnfree = true;
+      home.stateVersion = "21.11";
+    };
   };
 }

@@ -9,6 +9,7 @@
         bookmarks = { };
         extensions = with inputs.firefox-addons.packages."${pkgs-unstable.system}"; [
           ublock-origin
+          # onepassword-password-manager
         ];
         bookmarks = { };
         settings = {

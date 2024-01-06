@@ -14,6 +14,16 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    stylix = {
+      url = "github:danth/stylix/release-23.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, ... }@inputs:
@@ -29,6 +39,7 @@
         system = desktop-system;
         config = {
           allowUnfree = true;
+          allowUnfreePredicate = (_: true);
           permittedInsecurePackages = [ "openssl-1.1.1w" ];
         };
       };
@@ -45,7 +56,10 @@
             ./modules/home-manager.nix
 	    ./modules/password-manager.nix 
             ./modules/browser.nix
-            ./hardware/squirtle.nix 
+            ./modules/theme
+            ./modules/audio.nix
+            ./hardware/squirtle.nix
+            inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd 
           ];
         };
       };

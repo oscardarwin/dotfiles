@@ -20,15 +20,15 @@
         # General
         modifier = "Mod4";
 
-        fonts = {
-          style = "";
-          size = 10.0;
-        };
+        #fonts = {
+        #  style = "";
+        #  size = 10.0;
+        #};
 
-        gaps = {
-          inner = 2;
-          outer = -2;
-        };
+        #gaps = {
+        #  inner = 2;
+        #  outer = -2;
+        # };
       };
     };
   };
