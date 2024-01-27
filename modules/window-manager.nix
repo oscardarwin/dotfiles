@@ -18,7 +18,7 @@
 
       config = {
         # General
-        modifier = "Mod4";
+        modifier = "Mod1";
 
         #fonts = {
         #  style = "";
