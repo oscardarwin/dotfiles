@@ -24,6 +24,10 @@
       url = "github:danth/stylix/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    neovim-config = {
+      url = "github:hallayus/neovim_config/main";
+    };
   };
 
   outputs = { nixpkgs, ... }@inputs:
