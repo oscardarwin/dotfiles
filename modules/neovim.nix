@@ -1,6 +1,7 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }: 
 {
   home-manager.users.hallayus = {
-    inherit inputs.neovim-config 
+    programs.neovim = inputs.neovim-config;
   };
 }
+

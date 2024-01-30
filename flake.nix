@@ -64,7 +64,7 @@
             ./modules/git.nix
             ./modules/audio.nix
             ./hardware/squirtle.nix
-            ./modules/neovim
+            ./modules/neovim.nix
             inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd 
           ];
         };
