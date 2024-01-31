@@ -2,11 +2,11 @@
   description = "hallayus system config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -21,12 +21,8 @@
     };
     
     stylix = {
-      url = "github:danth/stylix/release-23.05";
+      url = "github:danth/stylix/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    neovim-config = {
-      url = "github:hallayus/neovim_config/main";
     };
   };
 
@@ -64,10 +60,17 @@
             ./modules/git.nix
             ./modules/audio.nix
             ./hardware/squirtle.nix
-            ./modules/neovim.nix
+            ./modules/home
             inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd 
           ];
         };
       };
+
+      homeConfigurations."oscar" = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = desktop-pkgs;
+
+        modules = [ ./modules/home-ubuntu-uai.nix ./modules/home/neovim.nix ];
+      };
+
     };
 }
