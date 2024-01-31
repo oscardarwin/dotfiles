@@ -20,10 +20,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
-    stylix = {
-      url = "github:danth/stylix/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # stylix = {
+    #   url = "github:danth/stylix/release-23.11";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = { nixpkgs, ... }@inputs:
@@ -56,7 +56,9 @@
             ./modules/home-manager.nix
 	    ./modules/password-manager.nix 
             ./modules/browser.nix
-            ./modules/theme
+	    ./modules/terminal.nix
+	    ./modules/shell.nix
+            # ./modules/theme
             ./modules/git.nix
             ./modules/audio.nix
             ./hardware/squirtle.nix

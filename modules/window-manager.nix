@@ -19,11 +19,12 @@
       config = {
         # General
         modifier = "Mod1";
-
-        #fonts = {
-        #  style = "";
-        #  size = 10.0;
-        #};
+        terminal = "alacritty";
+        fonts = {
+	  names = [ "DejaVu Sans Mono" "FontAwesome5Free" ];
+          style = "Bold Semi-Condensed";
+          size = 11.0;
+        };
 
         #gaps = {
         #  inner = 2;
