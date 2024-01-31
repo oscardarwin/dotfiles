@@ -55,6 +55,7 @@
             ./modules/home-manager.nix
 	    ./modules/password-manager.nix 
             ./modules/browser.nix
+	    ./modules/ssh.nix
 	    ./modules/terminal.nix
 	    ./modules/shell.nix
             ./modules/theme
