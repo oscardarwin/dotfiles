@@ -1,10 +1,10 @@
 { inputs, pkgs, ... }: {
   imports = [ inputs.stylix.nixosModules.stylix ];
 
-  fonts.fonts = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+  # fonts.fonts = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
 
   stylix = {
-    image = ./wallpaper.png;
+    image = ./wallpaper.jpg;
 
     fonts = {
       serif = {
@@ -35,10 +35,10 @@
     #   size = 32;
     # };
 
-    targets.plymouth = {
-      logo = ./logo.png;
-      logoAnimated = false;
-    };
+    # targets.plymouth = {
+    #   logo = ./logo.png;
+    #   logoAnimated = false;
+    # };
 
     polarity = "light";
 

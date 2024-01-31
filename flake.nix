@@ -17,13 +17,12 @@
 
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     
-    # stylix = {
-    #   url = "github:danth/stylix/release-23.11";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    stylix = {
+      url = "github:danth/stylix/release-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, ... }@inputs:
@@ -58,7 +57,7 @@
             ./modules/browser.nix
 	    ./modules/terminal.nix
 	    ./modules/shell.nix
-            # ./modules/theme
+            ./modules/theme
             ./modules/git.nix
             ./modules/audio.nix
             ./hardware/squirtle.nix
