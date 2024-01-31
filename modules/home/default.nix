@@ -1,9 +1,9 @@
 { inputs, pkgs, ... }:
 {
   home-manager.users.hallayus = {
-    modules = [
+    imports = [
       ./neovim.nix
-    ]; # this could be imports too.
+    ];
   };
 }
 
