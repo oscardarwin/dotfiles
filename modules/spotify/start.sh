@@ -1,10 +1,16 @@
 #!/bin/sh
 
-eval $(op signin)
+NUM_SPOTIFYD_DAEMONS=`pgrep -fl "spotifyd --username" | wc -l` 
 
-SPOTIFY_USERNAME=$(op read op://Personal/Spotify/username)
-SPOTIFY_PASSWORD=$(op read op://Personal/Spotify/password)
+if [ $NUM_SPOTIFYD_DAEMONS -eq 0 ]; then
+  echo "Launching spotifyd daemon"
 
-spotifyd --username $SPOTIFY_USERNAME --password $SPOTIFY_PASSWORD
+  eval $(op signin)
+  
+  SPOTIFY_USERNAME=$(op read op://Personal/Spotify/username)
+  SPOTIFY_PASSWORD=$(op read op://Personal/Spotify/password)
+
+  spotifyd --username $SPOTIFY_USERNAME --password $SPOTIFY_PASSWORD --daemonize
+fi
 
 spt

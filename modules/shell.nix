@@ -30,10 +30,7 @@
           )
         '';
         shellAliases = {
-          vi = "hx";
-          vim = "hx";
-          nano = "hx";
-          spotify = "sh ./spotify/start.sh";
+          spotify = "sh ${./spotify/start.sh}";
         };
       };
       carapace.enable = true;
