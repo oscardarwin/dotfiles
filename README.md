@@ -1,6 +1,5 @@
 TODO STILL:
 
-spotify
 wikipedia
 Kanban in terminal
 Auto SSH
