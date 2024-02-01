@@ -1,7 +1,8 @@
 TODO STILL:
 
-fix fonts
-Login Manager
+spotify
+wikipedia
+Kanban in terminal
 Auto SSH
 Firefox plugins
 tmux

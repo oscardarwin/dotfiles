@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-  
+
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,12 +18,12 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
-    
+
     stylix = {
       url = "github:danth/stylix/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     nixvim = {
       url = "github:nix-community/nixvim/nixos-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,27 +48,31 @@
         };
       };
 
-    in {
+    in
+    {
       nixosConfigurations = {
         squirtle = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           system = desktop-system;
           pkgs = desktop-pkgs;
-          modules = [ 
+          modules = [
             ./configuration.nix
             ./modules/window-manager.nix
+            ./modules/spotify
+            ./modules/display-manager.nix
             ./modules/home-manager.nix
-	    ./modules/password-manager.nix 
+            ./modules/password-manager
             ./modules/browser.nix
-	    ./modules/ssh.nix
-	    ./modules/terminal.nix
-	    ./modules/shell.nix
+            ./modules/ssh.nix
+            ./modules/terminal.nix
+            ./modules/shell.nix
             ./modules/theme
             ./modules/git.nix
+            ./modules/mprocs.nix
             ./modules/audio.nix
             ./hardware/squirtle.nix
             ./modules/home
-            inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd 
+            inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
           ];
         };
       };
