@@ -47,11 +47,31 @@
           permittedInsecurePackages = [ "openssl-1.1.1w" ];
         };
       };
+      
+      ghastly-home = home-modules: home-modules ++ [
+        {
+          home.username = "oscar";
+	  home.homeDirectory = "/home/oscar";
+	  home.stateVersion = "23.11";
+
+	  programs.home-manager.enable = true;
+	}
+      ];
+
+      squirtle-home = home-modules: [
+        inputs.home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+
+          home-manager.users.hallayus = {
+            imports = home-modules;
+	  };
+	}
+      ];
 
     in
     {
-      nixosConfigurations = {
-        squirtle = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.squirtle = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           system = desktop-system;
           pkgs = desktop-pkgs;
@@ -62,7 +82,6 @@
             ./modules/display-manager.nix
             ./modules/home-manager.nix
             ./modules/password-manager
-            ./modules/browser.nix
             ./modules/ssh.nix
             ./modules/terminal.nix
             ./modules/shell.nix
@@ -73,16 +92,19 @@
             ./modules/mprocs
             ./modules/audio.nix
             ./hardware/squirtle.nix
-            ./modules/home
+            ./modules/browser.nix
             inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
-          ];
-        };
+          ] ++ squirtle-home [
+            ./modules/home/neovim.nix    
+	  ];
       };
 
-      homeConfigurations."oscar" = inputs.home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = desktop-pkgs;
 
-        modules = [ ./modules/home-ubuntu-uai.nix ./modules/home/neovim.nix ];
+        modules = ghastly-home [ 
+	  ./modules/home/neovim.nix 
+	];
       };
 
     };
