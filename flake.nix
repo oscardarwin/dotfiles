@@ -78,7 +78,7 @@
         pkgs = desktop-pkgs;
         modules = [
           ./configuration.nix
-          ./modules/window-manager.nix
+          ./modules/nixos/lockscreen.nix
           ./modules/spotify
           ./modules/display-manager.nix
           ./modules/home-manager.nix
@@ -96,6 +96,7 @@
           ./modules/browser.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
         ] ++ squirtle-home [
+          ./modules/home-manager/window-manager.nix
           ./modules/home-manager/neovim.nix
         ];
       };
@@ -105,6 +106,7 @@
 
         modules = ghastly-home [
           ./modules/home-manager/neovim.nix
+          ./modules/home-manager/window-manager.nix
         ];
       };
 
