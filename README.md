@@ -1,5 +1,7 @@
 TODO STILL:
 
+
+make yaml file for mprocs embedded
 wikipedia
 Kanban in terminal
 Auto SSH
@@ -10,3 +12,5 @@ tmux
 sudo nixos-rebuild switch --flake .#squirtle --show-trace
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/github
+
+
