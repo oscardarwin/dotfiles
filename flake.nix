@@ -67,8 +67,10 @@
             ./modules/terminal.nix
             ./modules/shell.nix
             ./modules/theme
+            ./modules/wikipedia.nix
             ./modules/git.nix
-            ./modules/mprocs.nix
+            # ./modules/kanban.nix
+            ./modules/mprocs
             ./modules/audio.nix
             ./hardware/squirtle.nix
             ./modules/home

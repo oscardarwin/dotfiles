@@ -32,6 +32,7 @@
         shellAliases = {
           spotify = "sh ${./spotify/start.sh}";
         };
+
       };
       carapace.enable = true;
       carapace.enableNushellIntegration = true;

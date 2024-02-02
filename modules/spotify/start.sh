@@ -10,7 +10,7 @@ if [ $NUM_SPOTIFYD_DAEMONS -eq 0 ]; then
   SPOTIFY_USERNAME=$(op read op://Personal/Spotify/username)
   SPOTIFY_PASSWORD=$(op read op://Personal/Spotify/password)
 
-  spotifyd --username $SPOTIFY_USERNAME --password $SPOTIFY_PASSWORD --daemonize
+  spotifyd --username $SPOTIFY_USERNAME --password $SPOTIFY_PASSWORD
 fi
 
 spt

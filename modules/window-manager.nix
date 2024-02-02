@@ -28,15 +28,6 @@
         #   style = "Bold Semi-Condensed";
         #   size = 11.0;
         # };
-
-        startup = [
-          # lock on start
-          { command = "swaylock"; }
-        ];
-        #gaps = {
-        #  inner = 2;
-        #  outer = -2;
-        # };
       };
     };
   };

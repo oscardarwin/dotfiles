@@ -1,4 +1,4 @@
-{ ... }: {
+{ lib, ... }: {
   environment.variables.TERM = "alacritty";
 
   home-manager.users.hallayus.programs.alacritty = {
@@ -16,7 +16,7 @@
           x = 12;
           y = 10;
         };
-        opacity = 0.9;
+        opacity = lib.mkForce 0.9;
       };
     };
 

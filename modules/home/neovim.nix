@@ -11,6 +11,16 @@
     colorscheme = lib.mkForce "tokyonight";
     colorschemes.tokyonight.enable = true;
 
+    keymaps = [
+      {
+        action = "<cmd>Telescope find_files<CR>";
+        key = "ff";
+        options = {
+          silent = true;
+        };
+      }
+    ];
+
     plugins = {
       lightline.enable = true;
 
@@ -41,6 +51,7 @@
       };
       telescope.enable = true;
       lualine.enable = true;
+      treesitter.enable = true;
       lsp-format = {
         enable = true;
         setup = {
@@ -56,6 +67,11 @@
           nixd = {
             enable = true;
             settings.formatting.command = "nixpkgs-fmt";
+          };
+          bashls = {
+            enable = true;
+            installLanguageServer = true;
+            filetypes = [ "sh" ];
           };
         };
       };

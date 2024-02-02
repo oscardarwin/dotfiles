@@ -1,0 +1,8 @@
+procs:
+  firefox:
+    cmd: ["firefox && sway move container to workspace firefox"]
+    autostart: false
+  1password:
+    cmd: ["1password"]
+    autostart: false
+

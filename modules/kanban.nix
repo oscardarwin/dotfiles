@@ -1,5 +1,5 @@
 { pkgs, ... }: {
   environment.systemPackages = [
-    pkgs.mprocs
+    pkgs.haskellPackages.taskell
   ];
 }
