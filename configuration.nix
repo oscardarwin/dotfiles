@@ -9,14 +9,6 @@
     experimental-features = [ "nix-command" "flakes" ];
   };
 
-  # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-  # boot.loader.grub = {
-  #   device = "nodev";
-  #   efiSupport = true;
-  # };
-
   networking.hostName = "nixos"; # Define your hostname.
 
   # Enable networking
