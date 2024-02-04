@@ -1,8 +1,0 @@
-procs:
-  firefox:
-    cmd: [""]
-    autostart: false
-  1password:
-    cmd: ["1password"]
-    autostart: false
-

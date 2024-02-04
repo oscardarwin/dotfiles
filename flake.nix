@@ -61,11 +61,17 @@
       squirtle-home = home-modules: [
         inputs.home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
 
-          home-manager.users.hallayus = {
-            imports = home-modules;
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = { inherit inputs; };
+
+            users.hallayus = {
+              imports = home-modules;
+              nixpkgs.config.allowUnfree = true;
+              home.stateVersion = "21.11";
+            };
           };
         }
       ];
@@ -81,16 +87,14 @@
           ./modules/nixos/lockscreen.nix
           ./modules/spotify
           ./modules/display-manager.nix
-          ./modules/home-manager.nix
           ./modules/password-manager
+          ./modules/nixos/bootloader.nix
           ./modules/ssh.nix
           ./modules/terminal.nix
           ./modules/shell.nix
           ./modules/theme
           ./modules/wikipedia.nix
           ./modules/git.nix
-          # ./modules/kanban.nix
-          ./modules/mprocs
           ./modules/audio.nix
           ./hardware/squirtle.nix
           ./modules/browser.nix
@@ -98,6 +102,7 @@
         ] ++ squirtle-home [
           ./modules/home-manager/window-manager.nix
           ./modules/home-manager/neovim.nix
+          ./modules/home-manager/startup.nix
         ];
       };
 

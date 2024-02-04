@@ -1,44 +1,20 @@
 { pkgs, ... }: {
   home-manager.users.hallayus = {
     programs = {
-      nushell = {
+      fish = {
         enable = true;
-        extraConfig = ''
-          let carapace_completer = {|spans|
-          carapace $spans.0 nushell $spans | from json
-          }
-          $env.config = {
-           show_banner: false,
-           completions: {
-           case_sensitive: false # case-sensitive completions
-           quick: true    # set to false to prevent auto-selecting completions
-           partial: true    # set to false to prevent partial filling of the prompt
-           algorithm: "fuzzy"    # prefix or fuzzy
-           external: {
-           # set to false to prevent nushell looking into $env.PATH to find more suggestions
-               enable: true 
-           # set to lower can improve completion performance at the cost of omitting some options
-               max_results: 100 
-               completer: $carapace_completer # check 'carapace_completer' 
-             }
-           }
-          } 
-          $env.PATH = ($env.PATH | 
-          split row (char esep) |
-          prepend /home/myuser/.apps |
-          append /usr/bin/env
-          )
-        '';
+        loginShellInit = "fish_vi_key_bindings";
         shellAliases = {
-          spotify = "sh ${./spotify/start.sh}";
+          sshs = "eval (ssh-agent -c)
+	          ssh-add ~/.ssh/github";
+          lg = "lazygit";
+          re = "sudo nixos-rebuild switch --flake .#squirtle --show-trace";
         };
-
       };
-      carapace.enable = true;
-      carapace.enableNushellIntegration = true;
-
+      nushell.enable = true;
       starship = {
         enable = true;
+        enableFishIntegration = true;
         settings = {
           add_newline = true;
           character = {

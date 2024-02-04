@@ -15,6 +15,9 @@
     colorscheme = lib.mkForce "tokyonight";
     colorschemes.tokyonight.enable = true;
 
+    clipboard.register = "unnamedplus";
+    clipboard.providers.wl-copy.enable = true;
+
     keymaps = [
       {
         action = "<cmd>Telescope find_files<CR>";
@@ -27,6 +30,8 @@
 
     plugins = {
       lightline.enable = true;
+
+      leap.enable = true;
 
       nvim-cmp = {
         enable = true;
