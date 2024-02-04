@@ -8,7 +8,7 @@
           sshs = "eval (ssh-agent -c)
 	          ssh-add ~/.ssh/github";
           lg = "lazygit";
-          re = "sudo nixos-rebuild switch --flake .#squirtle --show-trace";
+          rb = "sudo nixos-rebuild switch --flake .#squirtle --show-trace";
         };
       };
       nushell.enable = true;

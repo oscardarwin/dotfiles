@@ -19,17 +19,19 @@
       keybindings =
         let
           modifier = config.wayland.windowManager.sway.config.modifier;
-          web_browser_script_path = pkgs.writeScript "open_web_browser.sh" ''
+          execute_in_workspace_script_path = pkgs.writeScript "execute_in_workspace.sh" ''
             #!/bin/sh
-            WORKSPACE_NAME="w"
+            WORKSPACE_NAME=$2
+            TO_EXECUTE=$1
             WORKSPACE_EXISTS=$(exec swaymsg -t get_workspaces | grep '"name": "'$WORKSPACE_NAME'"')
             if [ -n "$WORKSPACE_EXISTS" ]; then exec swaymsg "workspace $WORKSPACE_NAME"
-            else swaymsg "workspace $WORKSPACE_NAME; exec firefox"
+            else swaymsg "workspace $WORKSPACE_NAME; exec $TO_EXECUTE"
             fi
           '';
         in
         lib.mkOptionDefault {
-          "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${web_browser_script_path}"'';
+          "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} firefox w"'';
+          "${modifier}+g" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} 'alacritty -e lazygit' g"'';
         };
     };
   };

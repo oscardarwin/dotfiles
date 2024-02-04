@@ -1,13 +1,11 @@
 TODO STILL:
 
-- copy buffer in vim
-- leap in vim
-- lazygit
-- vim commands for sway
 - add command for starting development environment with nvim
-
-firefox
-    - bookmarks
+- leap in vim
+- firefox plugins and bookmarks
+  - 1password
+  - ublock origin
+  - translation
 
 sudo nixos-rebuild switch --flake .#squirtle --show-trace
 
