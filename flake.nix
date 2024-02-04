@@ -47,64 +47,72 @@
           permittedInsecurePackages = [ "openssl-1.1.1w" ];
         };
       };
-      
+
       ghastly-home = home-modules: home-modules ++ [
         {
           home.username = "oscar";
-	  home.homeDirectory = "/home/oscar";
-	  home.stateVersion = "23.11";
+          home.homeDirectory = "/home/oscar";
+          home.stateVersion = "23.11";
 
-	  programs.home-manager.enable = true;
-	}
+          programs.home-manager.enable = true;
+        }
       ];
 
       squirtle-home = home-modules: [
-        inputs.home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
+        inputs.home-manager.nixosModules.home-manager
+        {
 
-          home-manager.users.hallayus = {
-            imports = home-modules;
-	  };
-	}
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = { inherit inputs; };
+
+            users.hallayus = {
+              imports = home-modules;
+              nixpkgs.config.allowUnfree = true;
+              home.stateVersion = "21.11";
+            };
+          };
+        }
       ];
 
     in
     {
       nixosConfigurations.squirtle = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          system = desktop-system;
-          pkgs = desktop-pkgs;
-          modules = [
-            ./configuration.nix
-            ./modules/window-manager.nix
-            ./modules/spotify
-            ./modules/display-manager.nix
-            ./modules/home-manager.nix
-            ./modules/password-manager
-            ./modules/ssh.nix
-            ./modules/terminal.nix
-            ./modules/shell.nix
-            ./modules/theme
-            ./modules/wikipedia.nix
-            ./modules/git.nix
-            # ./modules/kanban.nix
-            ./modules/mprocs
-            ./modules/audio.nix
-            ./hardware/squirtle.nix
-            ./modules/browser.nix
-            inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
-          ] ++ squirtle-home [
-            ./modules/home/neovim.nix    
-	  ];
+        inherit specialArgs;
+        system = desktop-system;
+        pkgs = desktop-pkgs;
+        modules = [
+          ./configuration.nix
+          ./modules/nixos/lockscreen.nix
+          ./modules/spotify
+          ./modules/display-manager.nix
+          ./modules/password-manager
+          ./modules/nixos/bootloader.nix
+          ./modules/ssh.nix
+          ./modules/terminal.nix
+          ./modules/shell.nix
+          ./modules/theme
+          ./modules/wikipedia.nix
+          ./modules/git.nix
+          ./modules/audio.nix
+          ./hardware/squirtle.nix
+          ./modules/browser.nix
+          inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
+        ] ++ squirtle-home [
+          ./modules/home-manager/window-manager.nix
+          ./modules/home-manager/neovim.nix
+          ./modules/home-manager/startup.nix
+        ];
       };
 
       homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = desktop-pkgs;
 
-        modules = ghastly-home [ 
-	  ./modules/home/neovim.nix 
-	];
+        modules = ghastly-home [
+          ./modules/home-manager/neovim.nix
+          ./modules/home-manager/window-manager.nix
+        ];
       };
 
     };

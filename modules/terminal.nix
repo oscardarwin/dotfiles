@@ -6,7 +6,7 @@
 
     settings = {
       # General
-      shell.program = "nu";
+      shell.program = "fish";
 
       # UI
       cursor.style = { shape = "Beam"; };

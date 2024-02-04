@@ -1,16 +1,13 @@
 TODO STILL:
 
+- copy buffer in vim
+- leap in vim
+- lazygit
+- vim commands for sway
+- add command for starting development environment with nvim
 
-make yaml file for mprocs embedded
-wikipedia
-Kanban in terminal
-Auto SSH
-Firefox plugins
-tmux
-
+firefox
+    - bookmarks
 
 sudo nixos-rebuild switch --flake .#squirtle --show-trace
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/github
-
 
