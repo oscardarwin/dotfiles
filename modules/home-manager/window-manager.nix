@@ -27,15 +27,6 @@
             else swaymsg "workspace $WORKSPACE_NAME; exec firefox"
             fi
           '';
-          #  web_browser_script_path = builtins.toFile "open_web_browser.sh" "
-          #    #!\bin\sh
-          #    echo \"creating\"
-          #    CURRENT_TREE=$(swaymsg -t get_tree)
-          #    sway workspace w
-          #    if [[*\"workspace \"w\"\"* != $CURRENT_TREE]]; then 
-          #      firefox
-          #    fi
-          #  ";
         in
         lib.mkOptionDefault {
           "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${web_browser_script_path}"'';
