@@ -31,7 +31,7 @@
           launch_lazygit_with_ssh_agent = pkgs.writeScript "launch_ssh_agent_and_lazygit.sh" ''
             #!/bin/sh
             eval "$(ssh-agent -c)"
-            ssh-add ~/.ssh/github"
+            ssh-add ~/.ssh/github
             exec lazygit
           '';
         in
