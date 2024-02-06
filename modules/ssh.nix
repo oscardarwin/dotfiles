@@ -5,6 +5,7 @@
 
   home-manager.users.hallayus.programs.ssh = {
     enable = true;
+    extraConfig = ''IdentityAgent ~/.1password/agent.sock'';
     # addKeysToAgent = "~/.ssh/github";
   };
 

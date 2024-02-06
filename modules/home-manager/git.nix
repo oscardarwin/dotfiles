@@ -1,5 +1,5 @@
 { ... }: {
-  home-manager.users.hallayus.programs = {
+  programs = {
     git = {
       enable = true;
       includes = [{ path = "~/.config/git/user"; }];
@@ -7,6 +7,7 @@
       signing = {
         key = "~/.ssh/github.pub";
         signByDefault = true;
+        gpgPath = "/opt/1Password/op-ssh-sign";
       };
     };
     lazygit.enable = true;
