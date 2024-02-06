@@ -33,10 +33,23 @@
             eval "$(ssh-agent -c)"
             ssh-add ~/.ssh/github
           '';
+          launch_neovim = pkgs.writeScript "launch_neovim.sh" ''
+            #!/bin/sh
+            swaymsg "workspace e; exec alacritty -e nvim;"
+            sleep 0.1s
+            swaymsg "workspace e; exec alacritty, move down; layout splitv;"
+            sleep 0.1s
+            swaymsg "workspace e; resize set height 30ppt"
+          '';
+          launch_lazygit = pkgs.writeScript "launch_lazygit.sh" ''
+            alacritty -e lazygit
+          '';
         in
         lib.mkOptionDefault {
           "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} firefox w"'';
-          "${modifier}+g" = ''exec ${launch_ssh_agent}; exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} lazygit g"'';
+          "${modifier}+g" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_lazygit} g"'';
+          "${modifier}+e" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_neovim} e"'';
+          "${modifier}+p" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} 1password p"'';
         };
     };
   };
