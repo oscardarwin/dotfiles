@@ -28,18 +28,15 @@
             else swaymsg "workspace $WORKSPACE_NAME; exec $TO_EXECUTE"
             fi
           '';
-          launch_lazygit_with_ssh_agent = pkgs.writeScript "launch_ssh_agent_and_lazygit.sh" ''
+          launch_ssh_agent = pkgs.writeScript "launch_ssh_agent.sh" ''
             #!/bin/sh
             eval "$(ssh-agent -c)"
             ssh-add ~/.ssh/github
-            echo $SSH_AGENT_PID
-            echo $SSH_AUTH_SOCK
-            lazygit
           '';
         in
         lib.mkOptionDefault {
           "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} firefox w"'';
-          "${modifier}+g" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_lazygit_with_ssh_agent}  g"'';
+          "${modifier}+g" = ''exec ${launch_ssh_agent}; exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} lazygit g"'';
         };
     };
   };
