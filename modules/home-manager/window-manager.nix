@@ -32,12 +32,14 @@
             #!/bin/sh
             eval "$(ssh-agent -c)"
             ssh-add ~/.ssh/github
-            exec lazygit
+            echo $SSH_AGENT_PID
+            echo $SSH_AUTH_SOCK
+            lazygit
           '';
         in
         lib.mkOptionDefault {
           "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} firefox w"'';
-          "${modifier}+g" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} 'alacritty -e ${launch_lazygit_with_ssh_agent}'  g"'';
+          "${modifier}+g" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_lazygit_with_ssh_agent}  g"'';
         };
     };
   };

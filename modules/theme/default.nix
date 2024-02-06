@@ -1,8 +1,6 @@
 { inputs, pkgs, ... }: {
   imports = [ inputs.stylix.nixosModules.stylix ];
 
-  # fonts.fonts = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
-
   stylix = {
     image = ./wallpaper.jpg;
 
@@ -27,18 +25,6 @@
         name = "Noto Color Emoji";
       };
     };
-
-    # TODO: add this in 23.11
-    # cursor = {
-    #   package = pkgs.nordzy-cursor-theme;
-    #   name = "Nordzy-cursors";
-    #   size = 32;
-    # };
-
-    # targets.plymouth = {
-    #   logo = ./logo.png;
-    #   logoAnimated = false;
-    # };
 
     polarity = "light";
 
