@@ -5,12 +5,17 @@
   programs.firefox = {
     enable = true;
     profiles.hallayus = {
-      bookmarks = { };
-      # extensions = with inputs.firefox-addons.packages."${pkgs-unstable.system}"; [
+      bookmarks = [
+        {
+          name = "Bookmarks";
+          toolbar = true;
+          bookmarks = import ./browser-bookmarks/firefox-bookmarks.nix;
+        }
+      ];
+      # extensions = with inputs.firefox-addons.packages."${inputs.nixpkgs-unstable.system}"; [
       #   ublock-origin
       #   # onepassword-password-manager
       # ];
-      bookmarks = { };
       settings = {
         "browser.disableResetPrompt" = true;
         "browser.download.panel.shown" = true;
