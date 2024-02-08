@@ -26,6 +26,13 @@
           silent = true;
         };
       }
+      {
+        action = "<cmd>Telescope lsp_document_symbols<CR>";
+        key = "fs";
+        options = {
+          silent = true;
+        };
+      }
     ];
 
     plugins = {

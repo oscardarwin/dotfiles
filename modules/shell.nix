@@ -8,6 +8,7 @@
           sshs = "eval (ssh-agent -c)
 	          ssh-add ~/.ssh/github";
           lg = "lazygit";
+          susp = "systemctl suspend";
           rb = "sudo nixos-rebuild switch --flake .#squirtle --show-trace";
         };
       };

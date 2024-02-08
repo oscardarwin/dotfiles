@@ -96,9 +96,9 @@
           ./modules/wikipedia.nix
           ./modules/audio.nix
           ./hardware/squirtle.nix
-          ./modules/browser.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
         ] ++ squirtle-home [
+          ./modules/home-manager/browser.nix
           ./modules/home-manager/git.nix
           ./modules/home-manager/window-manager.nix
           ./modules/home-manager/neovim.nix
@@ -110,6 +110,7 @@
         pkgs = desktop-pkgs;
 
         modules = ghastly-home [
+          ./modules/home-manager/browser.nix
           ./modules/home-manager/neovim.nix
           ./modules/home-manager/window-manager.nix
         ];

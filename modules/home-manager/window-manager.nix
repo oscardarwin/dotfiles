@@ -28,11 +28,6 @@
             else swaymsg "workspace $WORKSPACE_NAME; exec $TO_EXECUTE"
             fi
           '';
-          launch_ssh_agent = pkgs.writeScript "launch_ssh_agent.sh" ''
-            #!/bin/sh
-            eval "$(ssh-agent -c)"
-            ssh-add ~/.ssh/github
-          '';
           launch_neovim = pkgs.writeScript "launch_neovim.sh" ''
             #!/bin/sh
             swaymsg "workspace e; exec alacritty -e nvim;"
