@@ -1,9 +1,22 @@
 { pkgs, inputs, pkgs-unstable, ... }:
 
 {
+  # imports = [
+  #   inputs.nur.hmModules.nur
+  # ];
 
   programs.firefox = {
     enable = true;
+    policies = {
+      ExtensionSettings = {
+        "{d634138d-c276-4fc8-924b-40a0ea21d284}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";
+          installation_mode = "force_installed";
+        };
+      };
+      DefaultDownloadDirectory = "\${home}/downloads";
+    };
+
     profiles.hallayus = {
       bookmarks = [
         {
@@ -12,11 +25,14 @@
           bookmarks = import ./browser-bookmarks/firefox-bookmarks.nix;
         }
       ];
-      # extensions = with inputs.firefox-addons.packages."${inputs.nixpkgs-unstable.system}"; [
-      #   ublock-origin
-      #   # onepassword-password-manager
-      # ];
+      extensions = with inputs.firefox-addons.packages."${pkgs-unstable.system}"; [
+        ublock-origin
+        privacy-badger
+        vimium
+        simple-translate
+      ];
       settings = {
+        "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
         "browser.disableResetPrompt" = true;
         "browser.download.panel.shown" = true;
         "browser.download.useDownloadDir" = false;

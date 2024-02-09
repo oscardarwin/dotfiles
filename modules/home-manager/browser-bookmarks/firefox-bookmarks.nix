@@ -18,6 +18,10 @@
         name = "nixvim options";
         url = "https://nix-community.github.io/nixvim/";
       }
+      {
+        name = "firefox addons";
+        url = "https://github.com/nix-community/nur-combined/blob/cac5a762ec7c40a8489e8ba4efa4820ad4b23575/repos/rycee/pkgs/firefox-addons/addons.json";
+      }
     ];
   }
 ]
