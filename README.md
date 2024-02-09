@@ -1,8 +1,5 @@
 TODO:
 
-sway on ubuntu on startup
-
-extract all home-manager keybindings
 nixd completions still not working
 lsp-refactoring
 undo-tree
