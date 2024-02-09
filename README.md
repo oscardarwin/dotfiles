@@ -1,11 +1,12 @@
-TODO STILL:
+TODO:
 
-- add command for starting development environment with nvim
-- leap in vim
-- firefox plugins and bookmarks
-  - 1password
-  - ublock origin
-  - translation
+vim lsp:
+
+refactoring
+telescope undo or undo-tree
+
+
+
 
 sudo nixos-rebuild switch --flake .#squirtle --show-trace
 
