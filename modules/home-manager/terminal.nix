@@ -1,6 +1,4 @@
 { lib, ... }: {
-  # environment.variables.TERM = "alacritty";
-
   programs.alacritty = {
     enable = true;
 

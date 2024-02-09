@@ -16,7 +16,7 @@
         {
           name = "Bookmarks";
           toolbar = true;
-          bookmarks = import ./browser-bookmarks/firefox-bookmarks.nix;
+          bookmarks = import ./browser-bookmarks/firefox-bookmarks.nix ++ import ./browser-bookmarks/uai-bookmarks.nix;
         }
       ];
       extensions = with inputs.firefox-addons.packages."${pkgs-unstable.system}"; [
@@ -27,6 +27,7 @@
       ];
       settings = {
         "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
+        "browser.toolbars.bookmarks.visibility" = "always";
         "browser.disableResetPrompt" = true;
         "browser.download.panel.shown" = true;
         "browser.download.useDownloadDir" = false;

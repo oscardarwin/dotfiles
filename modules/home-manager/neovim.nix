@@ -1,10 +1,15 @@
-{ pkgs, lib, inputs, ... }:
-{
+{ pkgs, lib, config, inputs, ... }:
+let
+  keybindings = import ./keybindings.nix { inherit config pkgs lib; };
+in {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
   ];
+
   programs.nixvim = {
     enable = true;
+
+    keymaps = keybindings.nixvimBase;
 
     options = {
       number = true;
@@ -27,23 +32,6 @@
     clipboard.register = "unnamedplus";
     clipboard.providers.wl-copy.enable = true;
 
-    keymaps = [
-      {
-        action = "<cmd>Telescope find_files<CR>";
-        key = "ff";
-        options = {
-          silent = true;
-        };
-      }
-      {
-        action = "<cmd>Telescope lsp_document_symbols<CR>";
-        key = "fs";
-        options = {
-          silent = true;
-        };
-      }
-    ];
-
     plugins = {
       lightline = {
         enable = true;
@@ -62,22 +50,7 @@
           # { name = "treesitter"; }
           # {name = "luasnip";}
         ];
-        mapping = {
-          "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "C-Space" = "cmp.mapping.complete()";
-          "<Tab>" = {
-            action = ''
-              function(fallback)
-                if cmp.visible() then
-                  cmp.select_next_item()
-                else
-                  fallback()
-                end
-              end
-            '';
-            modes = [ "i" "s" ];
-          };
-        };
+        mapping = keybindings.nixvimCmpMapping;
       };
       telescope = {
         enable = true;
@@ -118,20 +91,8 @@
       cmp-nvim-lua.enable = true;
       lsp = {
         enable = true;
-        # capabilities = ''
-        #   local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        #   local lspconfig = require('lspconfig')
-        #   lspconfig.nixd.setup {
-        #       capabilities = capabilities
-        #   }
-        # '';
-        keymaps.lspBuf = {
-          "gd" = "definition";
-          "gD" = "references";
-          "gt" = "type_definition";
-          "gi" = "implementation";
-          "K" = "hover";
-        };
+        keymaps.lspBuf = keybindings.nixvimLspMapping;
+
         servers = {
           nixd = {
             enable = true;
@@ -168,4 +129,3 @@
     };
   };
 }
-

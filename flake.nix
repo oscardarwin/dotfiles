@@ -88,13 +88,15 @@
           ./configuration.nix
           ./modules/nixos/lockscreen.nix
           ./modules/spotify
-          ./modules/display-manager.nix
-          ./modules/password-manager
+          ./modules/nixos/display-manager.nix
+          ./modules/nixos/password-manager
           ./modules/nixos/bootloader.nix
-          ./modules/ssh.nix
+          ./modules/nixos/ssh.nix
           ./modules/theme
-          ./modules/wikipedia.nix
-          ./modules/audio.nix
+          ./modules/nixos/wikipedia.nix
+          ./modules/nixos/audio.nix
+          ./modules/nixos/networking.nix
+          ./modules/nixos/locale.nix
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
         ] ++ squirtle-home [
@@ -110,7 +112,7 @@
 
       homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = desktop-pkgs;
-        extraSpecialArgs = { inherit inputs; };
+        extraSpecialArgs = { inherit inputs pkgs-unstable; };
 
         modules = ghastly-home [
           ./modules/home-manager/browser.nix
