@@ -27,6 +27,11 @@
       url = "github:nix-community/nixvim/nixos-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixGL = {
+      url = "github:guibou/nixGL";
+      flake = false;
+    };
   };
 
   outputs = { nixpkgs, ... }@inputs:
@@ -83,15 +88,15 @@
           ./configuration.nix
           ./modules/nixos/lockscreen.nix
           ./modules/spotify
-          ./modules/display-manager.nix
-          ./modules/password-manager
+          ./modules/nixos/display-manager.nix
+          ./modules/nixos/password-manager
           ./modules/nixos/bootloader.nix
-          ./modules/ssh.nix
-          ./modules/terminal.nix
-          ./modules/shell.nix
+          ./modules/nixos/ssh.nix
           ./modules/theme
-          ./modules/wikipedia.nix
-          ./modules/audio.nix
+          ./modules/nixos/wikipedia.nix
+          ./modules/nixos/audio.nix
+          ./modules/nixos/networking.nix
+          ./modules/nixos/locale.nix
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
         ] ++ squirtle-home [
@@ -100,16 +105,22 @@
           ./modules/home-manager/window-manager.nix
           ./modules/home-manager/neovim.nix
           ./modules/home-manager/startup.nix
+          ./modules/home-manager/shell.nix
+          ./modules/home-manager/terminal.nix
         ];
       };
 
       homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = desktop-pkgs;
+        extraSpecialArgs = { inherit inputs pkgs-unstable; };
 
         modules = ghastly-home [
           ./modules/home-manager/browser.nix
           ./modules/home-manager/neovim.nix
           ./modules/home-manager/window-manager.nix
+          ./modules/home-manager/shell.nix
+          ./modules/home-manager/terminal.nix
+          ./modules/home-manager/nixGL.nix
         ];
       };
 

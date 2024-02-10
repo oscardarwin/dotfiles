@@ -1,10 +1,4 @@
-{ pkgs, inputs, pkgs-unstable, ... }:
-
-{
-  # imports = [
-  #   inputs.nur.hmModules.nur
-  # ];
-
+{ pkgs, inputs, pkgs-unstable, ... }: {
   programs.firefox = {
     enable = true;
     policies = {
@@ -22,7 +16,7 @@
         {
           name = "Bookmarks";
           toolbar = true;
-          bookmarks = import ./browser-bookmarks/firefox-bookmarks.nix;
+          bookmarks = import ./browser-bookmarks/firefox-bookmarks.nix ++ import ./browser-bookmarks/uai-bookmarks.nix;
         }
       ];
       extensions = with inputs.firefox-addons.packages."${pkgs-unstable.system}"; [
@@ -33,6 +27,7 @@
       ];
       settings = {
         "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
+        "browser.toolbars.bookmarks.visibility" = "always";
         "browser.disableResetPrompt" = true;
         "browser.download.panel.shown" = true;
         "browser.download.useDownloadDir" = false;

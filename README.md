@@ -1,11 +1,12 @@
 TODO:
 
-vim lsp:
+sway on ubuntu on startup
 
-refactoring
-telescope undo or undo-tree
-
-
+extract all home-manager keybindings
+nixd completions still not working
+lsp-refactoring
+undo-tree
+install rust neovim tools
 
 
 sudo nixos-rebuild switch --flake .#squirtle --show-trace

@@ -14,6 +14,7 @@
   # boot.initrd.kernelModules = [ ];
   # boot.extraModulePackages = [ ];
 
+  # optimise battery life
   services.tlp = {
     enable = true;
   };
