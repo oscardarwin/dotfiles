@@ -92,7 +92,6 @@
           ./modules/nixos/password-manager
           ./modules/nixos/bootloader.nix
           ./modules/nixos/ssh.nix
-          ./modules/theme
           ./modules/nixos/wikipedia.nix
           ./modules/nixos/audio.nix
           ./modules/nixos/networking.nix
@@ -100,6 +99,7 @@
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
         ] ++ squirtle-home [
+          ./modules/home-manager/theme
           ./modules/home-manager/browser.nix
           ./modules/home-manager/git.nix
           ./modules/home-manager/window-manager.nix
@@ -115,6 +115,7 @@
         extraSpecialArgs = { inherit inputs pkgs-unstable; };
 
         modules = ghastly-home [
+          ./modules/home-manager/theme
           ./modules/home-manager/browser.nix
           ./modules/home-manager/neovim.nix
           ./modules/home-manager/window-manager.nix
