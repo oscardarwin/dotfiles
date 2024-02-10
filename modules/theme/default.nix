@@ -1,5 +1,5 @@
 { inputs, pkgs, ... }: {
-  imports = [ inputs.stylix.nixosModules.stylix ];
+  imports = [ inputs.stylix.homeManagerModules.stylix ];
 
   stylix = {
     image = ./wallpaper.jpg;
