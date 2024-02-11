@@ -1,11 +1,13 @@
 TODO:
 
-sway on ubuntu on startup
-
-extract all home-manager keybindings
 nixd completions still not working
-lsp-refactoring
+fix overlapping capabilities in nixd/nil 
+
+
+maybe just move to rust-tools
+
 undo-tree
+
 install rust neovim tools
 
 
@@ -23,4 +25,9 @@ sudo nix-collect-garbage --delete-older-than 2d
 
 ! you may need to fix the bios when windows updates itself. 
 
+## Neovim LSP
+
+print out LSP capabilities:
+
+`:lua =vim.lsp.get_clients()[1].server_capabilities`
 

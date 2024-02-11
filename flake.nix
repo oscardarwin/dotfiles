@@ -4,8 +4,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/bfd0ae29a86eff4603098683b516c67e22184511";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -32,6 +33,10 @@
       url = "github:guibou/nixGL";
       flake = false;
     };
+
+    # obsidian = {
+    #  url = "github:obsidianmd/obsidian-releases";
+    # };
   };
 
   outputs = { nixpkgs, ... }@inputs:
@@ -86,6 +91,7 @@
 
         modules = [
           ./configuration.nix
+          ./modules/nixos/tools.nix
           ./modules/nixos/lockscreen.nix
           ./modules/spotify
           ./modules/nixos/display-manager.nix
@@ -96,13 +102,14 @@
           ./modules/nixos/audio.nix
           ./modules/nixos/networking.nix
           ./modules/nixos/locale.nix
+          ./modules/nixos/obsidian.nix
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
         ] ++ squirtle-home [
           ./modules/home-manager/theme
           ./modules/home-manager/browser.nix
           ./modules/home-manager/git.nix
-          ./modules/home-manager/window-manager.nix
+          ./modules/home-manager/window-manager
           ./modules/home-manager/neovim.nix
           ./modules/home-manager/startup.nix
           ./modules/home-manager/shell.nix

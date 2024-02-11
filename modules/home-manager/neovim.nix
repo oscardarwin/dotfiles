@@ -1,7 +1,8 @@
 { pkgs, lib, config, inputs, ... }:
 let
   keybindings = import ./keybindings.nix { inherit config pkgs lib; };
-in {
+in
+{
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
   ];
@@ -45,9 +46,9 @@ in {
         autoEnableSources = true;
         sources = [
           { name = "nvim_lsp"; }
-          # { name = "path"; }
-          # { name = "buffer"; }
-          # { name = "treesitter"; }
+          { name = "path"; }
+          { name = "buffer"; }
+          { name = "treesitter"; }
           # {name = "luasnip";}
         ];
         mapping = keybindings.nixvimCmpMapping;
@@ -91,11 +92,11 @@ in {
       cmp-nvim-lua.enable = true;
       lsp = {
         enable = true;
-        keymaps.lspBuf = keybindings.nixvimLspMapping;
 
         servers = {
           nixd = {
             enable = true;
+            rootDir = "";
             settings = {
               eval.workers = 3;
 
@@ -110,10 +111,14 @@ in {
                   # installable = "/flakeref#nixosConfigurations.<adrastea>.options";
 
                   # home-manager configuration
-                  installable = "/flakeref#nixosConfigurations.squirtle.options";
+                  installable = "/home/hallayus/dotfiles#squirtle.options";
                 };
               };
             };
+          };
+          nil_ls = {
+            enable = true;
+            installLanguageServer = true;
           };
           bashls = {
             enable = true;
@@ -123,6 +128,11 @@ in {
           jsonls = {
             enable = true;
             installLanguageServer = true;
+          };
+          rust-analyzer = {
+            enable = true;
+            installCargo = true;
+            installRustc = true;
           };
         };
       };

@@ -1,33 +1,35 @@
 { inputs, pkgs, ... }: {
   imports = [ inputs.stylix.homeManagerModules.stylix ];
 
+
   stylix =
     let
       theme = "${pkgs.base16-schemes}/share/themes/brushtrees.yaml";
+      # theme = "light";
     in
     {
       image = ./wallpaper.jpg;
-      # fonts = {
-      #   serif = {
-      #     package = pkgs.source-serif;
-      #     name = "Source Serif";
-      #   };
+      fonts = {
+        serif = {
+          package = pkgs.source-serif;
+          name = "Source Serif";
+        };
 
-      #   sansSerif = {
-      #     package = pkgs.source-sans;
-      #     name = "Source Sans";
-      #   };
+        sansSerif = {
+          package = pkgs.source-sans;
+          name = "Source Sans";
+        };
 
-      #   monospace = {
-      #     package = pkgs.fira-code;
-      #     name = "Fira Code";
-      #   };
+        monospace = {
+          package = pkgs.fira-code;
+          name = "Fira Code";
+        };
 
-      #   emoji = {
-      #     package = pkgs.noto-fonts-emoji;
-      #     name = "Noto Color Emoji";
-      #   };
-      # };
+        emoji = {
+          package = pkgs.noto-fonts-emoji;
+          name = "Noto Color Emoji";
+        };
+      };
 
       # polarity = "light";
 
