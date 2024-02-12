@@ -2,13 +2,16 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, pkgs-unstable, ... }:
+{ pkgs, ... }:
 
 {
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
   };
 
+  fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+
+  programs.dconf.enable = true;
   # Enable CUPS to print documents.
   services.printing.enable = true;
 

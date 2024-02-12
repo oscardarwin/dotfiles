@@ -1,32 +1,36 @@
 { config, pkgs, lib, ... }: {
-  sway = let
-    modifier = config.wayland.windowManager.sway.config.modifier;
-    execute_in_workspace_script_path = pkgs.writeScript "execute_in_workspace.sh" ''
-      #!/bin/sh
-      WORKSPACE_NAME=$2
-      TO_EXECUTE=$1
-      WORKSPACE_EXISTS=$(exec swaymsg -t get_workspaces | grep '"name": "'$WORKSPACE_NAME'"')
-      if [ -n "$WORKSPACE_EXISTS" ]; then exec swaymsg "workspace $WORKSPACE_NAME"
-      else swaymsg "workspace $WORKSPACE_NAME; exec $TO_EXECUTE"
-      fi
-    '';
-    launch_neovim = pkgs.writeScript "launch_neovim.sh" ''
-      #!/bin/sh
-      swaymsg "workspace e; exec alacritty -e nvim;"
-      sleep 0.1s
-      swaymsg "workspace e; exec alacritty, move down; layout splitv;"
-      sleep 0.1s
-      swaymsg "workspace e; resize set height 30ppt"
-    '';
-    launch_lazygit = pkgs.writeScript "launch_lazygit.sh" ''
-      alacritty -e lazygit
-    '';
-  in lib.mkOptionDefault {
-    "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} firefox w"'';
-    "${modifier}+g" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_lazygit} g"'';
-    "${modifier}+e" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_neovim} e"'';
-    "${modifier}+p" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} 1password p"'';
-  };
+
+  sway =
+    let
+      modifier = config.wayland.windowManager.sway.config.modifier;
+      execute_in_workspace_script_path = pkgs.writeScript "execute_in_workspace.sh" ''
+        #!/bin/sh
+        WORKSPACE_NAME=$2
+        TO_EXECUTE=$1
+        WORKSPACE_EXISTS=$(exec swaymsg -t get_workspaces | grep '"name": "'$WORKSPACE_NAME'"')
+        if [ -n "$WORKSPACE_EXISTS" ]; then exec swaymsg "workspace $WORKSPACE_NAME"
+        else swaymsg "workspace $WORKSPACE_NAME; exec $TO_EXECUTE"
+        fi
+      '';
+      launch_neovim = pkgs.writeScript "launch_neovim.sh" ''
+        #!/bin/sh
+        swaymsg "workspace e; exec alacritty -e nvim;"
+        sleep 0.1s
+        swaymsg "workspace e; exec alacritty, move down; layout splitv;"
+        sleep 0.1s
+        swaymsg "workspace e; resize set height 30ppt"
+      '';
+      launch_lazygit = pkgs.writeScript "launch_lazygit.sh" ''
+        alacritty -e lazygit
+      '';
+    in
+    lib.mkOptionDefault {
+      "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} firefox w"'';
+      "${modifier}+g" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_lazygit} g"'';
+      "${modifier}+e" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_neovim} e"'';
+      "${modifier}+p" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} 1password p"'';
+      "${modifier}+o" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} obsidian o"'';
+    };
 
   nixvimBase = [
     {
@@ -43,9 +47,34 @@
         silent = true;
       };
     }
+    {
+      action = "vim.lsp.buf.definition";
+      key = "gd";
+      lua = true;
+    }
+    {
+      action = "vim.lsp.buf.references";
+      key = "gr";
+      lua = true;
+    }
+    {
+      action = "vim.lsp.buf.type_definition";
+      key = "gt";
+      lua = true;
+    }
+    {
+      action = "vim.lsp.buf.implementation";
+      key = "gi";
+      lua = true;
+    }
+    {
+      action = "vim.lsp.buf.hover";
+      key = "gh";
+      lua = true;
+    }
   ];
 
-  nixvimCmpMapping =  {
+  nixvimCmpMapping = {
     "<CR>" = "cmp.mapping.confirm({ select = true })";
     "C-Space" = "cmp.mapping.complete()";
     "<Tab>" = {
@@ -60,13 +89,5 @@
       '';
       modes = [ "i" "s" ];
     };
-  };
-
-  nixvimLspMapping = {
-    "gd" = "definition";
-    "gD" = "references";
-    "gt" = "type_definition";
-    "gi" = "implementation";
-    "K" = "hover";
   };
 }
