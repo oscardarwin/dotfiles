@@ -1,14 +1,12 @@
 TODO:
 
+
+
+
 nixd completions still not working
 fix overlapping capabilities in nixd/nil 
-
-
 maybe just move to rust-tools
-
 undo-tree
-
-install rust neovim tools
 
 
 sudo nixos-rebuild switch --flake .#squirtle --show-trace
