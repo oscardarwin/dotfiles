@@ -11,6 +11,7 @@
 
   fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
 
+  programs.dconf.enable = true;
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
