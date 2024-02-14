@@ -1,5 +1,9 @@
 TODO:
 
+uai ubuntu:
+ - screen positions
+ - screen sharing
+
 nixd completions still not working
 fix overlapping capabilities in nixd/nil 
 
@@ -31,3 +35,12 @@ print out LSP capabilities:
 
 `:lua =vim.lsp.get_clients()[1].server_capabilities`
 
+## Sway Screen Orientation
+
+focus the screen that you aren't moving, then list outputs:
+
+`swaymsg -t get_outputs`
+
+move unfocused screen to position
+
+`swaymsg "output 'Dell Inc. DELL U2520D FRTJ923' pos -320 -1440"`

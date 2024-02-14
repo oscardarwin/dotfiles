@@ -52,7 +52,7 @@
       }
       {
         name = "clearml";
-        url =  "https://clearml.uai-dev-clearml.eu.dev.understand.ai/dashboard";
+        url = "https://clearml.uai-dev-clearml.eu.dev.understand.ai/dashboard";
       }
       {
         name = "component list";
@@ -61,6 +61,10 @@
       {
         name = "weights & biases";
         url = "https://wandb.internal.understand.ai/3d-and-automation";
+      }
+      {
+        name = "JIRA";
+        url = "https://understandai.atlassian.net/jira/your-work";
       }
     ];
   }

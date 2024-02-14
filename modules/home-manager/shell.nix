@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ ... }: {
   programs = {
     fish = {
       enable = true;
@@ -8,6 +8,7 @@
 	          ssh-add ~/.ssh/github";
         lg = "lazygit";
         rb = "sudo nixos-rebuild switch --flake .#squirtle --show-trace";
+        gl = "git log --all --decorate --oneline --graph";
       };
     };
     nushell.enable = true;

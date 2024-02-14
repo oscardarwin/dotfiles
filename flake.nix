@@ -106,8 +106,9 @@
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
         ] ++ squirtle-home [
+          ./modules/home-manager/keybindings.nix
           ./modules/home-manager/theme
-          ./modules/home-manager/browser.nix
+          ./modules/home-manager/firefox.nix
           ./modules/home-manager/git.nix
           ./modules/home-manager/window-manager
           ./modules/home-manager/neovim.nix
@@ -122,10 +123,14 @@
         extraSpecialArgs = { inherit inputs pkgs-unstable; };
 
         modules = ghastly-home [
-          ./modules/home-manager/theme
-          ./modules/home-manager/browser.nix
+          # ./modules/home-manager/theme
+          ./modules/home-manager/uai-keybindings.nix
+          ./modules/home-manager/keybindings.nix
+          ./modules/home-manager/uai-ubuntu-config.nix
+          ./modules/home-manager/firefox.nix
+          ./modules/home-manager/chrome.nix
           ./modules/home-manager/neovim.nix
-          ./modules/home-manager/window-manager.nix
+          ./modules/home-manager/window-manager
           ./modules/home-manager/shell.nix
           ./modules/home-manager/terminal.nix
           ./modules/home-manager/nixGL.nix

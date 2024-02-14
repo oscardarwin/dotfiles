@@ -1,16 +1,10 @@
-{ pkgs, lib, config, inputs, ... }:
-let
-  keybindings = import ./keybindings.nix { inherit config pkgs lib; };
-in
-{
+{ pkgs, lib, inputs, ... }: {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
   ];
 
   programs.nixvim = {
     enable = true;
-
-    keymaps = keybindings.nixvimBase;
 
     options = {
       number = true;
@@ -51,7 +45,6 @@ in
           { name = "treesitter"; }
           # {name = "luasnip";}
         ];
-        mapping = keybindings.nixvimCmpMapping;
       };
       telescope = {
         enable = true;
