@@ -112,7 +112,7 @@
           ./modules/home-manager/firefox.nix
           ./modules/home-manager/git.nix
           ./modules/home-manager/window-manager
-          ./modules/home-manager/neovim
+          ./modules/home-manager/editor
           ./modules/home-manager/startup.nix
           ./modules/home-manager/shell.nix
           ./modules/home-manager/terminal.nix
