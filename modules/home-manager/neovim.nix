@@ -12,7 +12,7 @@
       tabstop = 2;
       softtabstop = 2;
       expandtab = true;
-      relativenumber = true;
+      relativenumber = false;
       smartindent = true;
       hlsearch = false;
       incsearch = true;
@@ -43,7 +43,8 @@
           { name = "path"; }
           { name = "buffer"; }
           { name = "treesitter"; }
-          # {name = "luasnip";}
+          { name = "luasnip"; }
+          { name = "clippy"; }
         ];
       };
       telescope = {
@@ -52,8 +53,9 @@
           undo.enable = true;
         };
       };
+      luasnip.enable = true;
       lualine.enable = true;
-
+      cmp-clippy.enable = true;
       cmp-treesitter.enable = true;
       treesitter = {
         enable = true;
@@ -74,6 +76,11 @@
         ];
       };
 
+      rust-tools = {
+        enable = true;
+        server.check.targets = "clippy";
+      };
+
       lsp-format = {
         enable = true;
         setup = {
@@ -83,6 +90,14 @@
         };
       };
       cmp-nvim-lua.enable = true;
+      lspkind.enable = true;
+      # gitgutter = {
+      #   enable = true;
+      #   recommendedSettings = {
+      #     updatetime = lib.mkForce True;
+      #     foldtext = "gitgutter#fold#foldtext";
+      #   };
+      # };
       lsp = {
         enable = true;
 
@@ -112,6 +127,7 @@
           nil_ls = {
             enable = true;
             installLanguageServer = true;
+            settings.formatting.command = [ "nixpkgs-fmt" ];
           };
           bashls = {
             enable = true;
@@ -121,11 +137,6 @@
           jsonls = {
             enable = true;
             installLanguageServer = true;
-          };
-          rust-analyzer = {
-            enable = true;
-            installCargo = true;
-            installRustc = true;
           };
         };
       };

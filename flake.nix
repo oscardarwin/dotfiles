@@ -103,6 +103,7 @@
           ./modules/nixos/networking.nix
           ./modules/nixos/locale.nix
           ./modules/nixos/obsidian.nix
+          ./modules/nixos/screensharing.nix
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
         ] ++ squirtle-home [
@@ -111,7 +112,7 @@
           ./modules/home-manager/firefox.nix
           ./modules/home-manager/git.nix
           ./modules/home-manager/window-manager
-          ./modules/home-manager/neovim.nix
+          ./modules/home-manager/neovim
           ./modules/home-manager/startup.nix
           ./modules/home-manager/shell.nix
           ./modules/home-manager/terminal.nix

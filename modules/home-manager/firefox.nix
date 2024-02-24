@@ -1,4 +1,4 @@
-{ pkgs, inputs, pkgs-unstable, ... }: {
+{ inputs, pkgs-unstable, ... }: {
   programs.firefox = {
     enable = true;
     policies = {
@@ -24,6 +24,7 @@
         privacy-badger
         vimium
         simple-translate
+        darkreader
       ];
       settings = {
         "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";

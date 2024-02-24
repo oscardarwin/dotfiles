@@ -7,13 +7,16 @@ uai ubuntu:
 nixd completions still not working
 fix overlapping capabilities in nixd/nil 
 
-
 maybe just move to rust-tools
 
+plugins.rust-tools.server.rename.allowExternalItems = true;
+lspkind
 undo-tree
+clippy
 
 install rust neovim tools
 
+rclone
 
 sudo nixos-rebuild switch --flake .#squirtle --show-trace
 
