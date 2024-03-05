@@ -1,4 +1,4 @@
-{ lib, inputs, ... }: {
+{ inputs, ... }: {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
     ./auto-complete.nix
@@ -14,7 +14,7 @@
       tabstop = 2;
       softtabstop = 2;
       expandtab = true;
-      relativenumber = false;
+      relativenumber = true;
       smartindent = true;
       hlsearch = false;
       incsearch = true;
@@ -22,9 +22,6 @@
       updatetime = 50;
       colorcolumn = "80";
     };
-
-    colorscheme = lib.mkForce "tokyonight";
-    colorschemes.tokyonight.enable = true;
 
     clipboard.register = "unnamedplus";
     clipboard.providers.wl-copy.enable = true;

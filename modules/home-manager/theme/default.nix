@@ -4,11 +4,11 @@
 
   stylix =
     let
-      theme = "${pkgs.base16-schemes}/share/themes/brushtrees.yaml";
+      theme = "${pkgs.base16-schemes}/share/themes/atlas.yaml";
       # theme = "light";
     in
     {
-      image = ./wallpaper.jpg;
+      image = ./nixos-wallpaper-clean.jpg;
       fonts = {
         serif = {
           package = pkgs.source-serif;
@@ -31,7 +31,7 @@
         };
       };
 
-      # polarity = "light";
+      # polarity = "dark";
 
       base16Scheme = theme;
     };

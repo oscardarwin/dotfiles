@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ ... }: {
   imports = [ ./waybar.nix ];
 
   home.sessionVariables = {
@@ -35,6 +35,7 @@
       modifier = "Mod1";
       terminal = "alacritty";
       bars = [ ];
+      defaultWorkspace = "workspace number 1";
     };
   };
 }

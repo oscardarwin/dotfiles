@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }: {
+{ pkgs, ... }: {
   programs.nixvim.plugins = {
     treesitter = {
       enable = true;
@@ -28,6 +28,9 @@
       enable = true;
       setup = {
         nix = {
+          sync = true;
+        };
+        rust-analyzer = {
           sync = true;
         };
       };

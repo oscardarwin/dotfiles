@@ -130,7 +130,7 @@
           ./modules/home-manager/uai-ubuntu-config.nix
           ./modules/home-manager/firefox.nix
           ./modules/home-manager/chrome.nix
-          ./modules/home-manager/neovim.nix
+          ./modules/home-manager/neovim
           ./modules/home-manager/window-manager
           ./modules/home-manager/shell.nix
           ./modules/home-manager/terminal.nix

@@ -5,6 +5,7 @@
     cmp-nvim-lsp.enable = true;
     nvim-cmp = {
       enable = true;
+      snippet.expand = "luasnip";
       autoEnableSources = true;
       sources = [
         { name = "nvim_lsp"; }
