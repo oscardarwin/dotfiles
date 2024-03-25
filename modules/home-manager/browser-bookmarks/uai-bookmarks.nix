@@ -66,6 +66,10 @@
         name = "JIRA";
         url = "https://understandai.atlassian.net/jira/your-work";
       }
+      {
+        name = "HR Portal";
+        url = "https://dspace-web.levtec.de/HRPortal/en-GB/Home";
+      }
     ];
   }
 ]

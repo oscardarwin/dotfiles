@@ -26,6 +26,10 @@
         name = "nix-lib";
         url = "https://teu5us.github.io/nix-lib.html";
       }
+      {
+        name = "noogle";
+        url = "https://noogle.dev/";
+      }
     ];
   }
 ]
