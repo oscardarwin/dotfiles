@@ -47,3 +47,10 @@ focus the screen that you aren't moving, then list outputs:
 move unfocused screen to position
 
 `swaymsg "output 'Dell Inc. DELL U2520D FRTJ923' pos -320 -1440"`
+
+## Take a screenshot
+
+```
+nix-shell -p grim slurp wl-clipboard
+grim -g "$(slurp)" > my_file.png
+```
