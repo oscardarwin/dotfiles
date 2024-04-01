@@ -1,4 +1,4 @@
-{ ... }: {
+{ lib, ... }: {
   programs.alacritty = {
     enable = true;
 
@@ -12,6 +12,8 @@
           y = 10;
         };
       };
+
+      font.size = lib.mkForce 10.0;
 
     };
   };

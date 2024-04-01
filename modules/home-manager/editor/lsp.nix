@@ -3,7 +3,7 @@
     treesitter = {
       enable = true;
       incrementalSelection.enable = true;
-      ensureInstalled = [ "nix" "bash" "c" "json" ];
+      ensureInstalled = [ "nix" "bash" "c" "json" "xml" ];
       grammarPackages = with pkgs.vimPlugins.nvim-treesitter.passthru.builtGrammars; [
         bash
         c
@@ -16,12 +16,25 @@
         python
         rust
         vimdoc
+        xml
       ];
     };
 
     rust-tools = {
       enable = true;
-      server.check.targets = "clippy";
+      server = {
+        check.targets = "clippy";
+        hover = {
+          actions = {
+            enable = true;
+            debug.enable = true;
+            gotoTypeDef.enable = true;
+            implementations.enable = true;
+            references.enable = true;
+            run.enable = true;
+          };
+        };
+      };
     };
 
     lsp-format = {
@@ -39,6 +52,14 @@
       enable = true;
 
       servers = {
+        # TODO: add this LSP when it exists
+        # lemminx = {
+        #   enable = true;
+        #   filetypes = [
+        #     "xml"
+        #     "kml"
+        #   ];
+        # };
         nixd = {
           enable = true;
           rootDir = "";

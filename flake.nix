@@ -104,6 +104,8 @@
           ./modules/nixos/locale.nix
           ./modules/nixos/obsidian.nix
           ./modules/nixos/screensharing.nix
+          ./modules/nixos/rclone.nix
+          ./modules/nixos/resource-monitoring.nix
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
         ] ++ squirtle-home [

@@ -4,7 +4,7 @@
 
   stylix =
     let
-      theme = "${pkgs.base16-schemes}/share/themes/atlas.yaml";
+      theme = "${pkgs.base16-schemes}/share/themes/kimber.yaml";
       # theme = "light";
     in
     {
