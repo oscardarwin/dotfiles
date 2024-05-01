@@ -28,4 +28,17 @@
       }
     ];
   }
+  {
+    name = "rust";
+    bookmarks = [
+      {
+        name = "rsrl";
+        url = "https://github.com/tspooner/rsrl";
+      }
+      {
+        name = "rurel";
+        url = "https://github.com/milanboers/rurel";
+      }
+    ];
+  }
 ]

@@ -17,6 +17,7 @@
         lg = "lazygit";
         rb = "sudo nixos-rebuild switch --flake .#squirtle --show-trace";
         gl = "git log --all --decorate --oneline --graph";
+        mn = "rclone mount drive:notes ~/notes --daemon --vfs-cache-mode full --buffer-size 256M --dir-cache-time 72h --drive-chunk-size 32M";
       };
     };
     nushell.enable = true;
