@@ -14,9 +14,7 @@ lspkind
 undo-tree
 clippy
 
-install rust neovim tools
-
-rclone
+## Rebuild
 
 sudo nixos-rebuild switch --flake .#squirtle --show-trace
 

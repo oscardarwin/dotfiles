@@ -16,6 +16,25 @@
       launch_lazygit = pkgs.writeScript "launch_lazygit.sh" ''
         alacritty -e lazygit
       '';
+
+      volume-notification-id = "2";
+
+      volume-increase = pkgs.writeShellScript "volume-increase" ''
+        new_volume=$(${pkgs.pamixer}/bin/pamixer -i 5 --get-volume)
+        ${pkgs.libnotify}/bin/notify-send --hint int:value:$new_volume --replace-id ${volume-notification-id} "Volume"
+      '';
+      volume-decrease = pkgs.writeShellScript "volume-decrease" ''
+        new_volume=$(${pkgs.pamixer}/bin/pamixer -d 5 --get-volume)
+        ${pkgs.libnotify}/bin/notify-send --hint int:value:$new_volume --replace-id ${volume-notification-id} "Volume"
+      '';
+      volume-toggle = pkgs.writeShellScript "volume-toggle" ''
+        ${pkgs.pamixer}/bin/pamixer -t
+          if [ "$(${pkgs.pamixer}/bin/pamixer --get-mute)" = "true" ]; then
+            ${pkgs.libnotify}/bin/notify-send --hint int:value:0 --replace-id ${volume-notification-id} "Volume"
+          else
+            ${pkgs.libnotify}/bin/notify-send --hint int:value:100 --replace-id ${volume-notification-id} "Volume"
+          fi
+      '';
     in
     lib.mkOptionDefault {
       "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} firefox w"'';
@@ -74,6 +93,11 @@
       "${modifier}+r" = "mode resize";
 
       "${modifier}+Return" = "exec alacritty";
+
+      # Volume
+      "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";
+      "--no-repeat --no-warn XF86AudioLowerVolume" = "exec ${volume-decrease}";
+      "--no-repeat --no-warn XF86AudioMute" = "exec ${volume-toggle}";
     };
 
   programs.nixvim.keymaps = [
