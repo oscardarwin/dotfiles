@@ -52,14 +52,6 @@
       enable = true;
 
       servers = {
-        # TODO: add this LSP when it exists
-        # lemminx = {
-        #   enable = true;
-        #   filetypes = [
-        #     "xml"
-        #     "kml"
-        #   ];
-        # };
         nixd = {
           enable = true;
           rootDir = "";
@@ -95,6 +87,9 @@
         jsonls = {
           enable = true;
           installLanguageServer = true;
+        };
+        pylsp = {
+          enable = true;
         };
       };
     };
