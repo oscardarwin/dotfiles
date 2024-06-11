@@ -107,6 +107,7 @@
           ./modules/nixos/rclone.nix
           ./modules/nixos/resource-monitoring.nix
           ./modules/nixos/chat.nix
+          ./modules/nixos/bitcoin.nix
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
         ] ++ squirtle-home [
