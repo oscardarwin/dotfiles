@@ -106,6 +106,7 @@
           ./modules/nixos/screensharing.nix
           ./modules/nixos/rclone.nix
           ./modules/nixos/resource-monitoring.nix
+          ./modules/nixos/reaper.nix
           ./modules/nixos/chat.nix
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
