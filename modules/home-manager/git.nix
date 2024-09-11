@@ -2,8 +2,8 @@
   programs = {
     git = {
       enable = true;
-      userEmail = "hallayus@gmail.com";
-      userName = "Hallayus";
+      userEmail = "oscar.henry.darwin@gmail.com";
+      userName = "oscardarwin";
     };
     lazygit.enable = true;
   };

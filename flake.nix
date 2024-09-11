@@ -62,7 +62,7 @@
         }
       ];
 
-      squirtle-home = home-modules: [
+      nixos-home = home-modules: [
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = {
@@ -93,7 +93,7 @@
         ./modules/nixos/rclone.nix
         ./modules/nixos/resource-monitoring.nix
         ./modules/nixos/chat.nix
-      ] ++ squirtle-home [
+      ] ++ nixos-home [
         ./modules/home-manager/keybindings.nix
         ./modules/home-manager/theme
         ./modules/home-manager/firefox.nix
@@ -120,7 +120,7 @@
         system = desktop-system;
         pkgs = desktop-pkgs;
 
-        modules = nixos-modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ];
+        modules = nixos-modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ] ++ nixos-home [ ./modules/home-manager/tyranitar/keyboard.nix ];
       };
 
       homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
