@@ -91,7 +91,6 @@
       "${modifier}+Shift+r" = "restart";
 
       "${modifier}+r" = "mode resize";
-
       "${modifier}+Return" = "exec alacritty";
 
       # Volume
@@ -116,29 +115,24 @@
       };
     }
     {
-      action = "vim.lsp.buf.definition";
+      action.__raw = "vim.lsp.buf.definition";
       key = "gd";
-      lua = true;
     }
     {
-      action = "vim.lsp.buf.references";
+      action.__raw = "vim.lsp.buf.references";
       key = "gr";
-      lua = true;
     }
     {
-      action = "vim.lsp.buf.type_definition";
+      action.__raw = "vim.lsp.buf.type_definition";
       key = "gt";
-      lua = true;
     }
     {
-      action = "vim.lsp.buf.implementation";
+      action.__raw = "vim.lsp.buf.implementation";
       key = "gi";
-      lua = true;
     }
     {
-      action = "vim.lsp.buf.hover";
+      action.__raw = "vim.lsp.buf.hover";
       key = "gh";
-      lua = true;
     }
     {
       key = "<leader>b";
@@ -222,7 +216,7 @@
     }
   ];
 
-  programs.nixvim.plugins.nvim-cmp.mapping = {
+  programs.nixvim.plugins.cmp.settings.mapping = {
     "<CR>" = "cmp.mapping.confirm({ select = true })";
     "C-Space" = "cmp.mapping.complete()";
     "<Tab>" = {
