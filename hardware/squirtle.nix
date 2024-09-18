@@ -10,9 +10,7 @@
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "amdgpu" ];
   boot.kernelParams = [ "amd_iommu=off" "iommu=off" ];
-  # boot.kernelModules = [ ];
-  # boot.initrd.kernelModules = [ ];
-  # boot.extraModulePackages = [ ];
+  # boot.kernelModules = [ "kvm-amd" ];
 
   # optimise battery life
   services.tlp = {

@@ -37,11 +37,11 @@
 
   outputs = { nixpkgs, ... }@inputs:
     let
-      pkgs-unstable = (import inputs.nixpkgs-unstable) {
+      pkgs-stable = (import inputs.nixpkgs) {
         system = "x86_64-linux";
         config.allowUnfree = true;
       };
-      specialArgs = { inherit inputs pkgs-unstable; };
+      specialArgs = { inherit inputs pkgs-stable; };
 
       desktop-system = "x86_64-linux";
       desktop-pkgs = (import nixpkgs) {
@@ -68,7 +68,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            extraSpecialArgs = { inherit inputs pkgs-unstable; };
+            extraSpecialArgs = { inherit inputs pkgs-stable; };
             users.hallayus = {
               imports = home-modules;
               nixpkgs.config.allowUnfree = true;
@@ -112,7 +112,11 @@
         system = desktop-system;
         pkgs = desktop-pkgs;
 
-        modules = nixos-modules ++ [ ./squirtle_configuration.nix ./hardware/squirtle.nix inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd ];
+        modules = nixos-modules ++ [
+          ./squirtle_configuration.nix
+          ./hardware/squirtle.nix
+          inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
+        ];
       };
 
       nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {
@@ -125,7 +129,7 @@
 
       homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = desktop-pkgs;
-        extraSpecialArgs = { inherit inputs pkgs-unstable; };
+        extraSpecialArgs = { inherit inputs pkgs-stable; };
 
         modules = ghastly-home [
           # ./modules/home-manager/theme
