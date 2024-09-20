@@ -37,11 +37,11 @@
 
   outputs = { nixpkgs, ... }@inputs:
     let
-      pkgs-stable = (import inputs.nixpkgs) {
+      pkgs-unstable = (import inputs.nixpkgs-unstable) {
         system = "x86_64-linux";
         config.allowUnfree = true;
       };
-      specialArgs = { inherit inputs pkgs-stable; };
+      specialArgs = { inherit inputs pkgs-unstable; };
 
       desktop-system = "x86_64-linux";
       desktop-pkgs = (import nixpkgs) {
@@ -68,7 +68,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            extraSpecialArgs = { inherit inputs pkgs-stable; };
+            extraSpecialArgs = { inherit inputs pkgs-unstable; };
             users.hallayus = {
               imports = home-modules;
               nixpkgs.config.allowUnfree = true;
@@ -93,6 +93,7 @@
         ./modules/nixos/rclone.nix
         ./modules/nixos/resource-monitoring.nix
         ./modules/nixos/chat.nix
+        ./modules/nixos/obsidian.nix
       ] ++ nixos-home [
         ./modules/home-manager/keybindings.nix
         ./modules/home-manager/theme
@@ -129,7 +130,7 @@
 
       homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = desktop-pkgs;
-        extraSpecialArgs = { inherit inputs pkgs-stable; };
+        extraSpecialArgs = { inherit inputs pkgs-unstable; };
 
         modules = ghastly-home [
           # ./modules/home-manager/theme
