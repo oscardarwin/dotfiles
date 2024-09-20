@@ -1,12 +1,9 @@
 {
   programs.nixvim.plugins = {
-    cmp-buffer.enable = true;
-    cmp-path.enable = true;
-    cmp-nvim-lsp.enable = true;
-    nvim-cmp = {
+    cmp.settings = {
       enable = true;
-      snippet.expand = "luasnip";
       autoEnableSources = true;
+      snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
       sources = [
         { name = "nvim_lsp"; }
         { name = "path"; }
@@ -14,13 +11,10 @@
         { name = "treesitter"; }
         { name = "luasnip"; }
         { name = "clippy"; }
+        { name = "nvim_lua"; }
       ];
     };
-    luasnip.enable = true;
-    cmp-clippy.enable = true;
-    cmp-treesitter.enable = true;
 
-    cmp-nvim-lua.enable = true;
     lspkind.enable = true;
   };
 }

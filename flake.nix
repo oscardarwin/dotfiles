@@ -2,11 +2,11 @@
   description = "hallayus system config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/bfd0ae29a86eff4603098683b516c67e22184511";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -20,12 +20,12 @@
     };
 
     stylix = {
-      url = "github:danth/stylix/release-23.11";
+      url = "github:danth/stylix/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-23.11";
+      url = "github:nix-community/nixvim/nixos-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -33,19 +33,15 @@
       url = "github:guibou/nixGL";
       flake = false;
     };
-
-    # obsidian = {
-    #  url = "github:obsidianmd/obsidian-releases";
-    # };
   };
 
   outputs = { nixpkgs, ... }@inputs:
     let
-      pkgs-unstable = (import inputs.nixpkgs-unstable) {
+      pkgs-stable = (import inputs.nixpkgs) {
         system = "x86_64-linux";
         config.allowUnfree = true;
       };
-      specialArgs = { inherit inputs pkgs-unstable; };
+      specialArgs = { inherit inputs pkgs-stable; };
 
       desktop-system = "x86_64-linux";
       desktop-pkgs = (import nixpkgs) {
@@ -66,13 +62,13 @@
         }
       ];
 
-      squirtle-home = home-modules: [
+      nixos-home = home-modules: [
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            extraSpecialArgs = { inherit inputs pkgs-unstable; };
+            extraSpecialArgs = { inherit inputs pkgs-stable; };
             users.hallayus = {
               imports = home-modules;
               nixpkgs.config.allowUnfree = true;
@@ -82,6 +78,33 @@
         }
       ];
 
+      nixos-modules = [
+        ./modules/nixos/tools.nix
+        ./modules/nixos/lockscreen.nix
+        ./modules/nixos/display-manager.nix
+        ./modules/nixos/password-manager
+        ./modules/nixos/bootloader.nix
+        ./modules/nixos/ssh.nix
+        ./modules/nixos/wikipedia.nix
+        ./modules/nixos/audio.nix
+        ./modules/nixos/networking.nix
+        ./modules/nixos/locale.nix
+        ./modules/nixos/screensharing.nix
+        ./modules/nixos/rclone.nix
+        ./modules/nixos/resource-monitoring.nix
+        ./modules/nixos/chat.nix
+      ] ++ nixos-home [
+        ./modules/home-manager/keybindings.nix
+        ./modules/home-manager/theme
+        ./modules/home-manager/firefox.nix
+        ./modules/home-manager/git.nix
+        ./modules/home-manager/window-manager
+        ./modules/home-manager/editor
+        ./modules/home-manager/startup.nix
+        ./modules/home-manager/shell.nix
+        ./modules/home-manager/terminal.nix
+      ];
+
     in
     {
       nixosConfigurations.squirtle = nixpkgs.lib.nixosSystem {
@@ -89,43 +112,24 @@
         system = desktop-system;
         pkgs = desktop-pkgs;
 
-        modules = [
-          ./configuration.nix
-          ./modules/nixos/tools.nix
-          ./modules/nixos/lockscreen.nix
-          ./modules/spotify
-          ./modules/nixos/display-manager.nix
-          ./modules/nixos/password-manager
-          ./modules/nixos/bootloader.nix
-          ./modules/nixos/ssh.nix
-          ./modules/nixos/wikipedia.nix
-          ./modules/nixos/audio.nix
-          ./modules/nixos/networking.nix
-          ./modules/nixos/locale.nix
-          ./modules/nixos/obsidian.nix
-          ./modules/nixos/screensharing.nix
-          ./modules/nixos/rclone.nix
-          ./modules/nixos/resource-monitoring.nix
-          ./modules/nixos/reaper.nix
-          ./modules/nixos/chat.nix
+        modules = nixos-modules ++ [
+          ./squirtle_configuration.nix
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
-        ] ++ squirtle-home [
-          ./modules/home-manager/keybindings.nix
-          ./modules/home-manager/theme
-          ./modules/home-manager/firefox.nix
-          ./modules/home-manager/git.nix
-          ./modules/home-manager/window-manager
-          ./modules/home-manager/editor
-          ./modules/home-manager/startup.nix
-          ./modules/home-manager/shell.nix
-          ./modules/home-manager/terminal.nix
         ];
+      };
+
+      nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = desktop-system;
+        pkgs = desktop-pkgs;
+
+        modules = nixos-modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ] ++ nixos-home [ ./modules/home-manager/tyranitar/keyboard.nix ];
       };
 
       homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = desktop-pkgs;
-        extraSpecialArgs = { inherit inputs pkgs-unstable; };
+        extraSpecialArgs = { inherit inputs pkgs-stable; };
 
         modules = ghastly-home [
           # ./modules/home-manager/theme

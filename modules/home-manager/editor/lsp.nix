@@ -57,36 +57,19 @@
           rootDir = "";
           settings = {
             eval.workers = 3;
-
-            formatting.command = "nixpkgs-fmt";
-            options = {
-
-              target = {
-                # flake-parts
-                # installable = "/flakeref#debug.options";
-
-                # nixOS configuration
-                # installable = "/flakeref#nixosConfigurations.<adrastea>.options";
-
-                # home-manager configuration
-                installable = "/home/hallayus/dotfiles#squirtle.options";
-              };
-            };
+            formatting.command = [ "nixpkgs-fmt" ];
           };
         };
-        nil_ls = {
+        nil-ls = {
           enable = true;
-          installLanguageServer = true;
           settings.formatting.command = [ "nixpkgs-fmt" ];
         };
         bashls = {
           enable = true;
-          installLanguageServer = true;
           filetypes = [ "sh" ];
         };
         jsonls = {
           enable = true;
-          installLanguageServer = true;
         };
         pylsp = {
           enable = true;

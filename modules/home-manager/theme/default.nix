@@ -31,8 +31,6 @@
         };
       };
 
-      # polarity = "dark";
-
       base16Scheme = theme;
     };
 }

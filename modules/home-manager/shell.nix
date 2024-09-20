@@ -15,7 +15,7 @@
         sshs = "eval (ssh-agent -c)
 	          ssh-add ~/.ssh/github";
         lg = "lazygit";
-        rb = "sudo nixos-rebuild switch --flake .#squirtle --show-trace";
+        rb = "sudo nixos-rebuild switch --flake";
         gl = "git log --all --decorate --oneline --graph";
         mn = "rclone mount drive:notes ~/notes --daemon --vfs-cache-mode full --buffer-size 256M --dir-cache-time 72h --drive-chunk-size 32M";
       };

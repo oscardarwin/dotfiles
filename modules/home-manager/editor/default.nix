@@ -9,7 +9,7 @@
   programs.nixvim = {
     enable = true;
 
-    options = {
+    opts = {
       number = true;
       shiftwidth = 2;
       tabstop = 2;
