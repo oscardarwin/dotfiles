@@ -92,7 +92,6 @@
         ./modules/nixos/screensharing.nix
         ./modules/nixos/rclone.nix
         ./modules/nixos/resource-monitoring.nix
-        ./modules/nixos/chat.nix
         ./modules/nixos/obsidian.nix
       ] ++ nixos-home [
         ./modules/home-manager/keybindings.nix
