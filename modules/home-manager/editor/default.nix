@@ -20,7 +20,6 @@
       hlsearch = false;
       incsearch = true;
       scrolloff = 8;
-      updatetime = 50;
       colorcolumn = "80";
     };
 

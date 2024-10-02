@@ -1,20 +1,24 @@
 {
   programs.nixvim.plugins = {
-    cmp.settings = {
+    luasnip.enable = true;
+    cmp = {
       enable = true;
-      autoEnableSources = true;
-      snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
-      sources = [
-        { name = "nvim_lsp"; }
-        { name = "path"; }
-        { name = "buffer"; }
-        { name = "treesitter"; }
-        { name = "luasnip"; }
-        { name = "clippy"; }
-        { name = "nvim_lua"; }
-      ];
-    };
+      settings = {
+        experimental = { ghost_text = true; };
+        autoEnableSources = true;
+        snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
+        sources = [
+          { name = "nvim_lsp"; }
+          { name = "path"; }
+          { name = "buffer"; }
+          { name = "treesitter"; }
+          { name = "luasnip"; }
+          { name = "clippy"; }
+          { name = "nvim_lua"; }
+        ];
 
-    lspkind.enable = true;
+        lspkind.enable = true;
+      };
+    };
   };
 }
