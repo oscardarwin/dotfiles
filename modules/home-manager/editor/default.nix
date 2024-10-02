@@ -39,6 +39,7 @@
         };
       };
       lualine.enable = true;
+      gitgutter.enable = true;
     };
   };
 }
