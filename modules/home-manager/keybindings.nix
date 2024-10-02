@@ -135,6 +135,10 @@
       key = "gh";
     }
     {
+      action.__raw = "vim.lsp.buf.rename";
+      key = "R";
+    }
+    {
       key = "<leader>b";
       mode = "n";
       action = ":lua require'dap'.toggle_breakpoint()<CR>";
