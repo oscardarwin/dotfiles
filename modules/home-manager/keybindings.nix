@@ -139,29 +139,6 @@
       key = "R";
     }
     {
-      action.__raw = ''
-        cmp.select_prev_item
-      '';
-      key = "<Up>";
-      mode = "i";
-    }
-    {
-      action.__raw = ''
-        cmp.select_next_item
-      '';
-      key = "<Down>";
-      mode = "i";
-    }
-    {
-      action.__raw = ''
-        function() 
-          cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }) 
-        end
-      '';
-      key = "<Right>";
-      mode = "i";
-    }
-    {
       key = "<leader>b";
       mode = "n";
       action = ":lua require'dap'.toggle_breakpoint()<CR>";
@@ -242,6 +219,12 @@
       };
     }
   ];
+
+  programs.nixvim.plugins.cmp.settings.mapping = {
+    "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i'})";
+    "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i'})";
+    "<CR>" = "cmp.mapping.confirm({ select = true })";
+  };
 }
 
 
