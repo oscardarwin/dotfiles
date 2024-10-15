@@ -1,5 +1,7 @@
 { pkgs, ... }: {
   programs.nixvim.plugins = {
+    illuminate.enable = true;
+
     treesitter = {
       enable = true;
       incrementalSelection.enable = true;

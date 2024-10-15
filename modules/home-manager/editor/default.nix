@@ -20,7 +20,7 @@
       hlsearch = false;
       incsearch = true;
       scrolloff = 8;
-      colorcolumn = "80";
+      colorcolumn = "0";
     };
 
     clipboard.register = "unnamedplus";
