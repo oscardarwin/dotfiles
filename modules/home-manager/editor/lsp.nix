@@ -1,11 +1,10 @@
 { pkgs, ... }: {
   programs.nixvim.plugins = {
-    illuminate.enable = true;
-
     treesitter = {
       enable = true;
       incrementalSelection.enable = true;
       ensureInstalled = [ "nix" "bash" "c" "json" "xml" ];
+
       grammarPackages = with pkgs.vimPlugins.nvim-treesitter.passthru.builtGrammars; [
         bash
         c
