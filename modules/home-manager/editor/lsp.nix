@@ -59,11 +59,16 @@
           settings = {
             eval.workers = 3;
             formatting.command = [ "nixpkgs-fmt" ];
+            nixpkgs.expr = "import <nixpkgs> { }";
+            options = {
+              nixos = {
+                expr = "(builtins.getFlake \"/home/hallayus/dotfiles\").nixosConfigurations.squirtle.options";
+              };
+              home_manager = {
+                expr = "(builtins.getFlake \"/home/hallayus/dotfiles\").homeConfigurations.ghastly.options";
+              };
+            };
           };
-        };
-        nil-ls = {
-          enable = true;
-          settings.formatting.command = [ "nixpkgs-fmt" ];
         };
         bashls = {
           enable = true;
