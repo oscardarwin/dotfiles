@@ -3,9 +3,9 @@
     luasnip.enable = true;
     lspkind = {
       enable = true;
-      mode = "text_symbol";
+      mode = "symbol";
       cmp.menu = {
-        codium = "[Codium]";
+        codeium = "[Codium]";
         nvim_lsp = "[LSP]";
         buffer = "[Buffer]";
         path = "[Path]";
