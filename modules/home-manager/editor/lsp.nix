@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   programs.nixvim.plugins = {
     treesitter = {
       enable = true;
@@ -62,10 +62,10 @@
             nixpkgs.expr = "import <nixpkgs> { }";
             options = {
               nixos = {
-                expr = "(builtins.getFlake \"/home/hallayus/dotfiles\").nixosConfigurations.squirtle.options";
+                expr = "(builtins.getFlake \"${inputs.self}\").nixosConfigurations.squirtle.options";
               };
               home_manager = {
-                expr = "(builtins.getFlake \"/home/hallayus/dotfiles\").homeConfigurations.ghastly.options";
+                expr = "(builtins.getFlake \"${inputs.self}\").homeConfigurations.ghastly.options";
               };
             };
           };
