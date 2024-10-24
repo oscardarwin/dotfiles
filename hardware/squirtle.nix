@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "amdgpu" ];
@@ -13,7 +14,7 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
   boot.kernelParams = [ "amd_iommu=off" ];
-  
+
   # optimise battery life
   services.tlp = {
     enable = true;
@@ -24,12 +25,14 @@
   hardware.opengl.driSupport32Bit = true;
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f9784ddc-018e-4e7c-9778-d782417cbf09";
+    {
+      device = "/dev/disk/by-uuid/f9784ddc-018e-4e7c-9778-d782417cbf09";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/72D8-0FBD";
+    {
+      device = "/dev/disk/by-uuid/72D8-0FBD";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
