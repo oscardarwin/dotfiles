@@ -12,13 +12,18 @@
   fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
 
   programs.dconf.enable = true;
-  # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  # Configure keymap in X11 -- can remove??
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.hallayus = {
     isNormalUser = true;
-    description = "Oscar";
+    description = "hallayus";
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
@@ -28,6 +33,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 
 }

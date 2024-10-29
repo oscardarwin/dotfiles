@@ -5,31 +5,24 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "amdgpu" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelParams = [ "amd_iommu=off" ];
-  
-  # optimise battery life
-  services.tlp = {
-    enable = true;
-  };
-
-  services.xserver.videoDrivers = [ "modesetting" ];
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport32Bit = true;
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f9784ddc-018e-4e7c-9778-d782417cbf09";
+    {
+      device = "/dev/disk/by-uuid/7625509c-6cfa-4dc7-90e4-904190c9664a";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/72D8-0FBD";
+    {
+      device = "/dev/disk/by-uuid/62CF-D4CC";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
@@ -41,7 +34,8 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp24s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

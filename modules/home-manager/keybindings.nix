@@ -16,6 +16,25 @@
       launch_lazygit = pkgs.writeScript "launch_lazygit.sh" ''
         alacritty -e lazygit
       '';
+
+      volume-notification-id = "2";
+
+      volume-increase = pkgs.writeShellScript "volume-increase" ''
+        new_volume=$(${pkgs.pamixer}/bin/pamixer -i 5 --get-volume)
+        ${pkgs.libnotify}/bin/notify-send --hint int:value:$new_volume --replace-id ${volume-notification-id} "Volume"
+      '';
+      volume-decrease = pkgs.writeShellScript "volume-decrease" ''
+        new_volume=$(${pkgs.pamixer}/bin/pamixer -d 5 --get-volume)
+        ${pkgs.libnotify}/bin/notify-send --hint int:value:$new_volume --replace-id ${volume-notification-id} "Volume"
+      '';
+      volume-toggle = pkgs.writeShellScript "volume-toggle" ''
+        ${pkgs.pamixer}/bin/pamixer -t
+          if [ "$(${pkgs.pamixer}/bin/pamixer --get-mute)" = "true" ]; then
+            ${pkgs.libnotify}/bin/notify-send --hint int:value:0 --replace-id ${volume-notification-id} "Volume"
+          else
+            ${pkgs.libnotify}/bin/notify-send --hint int:value:100 --replace-id ${volume-notification-id} "Volume"
+          fi
+      '';
     in
     lib.mkOptionDefault {
       "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} firefox w"'';
@@ -72,8 +91,12 @@
       "${modifier}+Shift+r" = "restart";
 
       "${modifier}+r" = "mode resize";
-
       "${modifier}+Return" = "exec alacritty";
+
+      # Volume
+      "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";
+      "--no-repeat --no-warn XF86AudioLowerVolume" = "exec ${volume-decrease}";
+      "--no-repeat --no-warn XF86AudioMute" = "exec ${volume-toggle}";
     };
 
   programs.nixvim.keymaps = [
@@ -92,46 +115,116 @@
       };
     }
     {
-      action = "vim.lsp.buf.definition";
+      action.__raw = "vim.lsp.buf.definition";
       key = "gd";
-      lua = true;
     }
     {
-      action = "vim.lsp.buf.references";
+      action.__raw = "vim.lsp.buf.references";
       key = "gr";
-      lua = true;
     }
     {
-      action = "vim.lsp.buf.type_definition";
+      action.__raw = "vim.lsp.buf.type_definition";
       key = "gt";
-      lua = true;
     }
     {
-      action = "vim.lsp.buf.implementation";
+      action.__raw = "vim.lsp.buf.implementation";
       key = "gi";
-      lua = true;
     }
     {
-      action = "vim.lsp.buf.hover";
+      action.__raw = "vim.lsp.buf.hover";
       key = "gh";
-      lua = true;
+    }
+    {
+      action.__raw = "vim.lsp.buf.rename";
+      key = "R";
+    }
+    {
+      key = "<leader>b";
+      mode = "n";
+      action = ":lua require'dap'.toggle_breakpoint()<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Toggle DAP [b]reakpoint";
+      };
+    }
+    {
+      key = "<leader>B";
+      mode = "n";
+      action = ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Set DAP [B]reakpoint";
+      };
+    }
+    {
+      key = "<leader>de";
+      mode = "n";
+      action = ":lua require'dap'.repl.open()<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "[d]ap r[e]pl open";
+      };
+    }
+    {
+      key = "<leader>lp";
+      mode = "n";
+      action = ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "[l]og DAP [p]oint message";
+      };
+    }
+    {
+      key = "<F5>";
+      mode = "n";
+      action = ":lua require'dap'.continue()<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Continue DAP debug";
+      };
+    }
+    {
+      key = "<F10>";
+      mode = "n";
+      action = ":lua require'dap'.step_over()<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Step over DAP debug";
+      };
+    }
+    {
+      key = "<F11>";
+      mode = "n";
+      action = ":lua require'dap'.step_into()<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Step into DAP debug";
+      };
+    }
+    {
+      key = "<F12>";
+      mode = "n";
+      action = ":lua require'dap'.step_out()<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Stepout of DAP debug";
+      };
     }
   ];
 
-  programs.nixvim.plugins.nvim-cmp.mapping = {
+  programs.nixvim.plugins.cmp.settings.mapping = {
+    "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i'})";
+    "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i'})";
     "<CR>" = "cmp.mapping.confirm({ select = true })";
-    "C-Space" = "cmp.mapping.complete()";
-    "<Tab>" = {
-      action = ''
-        function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          else
-            fallback()
-          end
-        end
-      '';
-      modes = [ "i" "s" ];
-    };
   };
 }
+
+

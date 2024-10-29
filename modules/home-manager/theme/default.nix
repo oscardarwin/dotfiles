@@ -4,11 +4,11 @@
 
   stylix =
     let
-      theme = "${pkgs.base16-schemes}/share/themes/brushtrees.yaml";
+      theme = "${pkgs.base16-schemes}/share/themes/kimber.yaml";
       # theme = "light";
     in
     {
-      image = ./wallpaper.jpg;
+      image = ./nixos-wallpaper-clean.jpg;
       fonts = {
         serif = {
           package = pkgs.source-serif;
@@ -30,8 +30,6 @@
           name = "Noto Color Emoji";
         };
       };
-
-      # polarity = "light";
 
       base16Scheme = theme;
     };

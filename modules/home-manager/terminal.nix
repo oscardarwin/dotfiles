@@ -6,16 +6,15 @@
       # General
       shell.program = "fish";
 
-      # UI
-      cursor.style = { shape = "Beam"; };
-
       window = {
         padding = {
           x = 12;
           y = 10;
         };
-        opacity = lib.mkForce 0.9;
       };
+
+      font.size = lib.mkForce 10.0;
+
     };
   };
 }

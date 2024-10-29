@@ -5,8 +5,8 @@ let
       # or wrapType1
       name = "obsidian";
       src = fetchurl {
-        sha256 = "sha256-B4sz3cZSdm391x5vGjM60uWxusFb2EVGVeRv+aDisCE=";
-        url = "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.5.3/Obsidian-1.5.3.AppImage";
+        sha256 = "sha256-Bf5IUjM1oX6gGlwXExAdsvEFPYMKXkKLnBFdmhvYCcU=";
+        url = "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.6.7/Obsidian-1.6.7.AppImage";
       };
     });
 in

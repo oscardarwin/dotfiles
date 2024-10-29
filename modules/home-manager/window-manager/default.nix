@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ ... }: {
   imports = [ ./waybar.nix ];
 
   home.sessionVariables = {
@@ -35,37 +35,7 @@
       modifier = "Mod1";
       terminal = "alacritty";
       bars = [ ];
+      defaultWorkspace = "workspace number 1";
     };
   };
-
-  # home.packages = with pkgs; [ xdg-utils ];
-
-  # xdg.enable = true;
-
-  # enable screensharing in Wayland
-  # xdg.portal = {
-  #   enable = true;
-  #   config.common.default = [ "wlr" "gtk" ];
-
-  #   extraPortals = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal-wlr ];
-  # };
-
-  # systemd.user.services = {
-  #   xdg-desktop-portal-wlr = {
-  #     Unit = {
-  #       After = [ "graphical-session.target" ];
-  #       Description = "xdg-desktop-portal-wlr";
-  #       PartOf = [ "graphical-session.target" ];
-  #       ConditionEnvironment = [ "WAYLAND_DISPLAY" ];
-  #     };
-
-  #     Service = {
-  #       ExecStart =
-  #         "${pkgs.xdg-desktop-portal-wlr}/libexec/xdg-desktop-portal-wlr";
-  #       Restart = "on-failure";
-  #       BusName = "org.freedesktop.impl.portal.desktop.wlr";
-  #       Type = "dbus";
-  #     };
-  #   };
-  # };
 }
