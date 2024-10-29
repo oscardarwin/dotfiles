@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   programs.nixvim.plugins = {
     treesitter = {
       enable = true;
@@ -59,11 +59,16 @@
           settings = {
             eval.workers = 3;
             formatting.command = [ "nixpkgs-fmt" ];
+            nixpkgs.expr = "import <nixpkgs> { }";
+            options = {
+              nixos = {
+                expr = "(builtins.getFlake \"${inputs.self}\").nixosConfigurations.squirtle.options";
+              };
+              home_manager = {
+                expr = "(builtins.getFlake \"${inputs.self}\").homeConfigurations.ghastly.options";
+              };
+            };
           };
-        };
-        nil-ls = {
-          enable = true;
-          settings.formatting.command = [ "nixpkgs-fmt" ];
         };
         bashls = {
           enable = true;
