@@ -18,7 +18,6 @@
         mn = "rclone mount gdrive:notes ~/notes --daemon --vfs-cache-mode full --buffer-size 256M --dir-cache-time 72h --drive-chunk-size 32M";
       };
     };
-    nushell.enable = true;
     starship = {
       enable = true;
       enableFishIntegration = true;
