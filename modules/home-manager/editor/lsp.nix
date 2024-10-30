@@ -77,7 +77,7 @@
         jsonls = {
           enable = true;
         };
-        pylsp = {
+        pyright = {
           enable = true;
         };
       };
