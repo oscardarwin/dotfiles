@@ -1,4 +1,8 @@
 { pkgs, ... }: {
+  home.packages = with pkgs; [
+    lldb_18
+  ];
+
   programs.nixvim = {
     plugins.dap = {
       enable = true;
@@ -10,6 +14,10 @@
       };
     };
 
+    plugins.rust-tools.server.hover.actions = {
+      enable = true;
+      debug.enable = true;
+    };
     extraPlugins = with pkgs.vimPlugins; [
       nvim-gdb
     ];
@@ -34,7 +42,7 @@
 
         dap.adapters.lldb = {
             type = 'executable',
-            command = '${pkgs.lldb_17}/bin/lldb-vscode', -- adjust as needed, must be absolute path
+            command = '${pkgs.lldb_18}/bin/lldb', -- adjust as needed, must be absolute path
             name = 'lldb'
         }
 
@@ -62,7 +70,17 @@
     '';
     keymaps = [
       {
-        key = "<leader>b";
+        key = "<C-h>";
+        mode = "n";
+        action = ":lua require'rust-tools'.hover_actions.hover_actions()";
+        options = {
+          silent = true;
+          noremap = true;
+          desc = "Open Hover Actions";
+        };
+      }
+      {
+        key = "<C-b>";
         mode = "n";
         action = ":lua require'dap'.toggle_breakpoint()<CR>";
         options = {
@@ -72,17 +90,7 @@
         };
       }
       {
-        key = "<leader>B";
-        mode = "n";
-        action = ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>";
-        options = {
-          silent = true;
-          noremap = true;
-          desc = "Set DAP [B]reakpoint";
-        };
-      }
-      {
-        key = "<leader>de";
+        key = "<C-e>";
         mode = "n";
         action = ":lua require'dap'.repl.open()<CR>";
         options = {
@@ -92,17 +100,7 @@
         };
       }
       {
-        key = "<leader>lp";
-        mode = "n";
-        action = ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>";
-        options = {
-          silent = true;
-          noremap = true;
-          desc = "[l]og DAP [p]oint message";
-        };
-      }
-      {
-        key = "<F5>";
+        key = "<C-d>";
         mode = "n";
         action = ":lua require'dap'.continue()<CR>";
         options = {
