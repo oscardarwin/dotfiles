@@ -20,8 +20,13 @@
     };
 
     stylix = {
-      url = "github:danth/stylix/release-24.05";
+      url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    alacritty-theme = {
+      url = "github:alacritty/alacritty-theme";
+      flake = false;
     };
 
     nixvim = {

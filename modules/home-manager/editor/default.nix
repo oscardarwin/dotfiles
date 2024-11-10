@@ -9,6 +9,8 @@
   programs.nixvim = {
     enable = true;
 
+    colorschemes.one.enable = true;
+
     opts = {
       number = true;
       shiftwidth = 2;

@@ -14,7 +14,6 @@
       };
 
       font.size = lib.mkForce 10.0;
-
     };
   };
 }
