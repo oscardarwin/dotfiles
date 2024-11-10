@@ -9,7 +9,7 @@
   programs.nixvim = {
     enable = true;
 
-    colorschemes.one.enable = true;
+    colorschemes.nightfox.enable = true;
 
     opts = {
       number = true;
