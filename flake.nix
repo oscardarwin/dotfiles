@@ -19,16 +19,6 @@
       url = "github:NixOS/nixos-hardware/master";
     };
 
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    alacritty-theme = {
-      url = "github:alacritty/alacritty-theme";
-      flake = false;
-    };
-
     nixvim = {
       url = "github:nix-community/nixvim/nixos-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -100,7 +90,6 @@
         ./modules/nixos/obsidian.nix
       ] ++ nixos-home [
         ./modules/home-manager/keybindings.nix
-        ./modules/home-manager/theme
         ./modules/home-manager/firefox.nix
         ./modules/home-manager/git.nix
         ./modules/home-manager/window-manager
