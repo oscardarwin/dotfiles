@@ -5,17 +5,6 @@
       modifier = config.wayland.windowManager.sway.config.modifier;
       menu = config.wayland.windowManager.sway.config.menu;
       execute_in_workspace_script_path = pkgs.writeScript "execute_in_workspace.sh" (builtins.readFile ./window-manager/execute_in_workspace.sh);
-      launch_neovim = pkgs.writeScript "launch_neovim.sh" ''
-        #!/bin/sh
-        swaymsg "workspace e; exec alacritty -e nvim;"
-        sleep 0.1s
-        swaymsg "workspace e; exec alacritty, move down; layout splitv;"
-        sleep 0.1s
-        swaymsg "workspace e; resize set height 30ppt"
-      '';
-      launch_lazygit = pkgs.writeScript "launch_lazygit.sh" ''
-        alacritty -e lazygit
-      '';
 
       volume-notification-id = "2";
 
