@@ -30,6 +30,8 @@
     clipboard.providers.xclip.enable = true;
 
     plugins = {
+      lsp-lines.enable = true;
+      illuminate.enable = true;
       lightline = {
         enable = true;
       };
