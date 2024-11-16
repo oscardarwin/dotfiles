@@ -24,6 +24,9 @@
   hardware.opengl.enable = true;
   hardware.opengl.driSupport32Bit = true;
 
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
   fileSystems."/" =
     {
       device = "/dev/disk/by-uuid/f9784ddc-018e-4e7c-9778-d782417cbf09";
