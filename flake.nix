@@ -97,6 +97,7 @@
         ./modules/home-manager/startup.nix
         ./modules/home-manager/shell.nix
         ./modules/home-manager/terminal.nix
+        ./modules/home-manager/screen.nix
       ];
 
     in
