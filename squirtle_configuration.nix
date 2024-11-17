@@ -14,6 +14,7 @@
   programs.dconf.enable = true;
   services.printing.enable = true;
 
+  environment.systemPackages = with pkgs; [ brightnessctl ];
   # Configure keymap in X11 -- can remove??
   services.xserver.xkb = {
     layout = "us";
