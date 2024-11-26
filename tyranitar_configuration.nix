@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   nix.settings = {
@@ -14,8 +14,12 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
- 
+
   programs.dconf.enable = true;
+
+  environment.systemPackages = [
+    pkgs.prismlauncher
+  ];
 
   # Configure console keymap
   console.keyMap = "uk";
@@ -31,9 +35,6 @@
     isNormalUser = true;
     description = "Hallayus";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
   };
 
   # This value determines the NixOS release from which the default
