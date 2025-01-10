@@ -18,6 +18,7 @@
         rust
         vimdoc
         xml
+        wgsl
       ];
     };
 
