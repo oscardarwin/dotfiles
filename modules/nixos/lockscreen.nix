@@ -5,5 +5,4 @@
 
   security.polkit.enable = true;
   security.pam.services.swaylock = { };
-  hardware.opengl.enable = true;
 }

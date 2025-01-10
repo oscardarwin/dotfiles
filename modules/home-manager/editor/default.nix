@@ -42,6 +42,7 @@
           undo.enable = true;
         };
       };
+      web-devicons.enable = true;
       lualine.enable = true;
       gitgutter.enable = true;
     };

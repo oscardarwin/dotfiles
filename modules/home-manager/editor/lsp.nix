@@ -2,8 +2,10 @@
   programs.nixvim.plugins = {
     treesitter = {
       enable = true;
-      incrementalSelection.enable = true;
-      ensureInstalled = [ "nix" "bash" "c" "json" "xml" ];
+      settings = {
+        incremental_selection.enable = true;
+        ensure_installed = [ "nix" "bash" "c" "json" "xml" "wgsl" ];
+      };
 
       grammarPackages = with pkgs.vimPlugins.nvim-treesitter.passthru.builtGrammars; [
         bash
@@ -22,26 +24,13 @@
       ];
     };
 
-    rust-tools = {
+    rustaceanvim = {
       enable = true;
-      server = {
-        check.targets = "clippy";
-        hover = {
-          actions = {
-            enable = true;
-            debug.enable = true;
-            gotoTypeDef.enable = true;
-            implementations.enable = true;
-            references.enable = true;
-            run.enable = true;
-          };
-        };
-      };
     };
 
     lsp-format = {
       enable = true;
-      setup = {
+      settings = {
         nix = {
           sync = true;
         };
