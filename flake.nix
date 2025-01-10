@@ -88,6 +88,7 @@
         ./modules/nixos/rclone.nix
         ./modules/nixos/resource-monitoring.nix
         ./modules/nixos/obsidian.nix
+        ./modules/nixos/libresprite.nix
       ] ++ nixos-home [
         ./modules/home-manager/keybindings.nix
         ./modules/home-manager/firefox.nix
