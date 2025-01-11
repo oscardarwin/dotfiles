@@ -4,7 +4,7 @@
 
     settings = {
       # General
-      shell.program = "fish";
+      terminal.shell.program = "fish";
 
       window = {
         padding = {

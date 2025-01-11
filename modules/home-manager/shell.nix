@@ -31,5 +31,7 @@
         };
       };
     };
+
+    htop.enable = true;
   };
 }
