@@ -119,7 +119,7 @@
         system = desktop-system;
         pkgs = desktop-pkgs;
 
-        modules = nixos-modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ] ++ nixos-home [ ./modules/home-manager/tyranitar/keyboard.nix ];
+        modules = nixos-modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ./modules/nixos/minecraft.nix ] ++ nixos-home [ ./modules/home-manager/tyranitar/keyboard.nix ];
       };
 
       homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
