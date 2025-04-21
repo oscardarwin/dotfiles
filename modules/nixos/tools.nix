@@ -1,6 +1,7 @@
 { pkgs, ... }: {
-  environment.systemPackages = [
-    pkgs.nixd
-    pkgs.nixdoc
+  environment.systemPackages = with pkgs; [
+    nixd
+    nixdoc
+    unzip
   ];
 }

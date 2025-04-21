@@ -24,7 +24,6 @@
     rust-tools = {
       enable = true;
       server = {
-        check.targets = "clippy";
         hover = {
           actions = {
             enable = true;

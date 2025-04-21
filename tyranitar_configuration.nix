@@ -17,8 +17,8 @@
 
   programs.dconf.enable = true;
 
-  environment.systemPackages = [
-    pkgs.prismlauncher
+  environment.systemPackages = with pkgs; [
+    android-studio
   ];
 
   # Configure console keymap
