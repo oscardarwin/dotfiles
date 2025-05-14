@@ -1,6 +1,6 @@
 * {
 	font-size: 12px;
-	font-family: monospace;
+	font-family: "FiraCode Nerd Font", "Symbols Nerd Font", sans-serif;
 }
 
 window#waybar {
@@ -19,14 +19,13 @@ window#waybar {
 }
 
 #workspaces,
-#clock.1,
-#clock.2,
-#clock.3,
+#clock,
 #pulseaudio,
 #memory,
 #cpu,
 #battery,
 #disk,
+#network,
 #tray {
 	background: #1a1a1a;
 }
@@ -52,10 +51,10 @@ window#waybar {
 	color: #268bd2;
 }
 #memory {
-	color: #2aa198;
+	color: #6c71c4;
 }
 #cpu {
-	color: #6c71c4;
+  color: #bdb76b;
 }
 #battery {
 	color: #859900;
@@ -63,12 +62,16 @@ window#waybar {
 #disk {
 	color: #b58900;
 }
+#network {
+	color: #2aa198;
+}
 
 #clock,
 #pulseaudio,
 #memory,
 #cpu,
 #battery,
-#disk {
+#disk,
+#network {
 	padding: 0 10px;
 }
