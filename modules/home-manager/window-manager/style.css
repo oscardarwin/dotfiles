@@ -4,12 +4,12 @@
 }
 
 window#waybar {
-	background: #1a1a1a;
+	background: #00171f;
 	color: #fdf6e3;
 }
 
 #custom-separator {
-	color: #1a1a1a;
+	color: #00171f;
 }
 
 #workspaces,
@@ -20,10 +20,10 @@ window#waybar {
 #battery,
 #disk,
 #network,
-
 #workspaces button {
 	padding: 0 2px;
 	color: #fdf6e3;
+  background: #00171f;
 }
 #workspaces button.focused {
 	color: #268bd2;
@@ -33,8 +33,8 @@ window#waybar {
 	text-shadow: inherit;
 }
 #workspaces button:hover {
-	background: #1a1a1a;
-	border: #1a1a1a;
+	background: #003459;
+	border: #003459;
 	padding: 0 3px;
 }
 
@@ -67,5 +67,17 @@ window#waybar {
 #battery,
 #disk,
 #network {
+	padding: 0 10px;
+}
+
+#clock:hover,
+#pulseaudio:hover,
+#memory:hover,
+#cpu:hover,
+#battery:hover,
+#disk:hover,
+#network:hover {
+	background: #003459;
+	border: #003459;
 	padding: 0 10px;
 }

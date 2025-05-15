@@ -9,7 +9,7 @@
   ],
   "modules-right": [
     "pulseaudio",
-    "custom/separate",
+    "custom/separator",
     "memory",
     "custom/separator",
     "cpu",
