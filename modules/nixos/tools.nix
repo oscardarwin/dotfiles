@@ -3,5 +3,6 @@
     nixd
     nixdoc
     unzip
+    manix
   ];
 }
