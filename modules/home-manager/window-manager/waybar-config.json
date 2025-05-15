@@ -71,7 +71,10 @@
   },
   "memory": {
     "interval": 5,
-    "format": " {}%"
+    "format": " {}%",
+    "states": {
+      "warning": 90
+    }
   },
   "cpu": {
     "interval": 5,

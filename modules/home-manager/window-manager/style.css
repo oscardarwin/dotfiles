@@ -53,6 +53,9 @@ window#waybar {
 #memory {
 	color: #6c71c4;
 }
+#memory.warning {
+  color: #cb4b16; 
+}
 #cpu {
   color: #bdb76b;
 }
