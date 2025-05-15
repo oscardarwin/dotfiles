@@ -95,8 +95,36 @@
       };
     }
     {
-      action = "<cmd>Telescope lsp_document_symbols<cr>";
+      action = "<cmd>Telescope live_grep<cr>";
+      key = "fg";
+      options = {
+        silent = true;
+      };
+    }
+    {
+      action = "<cmd>Telescope undo<cr>";
+      key = "fu";
+      options = {
+        silent = true;
+      };
+    }
+    {
+      action = "<cmd>Telescope manix<cr>";
+      key = "fn";
+      options = {
+        silent = true;
+      };
+    }
+    {
+      action = "<cmd>Telescope lsp_workspace_symbols<cr>";
       key = "fs";
+      options = {
+        silent = true;
+      };
+    }
+    {
+      action = "<cmd>Gitsigns preview_hunk<cr>";
+      key = "gp";
       options = {
         silent = true;
       };
