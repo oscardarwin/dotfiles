@@ -24,21 +24,7 @@
       ];
     };
 
-    rust-tools = {
-      enable = true;
-      server = {
-        hover = {
-          actions = {
-            enable = true;
-            debug.enable = true;
-            gotoTypeDef.enable = true;
-            implementations.enable = true;
-            references.enable = true;
-            run.enable = true;
-          };
-        };
-      };
-    };
+    rustaceanvim.enable = true;
 
     lsp-format = {
       enable = true;
