@@ -2,47 +2,26 @@
   "layer": "top",
   "position": "bottom",
   "modules-left": [
-    "sway/workspaces",
-    "custom/right-arrow-dark"
+    "sway/workspaces"
   ],
   "modules-center": [
-    "custom/left-arrow-dark",
-    "clock",
-    "custom/right-arrow-dark"
+    "clock"
   ],
   "modules-right": [
-    "custom/left-arrow-dark",
     "pulseaudio",
-    "custom/left-arrow-light",
-    "custom/left-arrow-dark",
+    "custom/separate",
     "memory",
-    "custom/left-arrow-light",
-    "custom/left-arrow-dark",
+    "custom/separator",
     "cpu",
-    "custom/left-arrow-light",
-    "custom/left-arrow-dark",
+    "custom/separator",
     "battery",
-    "custom/left-arrow-light",
-    "custom/left-arrow-dark",
+    "custom/separator",
     "disk",
-    "custom/left-arrow-light",
-    "custom/left-arrow-dark",
+    "custom/separator",
     "network"
   ],
-  "custom/left-arrow-dark": {
-    "format": "",
-    "tooltip": false
-  },
-  "custom/left-arrow-light": {
-    "format": "",
-    "tooltip": false
-  },
-  "custom/right-arrow-dark": {
-    "format": "",
-    "tooltip": false
-  },
-  "custom/right-arrow-light": {
-    "format": "",
+  "custom/separator": {
+    "format": "|",
     "tooltip": false
   },
   "sway/workspaces": {

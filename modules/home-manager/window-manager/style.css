@@ -4,18 +4,12 @@
 }
 
 window#waybar {
-	background: #292b2e;
+	background: #1a1a1a;
 	color: #fdf6e3;
 }
 
-#custom-right-arrow-dark,
-#custom-left-arrow-dark {
+#custom-separator {
 	color: #1a1a1a;
-}
-#custom-right-arrow-light,
-#custom-left-arrow-light {
-	color: #292b2e;
-	background: #1a1a1a;
 }
 
 #workspaces,
@@ -26,9 +20,6 @@ window#waybar {
 #battery,
 #disk,
 #network,
-#tray {
-	background: #1a1a1a;
-}
 
 #workspaces button {
 	padding: 0 2px;
