@@ -40,11 +40,13 @@
         enable = true;
         extensions = {
           undo.enable = true;
+          manix.enable = true;
+          ui-select.enable = true;
         };
       };
       web-devicons.enable = true;
       lualine.enable = true;
-      gitgutter.enable = true;
+      gitsigns.enable = true;
     };
   };
 }
