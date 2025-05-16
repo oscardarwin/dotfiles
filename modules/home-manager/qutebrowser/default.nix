@@ -25,17 +25,20 @@
         darkmode.enabled = true;
         preferred_color_scheme = "dark";
       };
+      content.cookies.accept = "all";
+      auto_save.session = true;
 
       url.start_pages = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
     };
 
     aliases = {
       t = "tab-select";
+      f = "spawn --userscript 1password.sh";
     };
   };
 
-  home.file.".config/qutebrowser/userscripts/my-qute-1pass.sh" = {
-    source = ./qute-1pass.sh;
+  home.file.".config/qutebrowser/userscripts/1password.sh" = {
+    source = ./1password.sh;
     executable = true;
   };
 }
