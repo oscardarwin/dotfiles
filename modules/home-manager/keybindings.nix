@@ -26,7 +26,7 @@
       '';
     in
     lib.mkOptionDefault {
-      "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} firefox w"'';
+      "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} qutebrowser w"'';
       "${modifier}+p" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} 1password p"'';
       "${modifier}+o" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} obsidian o"'';
       "${modifier}+q" = "kill";
