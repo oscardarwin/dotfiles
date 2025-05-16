@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SESSION_1PASSWORD_ENV_VAR=$(systemctl --user show-environment | grep ^OP_SESSION_ | head -n1)
+SESSION_1PASSWORD_ENV_VAR=$(systemctl --user show-environment | grep OP_SESSION | head -n1)
 
 WORKSPACE_NAME=$2
 TO_EXECUTE=$1
