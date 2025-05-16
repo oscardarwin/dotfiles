@@ -32,9 +32,10 @@
     aliases = {
       t = "tab-select";
     };
+  };
 
-    greasemonkey = [
-      (pkgs.writeText "my-qute-1pass.sh" (builtins.readFile ./qute-1pass.sh))
-    ];
+  home.file.".config/qutebrowser/userscripts/my-qute-1pass.sh" = {
+    source = ./qute-1pass.sh;
+    executable = true;
   };
 }
