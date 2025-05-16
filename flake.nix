@@ -64,6 +64,7 @@
             useGlobalPkgs = true;
             useUserPackages = true;
             extraSpecialArgs = { inherit inputs pkgs-unstable; };
+            backupFileExtension = "backup";
             users.hallayus = {
               imports = home-modules;
               nixpkgs.config.allowUnfree = true;

@@ -1,4 +1,6 @@
-{ inputs, pkgs-unstable, ... }: {
+{ pkgs, ... }: {
+  programs.rofi.enable = true;
+
   programs.qutebrowser = {
     enable = true;
 
@@ -9,12 +11,30 @@
     };
 
     quickmarks = {
-      nixvim = "https://nix-community.github.io/nixvim/";
+      cheatsheet = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
+      nixvim = "https://nix-community.github.io/nixvim";
       home-manager = "https://nix-community.github.io/home-manager/options.xhtml";
       beeper = "https://chat.beeper.com/";
       chatgpt = "https://chatgpt.com";
+      calendar = "https://calendar.google.com/calendar/u/0/r";
+      gmail = "https://mail.google.com/mail/u/0/#inbox";
     };
 
-    colors.webpage.preferred_color_scheme = "dark";
+    settings = {
+      colors.webpage = {
+        darkmode.enabled = true;
+        preferred_color_scheme = "dark";
+      };
+
+      url.start_pages = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
+    };
+
+    aliases = {
+      t = "tab-select";
+    };
+
+    greasemonkey = [
+      (pkgs.writeText "my-qute-1pass.sh" (builtins.readFile ./qute-1pass.sh))
+    ];
   };
 }
