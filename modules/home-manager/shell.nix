@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   programs = {
     fish = {
       enable = true;
@@ -41,4 +41,8 @@
       enableFishIntegration = true;
     };
   };
+
+  home.packages = with pkgs; [
+    wl-clipboard
+  ];
 }
