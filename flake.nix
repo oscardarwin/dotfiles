@@ -100,6 +100,7 @@
         ./modules/home-manager/shell.nix
         ./modules/home-manager/terminal.nix
         ./modules/home-manager/screen.nix
+        ./modules/home-manager/qutebrowser.nix
       ];
 
     in
