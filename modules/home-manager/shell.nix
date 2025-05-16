@@ -33,5 +33,12 @@
     };
 
     htop.enable = true;
+
+    jq.enable = true;
+
+    fzf = {
+      enable = true;
+      enableFishIntegration = true;
+    };
   };
 }
