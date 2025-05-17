@@ -18,6 +18,7 @@
       chatgpt = "https://chatgpt.com";
       calendar = "https://calendar.google.com/calendar/u/0/r";
       gmail = "https://mail.google.com/mail/u/0/#inbox";
+      settings = "https://www.qutebrowser.org/doc/help/settings.html";
     };
 
     settings = {
@@ -27,6 +28,7 @@
       };
       content.cookies.accept = "all";
       auto_save.session = true;
+      tabs.show = false;
 
       url.start_pages = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
     };
