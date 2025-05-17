@@ -28,7 +28,7 @@
       };
       content.cookies.accept = "all";
       auto_save.session = true;
-      tabs.show = false;
+      tabs.show = "never";
 
       url.start_pages = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
     };
