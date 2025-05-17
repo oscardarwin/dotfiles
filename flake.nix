@@ -96,7 +96,7 @@
         ./modules/home-manager/firefox.nix
         ./modules/home-manager/git.nix
         ./modules/home-manager/window-manager
-        ./modules/home-manager/editor
+        ./modules/home-manager/nixvim
         ./modules/home-manager/startup.nix
         ./modules/home-manager/shell.nix
         ./modules/home-manager/terminal.nix
@@ -137,7 +137,7 @@
           ./modules/home-manager/uai-ubuntu-config.nix
           ./modules/home-manager/firefox.nix
           ./modules/home-manager/chrome.nix
-          ./modules/home-manager/editor
+          ./modules/home-manager/nixvim
           ./modules/home-manager/window-manager
           ./modules/home-manager/shell.nix
           ./modules/home-manager/terminal.nix
