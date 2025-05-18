@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  connect_hotspot = pkgs.writeScript "hotspot.sh" (builtins.readFile ./hotspot.sh);
+in
+{
   programs = {
     fish = {
       enable = true;
@@ -16,6 +20,7 @@
         gl = "git log --all --decorate --oneline --graph";
         pl = "export OP_SESSION=$(op signin --raw) && systemctl --user import-environment OP_SESSION";
         op_setup = "op account add --address my.1password.com --email oscar.henry.darwin@gmail.com";
+        hotspot = "${connect_hotspot}";
       };
     };
     ripgrep.enable = true;

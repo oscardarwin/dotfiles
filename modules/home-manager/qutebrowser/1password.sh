@@ -80,7 +80,7 @@ fi
 USERNAME=$(echo "$ITEM" | jq -r '.fields[] | select(.id == "username" or .label == "username") | .value')
 PASSWORD=$(echo "$ITEM" | jq -r '.fields[] | select(.id == "password" or .label == "password") | .value')
 
-if [ -n "$USERNAME" ] || [ -n "$PASSWORD" ] || [ -n "$EMAIL" ]; then
+if [ -n "$USERNAME" ] || [ -n "$PASSWORD" ]; then
     printjs() {
         js | sed 's,//.*$,,' | tr '\n' ' '
     }
