@@ -1,5 +1,5 @@
-{ pkgs, ... }: {
-  programs.rofi.enable = true;
+{ ... }: {
+  programs.wofi.enable = true;
 
   programs.qutebrowser = {
     enable = true;

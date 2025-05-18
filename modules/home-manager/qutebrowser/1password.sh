@@ -59,7 +59,7 @@ if [ -z "$MATCHING_ITEMS" ] || [ "$MATCHING_ITEMS" = "null" ]; then
     echo "message-info 'No matching item for domain $DOMAIN. Prompting for title...'" >> "$QUTE_FIFO"
     
     # Get list of item titles and prompt user to select one
-    TITLE=$(op item list --format json --session "$OP_SESSION" | jq -r '.[].title' | rofi -dmenu -i -p "1Password Title")
+    TITLE=$(op item list --format json --session "$OP_SESSION" | jq -r '.[].title' | wofi -dmenu -i -p "1Password Title")
     if [ -z "$TITLE" ]; then
         echo "message-error 'No title selected.'" >> "$QUTE_FIFO"
         exit 1
