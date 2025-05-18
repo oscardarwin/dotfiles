@@ -86,6 +86,7 @@
         ./modules/home-manager/screen.nix
         ./modules/home-manager/qutebrowser
         ./modules/home-manager/obsidian
+        ./modules/home-manager/packages.nix
       ];
 
       nixos-modules = [
