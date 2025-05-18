@@ -32,9 +32,6 @@
     plugins = {
       lsp-lines.enable = true;
       illuminate.enable = true;
-      lightline = {
-        enable = true;
-      };
       leap.enable = true;
       telescope = {
         enable = true;
@@ -45,7 +42,18 @@
         };
       };
       web-devicons.enable = true;
-      lualine.enable = true;
+      lualine = {
+        enable = true;
+        settings = {
+          sections = {
+            lualine_b = [{ __unkeyed-1 = "filename"; path = 1; }];
+            lualine_c = [ "buffers" ];
+            lualine_y = [ "diff" "diagnostics" ];
+            lualine_z = [ "branch" ];
+          };
+
+        };
+      };
       gitsigns.enable = true;
     };
   };
