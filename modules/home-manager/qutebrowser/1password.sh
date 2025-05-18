@@ -46,6 +46,8 @@ cat <<EOF
 EOF
 }
 
+OP_SESSION=$(systemctl --user show-environment | grep '^OP_SESSION=' | cut -d= -f2-)
+
 echo "message-info 'Looking for password for $QUTE_URL...'" >> "$QUTE_FIFO"
 
 DOMAIN=$(echo "$QUTE_URL" | awk -F/ '{print $3}' | sed 's/^www\.//')
