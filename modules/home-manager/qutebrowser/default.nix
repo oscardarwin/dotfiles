@@ -19,6 +19,7 @@
       calendar = "https://calendar.google.com/calendar/u/0/r";
       gmail = "https://mail.google.com/mail/u/0/#inbox";
       settings = "https://www.qutebrowser.org/doc/help/settings.html";
+      github = "https://github.com";
     };
 
     settings = {
