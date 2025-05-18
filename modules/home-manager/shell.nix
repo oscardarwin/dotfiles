@@ -15,6 +15,7 @@
         rb = "sudo nixos-rebuild switch --flake";
         gl = "git log --all --decorate --oneline --graph";
         pl = "export OP_SESSION=$(op signin --raw) && systemctl --user import-environment OP_SESSION";
+        op_setup = "op account add --address my.1password.com --email oscar.henry.darwin@gmail.com";
       };
     };
     ripgrep.enable = true;
