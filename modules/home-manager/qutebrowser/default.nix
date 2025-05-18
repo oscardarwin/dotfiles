@@ -8,6 +8,7 @@
       g = "https://www.google.com/search?hl=en&q={}";
       w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
       np = "https://search.nixos.org/packages?channel=24.11&size=50&sort=relevance&type=options&query={}";
+      nv = "https://nix-community.github.io/nixvim/search/?option_scope=0&query={}";
     };
 
     quickmarks = {
