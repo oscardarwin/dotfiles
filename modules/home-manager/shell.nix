@@ -14,7 +14,6 @@
         lg = "lazygit";
         rb = "sudo nixos-rebuild switch --flake";
         gl = "git log --all --decorate --oneline --graph";
-        mn = "rclone mount gdrive:notes ~/notes --daemon --vfs-cache-mode full --buffer-size 256M --dir-cache-time 72h --drive-chunk-size 32M";
         pl = "export OP_SESSION=$(op signin --raw) && systemctl --user import-environment OP_SESSION";
       };
     };
