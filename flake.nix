@@ -99,9 +99,6 @@
         ./modules/nixos/networking.nix
         ./modules/nixos/locale.nix
         ./modules/nixos/screensharing.nix
-        ./modules/nixos/rclone.nix
-        ./modules/nixos/libresprite.nix
-        ./modules/nixos/musescore.nix
       ] ++ nixos-home home-modules;
 
     in
