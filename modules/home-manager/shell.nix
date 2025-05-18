@@ -39,6 +39,16 @@
       enable = true;
       enableFishIntegration = true;
     };
+
+    ssh = {
+      enable = true;
+      extraConfig = ''IdentityAgent ~/.1password/agent.sock'';
+      # addKeysToAgent = "~/.ssh/github";
+    };
+  };
+
+  services.ssh-agent = {
+    enable = true;
   };
 
   home.packages = with pkgs; [
@@ -49,5 +59,7 @@
     manix
     du-dust
     wiki-tui
+
+    _1password-cli
   ];
 }

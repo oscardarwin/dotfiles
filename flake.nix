@@ -127,20 +127,14 @@
         pkgs = desktop-pkgs;
         extraSpecialArgs = { inherit inputs pkgs-unstable; };
 
-        modules = ghastly-home [
+        modules = ghastly-home ([
           # ./modules/home-manager/theme
           ./modules/home-manager/uai-keybindings.nix
-          ./modules/home-manager/keybindings.nix
           ./modules/home-manager/uai-ubuntu-config.nix
-          ./modules/home-manager/firefox.nix
           ./modules/home-manager/chrome.nix
-          ./modules/home-manager/nixvim
-          ./modules/home-manager/window-manager
-          ./modules/home-manager/shell.nix
-          ./modules/home-manager/terminal.nix
           ./modules/home-manager/zellij.nix
           ./modules/home-manager/nixGL.nix
-        ];
+        ] ++ home-modules);
       };
 
     };
