@@ -6,6 +6,8 @@
       menu = config.wayland.windowManager.sway.config.menu;
       execute_in_workspace_script_path = pkgs.writeScript "execute_in_workspace.sh" (builtins.readFile ./window-manager/execute_in_workspace.sh);
 
+      launch_obsidian = pkgs.writeScript "launch_obsidian.sh" (builtins.readFile ./obsidian/launch.sh);
+
       volume-notification-id = "2";
 
       volume-increase = pkgs.writeShellScript "volume-increase" ''
@@ -28,7 +30,7 @@
     lib.mkOptionDefault {
       "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} qutebrowser w"'';
       "${modifier}+p" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} 1password p"'';
-      "${modifier}+o" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} obsidian o"'';
+      "${modifier}+o" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_obsidian.sh} o"'';
       "${modifier}+q" = "kill";
       "${modifier}+d" = "exec ${menu}";
       "${modifier}+Left" = "focus left";

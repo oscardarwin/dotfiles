@@ -88,7 +88,6 @@
         ./modules/nixos/screensharing.nix
         ./modules/nixos/rclone.nix
         ./modules/nixos/resource-monitoring.nix
-        ./modules/nixos/obsidian.nix
         ./modules/nixos/libresprite.nix
         ./modules/nixos/musescore.nix
       ] ++ nixos-home [
@@ -102,6 +101,7 @@
         ./modules/home-manager/terminal.nix
         ./modules/home-manager/screen.nix
         ./modules/home-manager/qutebrowser
+        ./modules/home-manager/obsidian
       ];
 
     in
