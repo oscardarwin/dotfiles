@@ -74,23 +74,7 @@
         }
       ];
 
-      nixos-modules = [
-        ./modules/nixos/tools.nix
-        ./modules/nixos/lockscreen.nix
-        ./modules/nixos/display-manager.nix
-        ./modules/nixos/password-manager
-        ./modules/nixos/bootloader.nix
-        ./modules/nixos/ssh.nix
-        ./modules/nixos/wikipedia.nix
-        ./modules/nixos/audio.nix
-        ./modules/nixos/networking.nix
-        ./modules/nixos/locale.nix
-        ./modules/nixos/screensharing.nix
-        ./modules/nixos/rclone.nix
-        ./modules/nixos/resource-monitoring.nix
-        ./modules/nixos/libresprite.nix
-        ./modules/nixos/musescore.nix
-      ] ++ nixos-home [
+      home-modules = [
         ./modules/home-manager/keybindings.nix
         ./modules/home-manager/firefox.nix
         ./modules/home-manager/git.nix
@@ -103,6 +87,21 @@
         ./modules/home-manager/qutebrowser
         ./modules/home-manager/obsidian
       ];
+
+      nixos-modules = [
+        ./modules/nixos/lockscreen.nix
+        ./modules/nixos/display-manager.nix
+        ./modules/nixos/password-manager
+        ./modules/nixos/bootloader.nix
+        ./modules/nixos/ssh.nix
+        ./modules/nixos/audio.nix
+        ./modules/nixos/networking.nix
+        ./modules/nixos/locale.nix
+        ./modules/nixos/screensharing.nix
+        ./modules/nixos/rclone.nix
+        ./modules/nixos/libresprite.nix
+        ./modules/nixos/musescore.nix
+      ] ++ nixos-home home-modules;
 
     in
     {

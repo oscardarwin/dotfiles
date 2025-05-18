@@ -43,5 +43,11 @@
 
   home.packages = with pkgs; [
     wl-clipboard
+    nixd
+    nixdoc
+    unzip
+    manix
+    du-dust
+    wiki-tui
   ];
 }
