@@ -3,7 +3,7 @@
     inputs.nixvim.homeManagerModules.nixvim
     ./auto-complete.nix
     ./lsp.nix
-    ./debugger.nix
+    # ./debugger.nix
   ];
 
   programs.nixvim = {
@@ -55,6 +55,9 @@
         };
       };
       gitsigns.enable = true;
+      codecompanion = {
+        enable = true;
+      };
     };
   };
 }

@@ -43,7 +43,7 @@
       servers = {
         nixd = {
           enable = true;
-          rootDir = "";
+          rootMarkers = [ "flake.nix" ];
           settings = {
             eval.workers = 3;
             formatting.command = [ "nixpkgs-fmt" ];
