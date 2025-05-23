@@ -18,6 +18,8 @@ in
         lg = "lazygit";
         rb = "sudo nixos-rebuild switch --flake";
         gl = "git log --all --decorate --oneline --graph";
+        ls = "eza";
+        cat = "bat";
         pl = "export OP_SESSION=$(op signin --raw) && systemctl --user import-environment OP_SESSION";
         op_setup = "op account add --address my.1password.com --email oscar.henry.darwin@gmail.com";
         hotspot = "${connect_hotspot}";
@@ -51,6 +53,29 @@ in
       extraConfig = ''IdentityAgent ~/.1password/agent.sock'';
       # addKeysToAgent = "~/.ssh/github";
     };
+
+    zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
+    eza = {
+      enable = true;
+      enableFishIntegration = true;
+      git = true;
+      icons = "auto";
+    };
+
+    ncspot = {
+      enable = true;
+      settings = {
+        keybindings = {
+          "f" = "search";
+        };
+      };
+    };
+
+    bat.enable = true;
   };
 
   services.ssh-agent = {
