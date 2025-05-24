@@ -76,6 +76,8 @@ in
     };
 
     bat.enable = true;
+
+    fd.enable = true;
   };
 
   services.ssh-agent = {
