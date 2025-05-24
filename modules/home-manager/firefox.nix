@@ -12,14 +12,17 @@
     };
 
     profiles.hallayus = {
-      bookmarks = [
-        {
-          name = "Bookmarks";
-          toolbar = true;
-          bookmarks = import ./browser-bookmarks/firefox-bookmarks.nix ++ import ./browser-bookmarks/uai-bookmarks.nix;
-        }
-      ];
-      extensions = with inputs.firefox-addons.packages."${pkgs-unstable.system}"; [
+      bookmarks = {
+        force = true;
+        settings = [
+          {
+            name = "Bookmarks";
+            toolbar = true;
+            bookmarks = import ./browser-bookmarks/firefox-bookmarks.nix ++ import ./browser-bookmarks/uai-bookmarks.nix;
+          }
+        ];
+      };
+      extensions.packages = with inputs.firefox-addons.packages."${pkgs-unstable.system}"; [
         ublock-origin
         privacy-badger
         vimium

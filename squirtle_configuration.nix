@@ -9,7 +9,10 @@
     experimental-features = [ "nix-command" "flakes" ];
   };
 
-  fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+  fonts.packages = [
+    pkgs.nerd-fonts._0xproto
+    pkgs.nerd-fonts.droid-sans-mono
+  ];
 
   programs.dconf.enable = true;
   services.printing.enable = true;
