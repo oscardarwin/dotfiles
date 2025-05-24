@@ -23,6 +23,7 @@
       github = "https://github.com";
       german-translate = "https://www.deepl.com/en/translator/l/en/de";
       maps = "https://www.google.de/maps/@48.0005734,7.8578012,15z";
+      drive = "https://drive.google.com/drive/my-drive";
     };
 
     settings = {
