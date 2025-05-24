@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -32,21 +31,18 @@
 
   outputs = { nixpkgs, ... }@inputs:
     let
-      pkgs-unstable = (import inputs.nixpkgs-unstable) {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-      specialArgs = { inherit inputs pkgs-unstable; };
+      system = "x86_64-linux";
 
-      desktop-system = "x86_64-linux";
-      desktop-pkgs = (import nixpkgs) {
-        system = desktop-system;
+      pkgs = (import nixpkgs) {
+        inherit system;
         config = {
           allowUnfree = true;
           allowUnfreePredicate = (_: true);
           permittedInsecurePackages = [ "openssl-1.1.1w" ];
         };
       };
+
+      specialArgs = { inherit inputs; };
 
       ghastly-home = home-modules: home-modules ++ [
         {
@@ -63,11 +59,10 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            extraSpecialArgs = { inherit inputs pkgs-unstable; };
+            extraSpecialArgs = specialArgs;
             backupFileExtension = "backup";
             users.hallayus = {
               imports = home-modules;
-              nixpkgs.config.allowUnfree = true;
               home.stateVersion = "21.11";
             };
           };
@@ -104,9 +99,7 @@
     in
     {
       nixosConfigurations.squirtle = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        system = desktop-system;
-        pkgs = desktop-pkgs;
+        inherit specialArgs system pkgs;
 
         modules = nixos-modules ++ [
           ./squirtle_configuration.nix
@@ -116,16 +109,14 @@
       };
 
       nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        system = desktop-system;
-        pkgs = desktop-pkgs;
+        inherit specialArgs system pkgs;
 
         modules = nixos-modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ./modules/nixos/minecraft.nix ] ++ nixos-home [ ./modules/home-manager/tyranitar/keyboard.nix ];
       };
 
       homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = desktop-pkgs;
-        extraSpecialArgs = { inherit inputs pkgs-unstable; };
+        inherit pkgs;
+        extraSpecialArgs = specialArgs;
 
         modules = ghastly-home ([
           # ./modules/home-manager/theme

@@ -1,4 +1,4 @@
-{ inputs, pkgs-unstable, ... }: {
+{ inputs, pkgs, ... }: {
   programs.firefox = {
     enable = true;
     policies = {
@@ -22,7 +22,7 @@
           }
         ];
       };
-      extensions.packages = with inputs.firefox-addons.packages."${pkgs-unstable.system}"; [
+      extensions.packages = with inputs.firefox-addons.packages."${pkgs.system}"; [
         ublock-origin
         privacy-badger
         vimium
