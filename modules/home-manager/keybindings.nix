@@ -88,6 +88,8 @@
       "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";
       "--no-repeat --no-warn XF86AudioLowerVolume" = "exec ${volume-decrease}";
       "--no-repeat --no-warn XF86AudioMute" = "exec ${volume-toggle}";
+
+      "--no-repeat --no-warn Print" = "exec grim -g \"$(slurp)\" - | wl-copy";
     };
 
   programs.nixvim.keymaps = [

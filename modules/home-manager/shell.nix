@@ -92,5 +92,7 @@ in
     wiki-tui
 
     _1password-cli
+    grim
+    slurp
   ];
 }
