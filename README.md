@@ -4,17 +4,13 @@ uai ubuntu:
  - screen positions
  - screen sharing
 
-hard-time.nvim
 nvim instead of obsidian.
 debugger
 
 ## Rebuild
-
 sudo nixos-rebuild switch --flake .#squirtle --show-trace
 
 ## Delete Old Generations
-
-
 sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 sudo nix-collect-garbage -d
 

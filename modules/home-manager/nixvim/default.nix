@@ -30,6 +30,8 @@
     clipboard.providers.xclip.enable = true;
 
     plugins = {
+      hardtime.enable = true;
+
       lsp-lines.enable = true;
       illuminate.enable = true;
       leap.enable = true;
@@ -47,7 +49,7 @@
         settings = {
           sections = {
             lualine_b = [{ __unkeyed-1 = "filename"; path = 1; }];
-            lualine_c = [ "buffers" ];
+            lualine_c = [ "lsp_status" ];
             lualine_y = [ "diff" "diagnostics" ];
             lualine_z = [ "branch" ];
           };
