@@ -7,11 +7,9 @@
   ];
 
   programs.nixvim = {
-    nixpkgs.config.allowUnfree = true;
-
     enable = true;
 
-    colorschemes.nightfox.enable = true;
+    nixpkgs.config.allowUnfree = true;
 
     opts = {
       number = true;

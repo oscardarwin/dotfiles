@@ -27,9 +27,14 @@
       url = "github:guibou/nixGL";
       flake = false;
     };
+
+    stylix = {
+      url = "github:danth/stylix/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, ... }@inputs:
+  outputs = { nixpkgs, stylix, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -82,6 +87,8 @@
         ./modules/home-manager/qutebrowser
         ./modules/home-manager/obsidian
         ./modules/home-manager/packages.nix
+        stylix.homeModules.stylix
+        ./modules/home-manager/stylix.nix
       ];
 
       nixos-modules = [
