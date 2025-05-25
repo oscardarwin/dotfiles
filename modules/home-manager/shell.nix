@@ -77,8 +77,8 @@ in
     };
 
     bat.enable = true;
-
     fd.enable = true;
+    feh.enable = true; # Image Viewer
   };
 
   services.ssh-agent = {
