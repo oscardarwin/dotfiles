@@ -19,6 +19,8 @@
       starship.enable = true;
       lazygit.enable = true;
       feh.enable = true;
+      btop.enable = true;
+      bat.enable = true;
     };
   };
 }

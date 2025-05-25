@@ -40,7 +40,7 @@ in
       };
     };
 
-    htop.enable = true;
+    btop.enable = true;
 
     jq.enable = true;
 
