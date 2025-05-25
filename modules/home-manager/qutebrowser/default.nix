@@ -31,9 +31,20 @@
         darkmode.enabled = true;
         preferred_color_scheme = "dark";
       };
-      content.cookies.accept = "all";
+      content = {
+        cookies.accept = "all";
+        register_protocol_handler = false;
+      };
       auto_save.session = true;
       tabs.show = "never";
+
+      downloads = {
+        location = {
+          directory = "~/downloads";
+          prompt = false;
+          remember = false;
+        };
+      };
 
       url.start_pages = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
     };
