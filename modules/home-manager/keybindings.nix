@@ -162,6 +162,14 @@
       action.__raw = "vim.lsp.buf.rename";
       key = "R";
     }
+    {
+      action = "<cmd>edit %:p:h<cr>";
+      key = "fn";
+      options = {
+        silent = true;
+      };
+    }
+
 
   ];
 
