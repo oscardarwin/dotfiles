@@ -60,6 +60,7 @@
       codecompanion = {
         enable = true;
       };
+      oil.enable = true;
     };
   };
 }
