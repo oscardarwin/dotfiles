@@ -16,6 +16,7 @@
       };
       sway.enable = true;
       qutebrowser.enable = true;
+      starship.enable = true;
     };
   };
 }
