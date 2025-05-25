@@ -14,9 +14,9 @@
     "custom/separator",
     "cpu",
     "custom/separator",
-    "battery",
-    "custom/separator",
     "disk",
+    "custom/separator",
+    "battery",
     "custom/separator",
     "network"
   ],
