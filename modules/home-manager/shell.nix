@@ -23,6 +23,7 @@ in
         pl = "export OP_SESSION=$(op signin --raw) && systemctl --user import-environment OP_SESSION";
         op_setup = "op account add --address my.1password.com --email oscar.henry.darwin@gmail.com";
         hotspot = "${connect_hotspot}";
+        bs = "brightnessctl set";
       };
     };
     ripgrep.enable = true;
