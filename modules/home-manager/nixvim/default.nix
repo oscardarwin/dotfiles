@@ -60,7 +60,10 @@
       codecompanion = {
         enable = true;
       };
-      oil.enable = true;
+      oil = {
+        enable = true;
+        settings.view_options.show_hidden = true;
+      };
     };
   };
 }
