@@ -2,7 +2,9 @@
   programs.kitty = {
     enable = true;
     shellIntegration.enableFishIntegration = true;
-    settings.shell = "fish";
-    # font.size = 10.0;
+    settings = {
+      shell = "fish";
+      window_padding_width = 4;
+    };
   };
 }
