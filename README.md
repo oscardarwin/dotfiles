@@ -6,6 +6,7 @@ uai ubuntu:
 
 hard-time.nvim
 nvim instead of obsidian.
+debugger
 
 ## Rebuild
 
