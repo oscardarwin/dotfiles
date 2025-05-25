@@ -4,15 +4,8 @@ uai ubuntu:
  - screen positions
  - screen sharing
 
-nixd completions still not working
-fix overlapping capabilities in nixd/nil 
-
-maybe just move to rust-tools
-
-plugins.rust-tools.server.rename.allowExternalItems = true;
-lspkind
-undo-tree
-clippy
+hard-time.nvim
+nvim instead of obsidian.
 
 ## Rebuild
 
@@ -46,9 +39,3 @@ move unfocused screen to position
 
 `swaymsg "output 'Dell Inc. DELL U2520D FRTJ923' pos -320 -1440"`
 
-## Take a screenshot
-
-```
-nix-shell -p grim slurp wl-clipboard
-grim -g "$(slurp)" > my_file.png
-```
