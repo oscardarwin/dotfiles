@@ -21,6 +21,7 @@
         vimdoc
         xml
         wgsl
+        yaml
       ];
     };
 
