@@ -6,7 +6,7 @@
       menu = config.wayland.windowManager.sway.config.menu;
       execute_in_workspace_script_path = pkgs.writeScript "execute_in_workspace.sh" (builtins.readFile ./window-manager/execute_in_workspace.sh);
 
-      launch_ncspot = pkgs.writeScript "launch_ncspot.sh" ''alacritty -e ncspot'';
+      launch_ncspot = pkgs.writeScript "launch_ncspot.sh" ''kitty -e ncspot'';
       launch_obsidian = pkgs.writeScript "launch_obsidian.sh" (builtins.readFile ./obsidian/launch.sh);
 
       volume-notification-id = "2";
@@ -29,12 +29,14 @@
             ${volume_set_command "100"} 
           fi
       '';
+
+      run = "exec systemd-run --user --scope --quiet";
     in
     lib.mkOptionDefault {
-      "${modifier}+w" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} qutebrowser w"'';
-      "${modifier}+p" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} 1password p"'';
-      "${modifier}+m" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_ncspot} m"'';
-      "${modifier}+o" = ''exec swaymsg "exec alacritty -e ${execute_in_workspace_script_path} ${launch_obsidian} o"'';
+      "${modifier}+w" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} qutebrowser w"'';
+      "${modifier}+p" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} 1password p"'';
+      "${modifier}+m" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} ${launch_ncspot} m"'';
+      "${modifier}+o" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} ${launch_obsidian} o"'';
       "${modifier}+q" = "kill";
       "${modifier}+d" = "exec ${menu}";
       "${modifier}+Left" = "focus left";
@@ -84,7 +86,7 @@
       "${modifier}+Shift+r" = "restart";
 
       "${modifier}+r" = "mode resize";
-      "${modifier}+Return" = "exec alacritty";
+      "${modifier}+Return" = "exec kitty";
 
       # Volume
       "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";

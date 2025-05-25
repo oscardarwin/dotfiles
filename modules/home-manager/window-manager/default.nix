@@ -26,13 +26,11 @@
     '';
 
     wrapperFeatures.gtk = true;
-
     systemd.enable = true;
 
     config = {
-      # General
       modifier = "Mod1";
-      terminal = "alacritty";
+      terminal = "kitty";
       bars = [ ];
       defaultWorkspace = "workspace number 1";
     };

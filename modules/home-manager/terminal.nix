@@ -1,19 +1,8 @@
-{ lib, ... }: {
-  programs.alacritty = {
+{ ... }: {
+  programs.kitty = {
     enable = true;
-
-    settings = {
-      # General
-      terminal.shell.program = "fish";
-
-      window = {
-        padding = {
-          x = 12;
-          y = 10;
-        };
-      };
-
-      font.size = lib.mkForce 10.0;
-    };
+    shellIntegration.enableFishIntegration = true;
+    settings.shell = "fish";
+    # font.size = 10.0;
   };
 }
