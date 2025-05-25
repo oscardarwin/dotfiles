@@ -11,20 +11,22 @@
 
       volume-notification-id = "2";
 
+      volume_set_command = new_volume: "${pkgs.libnotify}/bin/notify-send --hint int:value:${new_volume} --replace-id ${volume-notification-id} \"Volume\"";
+
       volume-increase = pkgs.writeShellScript "volume-increase" ''
         new_volume=$(${pkgs.pamixer}/bin/pamixer -i 5 --get-volume)
-        ${pkgs.libnotify}/bin/notify-send --hint int:value:$new_volume --replace-id ${volume-notification-id} "Volume"
+        ${volume_set_command "new_volume"} 
       '';
       volume-decrease = pkgs.writeShellScript "volume-decrease" ''
         new_volume=$(${pkgs.pamixer}/bin/pamixer -d 5 --get-volume)
-        ${pkgs.libnotify}/bin/notify-send --hint int:value:$new_volume --replace-id ${volume-notification-id} "Volume"
+        ${volume_set_command "new_volume"} 
       '';
       volume-toggle = pkgs.writeShellScript "volume-toggle" ''
         ${pkgs.pamixer}/bin/pamixer -t
           if [ "$(${pkgs.pamixer}/bin/pamixer --get-mute)" = "true" ]; then
-            ${pkgs.libnotify}/bin/notify-send --hint int:value:0 --replace-id ${volume-notification-id} "Volume"
+            ${volume_set_command "0"} 
           else
-            ${pkgs.libnotify}/bin/notify-send --hint int:value:100 --replace-id ${volume-notification-id} "Volume"
+            ${volume_set_command "100"} 
           fi
       '';
     in
@@ -89,6 +91,7 @@
       "--no-repeat --no-warn XF86AudioLowerVolume" = "exec ${volume-decrease}";
       "--no-repeat --no-warn XF86AudioMute" = "exec ${volume-toggle}";
 
+      # Screenshot
       "--no-repeat --no-warn Print" = "exec grim -g \"$(slurp)\" - | wl-copy";
     };
 
