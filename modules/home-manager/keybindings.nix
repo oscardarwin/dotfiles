@@ -127,6 +127,13 @@
       };
     }
     {
+      action = "<cmd>Telescope lsp_references<cr>";
+      key = "gr";
+      options = {
+        silent = true;
+      };
+    }
+    {
       action = "<cmd>Telescope lsp_workspace_symbols<cr>";
       key = "fs";
       options = {
@@ -143,10 +150,6 @@
     {
       action.__raw = "vim.lsp.buf.definition";
       key = "gd";
-    }
-    {
-      action.__raw = "vim.lsp.buf.references";
-      key = "gr";
     }
     {
       action.__raw = "vim.lsp.buf.type_definition";
