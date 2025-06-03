@@ -4,6 +4,6 @@
     pkgs.musescore
     pkgs.muse-sounds-manager
     pkgs.rclone
-    pkgs.frescobaldi
+    pkgs.lilypond
   ];
 }
