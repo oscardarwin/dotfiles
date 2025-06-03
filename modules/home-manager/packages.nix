@@ -1,8 +1,9 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [
-    libresprite
-    musescore
-    muse-sounds-manager
-    rclone
+  home.packages = [
+    pkgs.libresprite
+    pkgs.musescore
+    pkgs.muse-sounds-manager
+    pkgs.rclone
+    pkgs.frescobaldi
   ];
 }
