@@ -56,6 +56,21 @@
 
         };
       };
+      lilypond-suite = {
+
+        enable = true;
+        settings = {
+          lilypond = {
+            options = {
+              include_dir = [
+                "./openlilylib"
+              ];
+              output = "pdf";
+              pitches_language = "default";
+            };
+          };
+        };
+      };
       gitsigns.enable = true;
       codecompanion = {
         enable = true;
