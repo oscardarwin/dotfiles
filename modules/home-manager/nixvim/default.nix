@@ -32,7 +32,6 @@
 
     plugins = {
       image.enable = true;
-      nvim-surround.enable = true;
       hardtime.enable = true;
 
       lsp-lines.enable = true;
