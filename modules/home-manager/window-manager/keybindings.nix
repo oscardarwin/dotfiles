@@ -4,7 +4,7 @@
     let
       modifier = config.wayland.windowManager.sway.config.modifier;
       menu = config.wayland.windowManager.sway.config.menu;
-      execute_in_workspace_script_path = pkgs.writeScript "execute_in_workspace.sh" (builtins.readFile ./window-manager/execute_in_workspace.sh);
+      execute_in_workspace_script_path = pkgs.writeScript "execute_in_workspace.sh" (builtins.readFile ./execute_in_workspace.sh);
 
       launch_ncspot = pkgs.writeScript "launch_ncspot.sh" ''kitty -e ncspot'';
 
@@ -76,7 +76,9 @@
       "${modifier}+Shift+r" = "restart";
 
       "${modifier}+r" = "mode resize";
-      "${modifier}+o" = "exec kitty";
+
+      "${modifier}+v" = "split h; exec kitty";
+      "${modifier}+s" = "split v; exec kitty";
 
       # Volume
       "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";

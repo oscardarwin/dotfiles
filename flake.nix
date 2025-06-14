@@ -75,7 +75,6 @@
       ];
 
       home-modules = [
-        ./modules/home-manager/keybindings.nix
         ./modules/home-manager/firefox.nix
         ./modules/home-manager/git.nix
         ./modules/home-manager/window-manager

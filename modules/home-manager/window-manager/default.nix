@@ -1,5 +1,8 @@
 { ... }: {
-  imports = [ ./waybar.nix ];
+  imports = [
+    ./waybar.nix
+    ./keybindings.nix
+  ];
 
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "sway";

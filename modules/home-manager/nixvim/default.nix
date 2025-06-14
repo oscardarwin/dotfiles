@@ -4,6 +4,7 @@
     ./auto-complete.nix
     ./lsp.nix
     # ./debugger.nix
+    ./keybindings.nix
   ];
 
   programs.nixvim = {
@@ -30,6 +31,8 @@
     clipboard.providers.xclip.enable = true;
 
     plugins = {
+      image.enable = true;
+      nvim-surround.enable = true;
       hardtime.enable = true;
 
       lsp-lines.enable = true;
