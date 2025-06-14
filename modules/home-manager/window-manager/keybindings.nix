@@ -80,6 +80,8 @@
       "${modifier}+v" = "split h; exec kitty";
       "${modifier}+s" = "split v; exec kitty";
 
+      "${modifier}+e" = "nop";
+
       # Volume
       "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";
       "--no-repeat --no-warn XF86AudioLowerVolume" = "exec ${volume-decrease}";
