@@ -24,6 +24,7 @@ in
         op_setup = "op account add --address my.1password.com --email oscar.henry.darwin@gmail.com";
         hotspot = "${connect_hotspot}";
         bs = "brightnessctl set";
+        mn = "rclone mount gdrive:notes ~/notes --daemon --vfs-cache-mode full --buffer-size 256M --dir-cache-time 72h --drive-chunk-size 32M";
       };
     };
     ripgrep.enable = true;
