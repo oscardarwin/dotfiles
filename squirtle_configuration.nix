@@ -9,10 +9,10 @@
     experimental-features = [ "nix-command" "flakes" ];
   };
 
-  fonts.packages = [
-    pkgs.nerd-fonts._0xproto
-    pkgs.nerd-fonts.droid-sans-mono
-  ];
+  programs.git = {
+    userName = "oscardarwin";
+    userEmail = "6627886+oscardarwin@users.noreply.github.com";
+  };
 
   programs.dconf.enable = true;
   services.printing.enable = true;
