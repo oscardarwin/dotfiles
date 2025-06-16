@@ -9,8 +9,6 @@ in
 {
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault
     {
-      "${modifier}+s" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} slack s"'';
-      "${modifier}+i" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} pycharm-professional i"'';
       "${modifier}+w" = lib.mkForce ''exec swaymsg "${run} ${execute_in_workspace_script_path} chromium w"'';
     };
 } 
