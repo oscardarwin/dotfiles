@@ -84,7 +84,6 @@
         ./modules/home-manager/terminal.nix
         ./modules/home-manager/screen.nix
         ./modules/home-manager/qutebrowser
-        ./modules/home-manager/obsidian
         ./modules/home-manager/packages.nix
         stylix.homeModules.stylix
         ./modules/home-manager/stylix.nix
