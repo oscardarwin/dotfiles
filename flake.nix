@@ -139,6 +139,7 @@
           ./modules/home-manager/terminal.nix
           ./modules/home-manager/zellij.nix
           ./modules/home-manager/nixGL.nix
+          ./modules/home-manager/ghastly_settings.nix
         ];
       };
 
