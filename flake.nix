@@ -75,6 +75,7 @@
       ];
 
       home-modules = [
+        ./modules/home-manager/fonts.nix
         ./modules/home-manager/firefox.nix
         ./modules/home-manager/git.nix
         ./modules/home-manager/window-manager
@@ -126,10 +127,9 @@
         modules = ghastly-home ([
           # ./modules/home-manager/theme
           ./modules/home-manager/uai-keybindings.nix
-          ./modules/home-manager/uai-ubuntu-config.nix
           ./modules/home-manager/chrome.nix
-          ./modules/home-manager/zellij.nix
           ./modules/home-manager/nixGL.nix
+          ./modules/home-manager/ghastly_settings.nix
         ] ++ home-modules);
       };
 
