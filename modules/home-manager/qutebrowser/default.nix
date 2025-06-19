@@ -25,14 +25,15 @@
       maps = "https://www.google.de/maps/@48.0005734,7.8578012,15z";
       drive = "https://drive.google.com/drive/my-drive";
     };
-
     settings = {
+      qt.chromium.process_model = "process-per-site";
       colors.webpage = {
         darkmode.enabled = true;
         preferred_color_scheme = "dark";
       };
       content = {
         cookies.accept = "all";
+        blocking.method = "both";
         register_protocol_handler = false;
       };
       auto_save.session = true;
