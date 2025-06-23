@@ -50,11 +50,7 @@ in
       enableFishIntegration = true;
     };
 
-    ssh = {
-      enable = true;
-      extraConfig = ''IdentityAgent ~/.1password/agent.sock'';
-      # addKeysToAgent = "~/.ssh/github";
-    };
+    ssh.enable = true;
 
     zoxide = {
       enable = true;
