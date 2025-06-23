@@ -7,5 +7,6 @@
     pkgs.ffmpeg
     pkgs.soundfont-fluid
     pkgs.zathura
+    pkgs.viu
   ];
 }
