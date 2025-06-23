@@ -5,7 +5,6 @@
       enable = true;
       mode = "symbol";
       cmp.menu = {
-        codeium = "[Codium]";
         nvim_lsp = "[LSP]";
         buffer = "[Buffer]";
         path = "[Path]";
@@ -22,7 +21,6 @@
         autoEnableSources = true;
         snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
         sources = [
-          { name = "codeium"; }
           { name = "nvim_lsp"; }
           { name = "buffer"; }
           { name = "path"; }
@@ -31,6 +29,5 @@
         ];
       };
     };
-    windsurf-nvim.enable = true;
   };
 }
