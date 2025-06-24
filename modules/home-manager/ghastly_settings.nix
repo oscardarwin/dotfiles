@@ -2,7 +2,7 @@
   programs = {
     fish = {
       shellAliases = {
-        black = "poetry run black --config ../black_config/pyproject.toml";
+        bl = "poetry run black --config ../black_config/pyproject.toml";
         mypy = "mypy --config-file ~/configs/mypy-config/mypy_strict.ini";
         ruff = "poetry run ruff check --fix .";
         login_prod = "uai_dev_login --environment_name=PRODUCTION";
