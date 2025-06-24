@@ -43,6 +43,13 @@
           undo.enable = true;
           manix.enable = true;
           ui-select.enable = true;
+          media-files = {
+            enable = true;
+            settings = {
+              filetypes = [ "png" "jpg" "jpeg" "webp" ];
+              find_cmd = "rg";
+            };
+          };
         };
       };
       web-devicons.enable = true;
