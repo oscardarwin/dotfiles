@@ -27,14 +27,18 @@
 
     rustaceanvim.enable = true;
 
-    lsp-format = {
+    conform-nvim = {
       enable = true;
       settings = {
-        nix = {
-          sync = true;
+        formattersByFt = {
+          python = [ "black" ];
+          rust = [ "rustfmt" ];
+          nix = [ "nixpkgs-fmt" ];
         };
-        rust-analyzer = {
-          sync = true;
+        default_format_opts.lsp_format = "fallback";
+        format_on_save = {
+          lsp_fallback = true;
+          timeout_ms = 500;
         };
       };
     };
