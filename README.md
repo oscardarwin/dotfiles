@@ -2,10 +2,8 @@ TODO:
 
 uai ubuntu:
  - screen positions
- - screen sharing
 
 codecompanion api key
-nvim instead of obsidian.
 debugger
 
 ## Rebuild

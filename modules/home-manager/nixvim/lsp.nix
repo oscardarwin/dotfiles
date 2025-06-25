@@ -67,15 +67,9 @@
           enable = true;
           filetypes = [ "sh" ];
         };
-        jsonls = {
-          enable = true;
-        };
-        pyright = {
-          enable = true;
-        };
-        marksman = {
-          enable = true;
-        };
+        jsonls.enable = true;
+        pyright.enable = true;
+        marksman.enable = true;
       };
     };
   };

@@ -83,17 +83,30 @@
       gitsigns.enable = true;
       codecompanion = {
         enable = true;
-        settings.adapters = {
-          openai = {
-            __raw = ''
-              function()
-                return require("codecompanion.adapters").extend("openai", {
-                  env = {
-                    api_key = "cmd:op read op://personal/OpenAI/credential --no-newline --session \"$(systemctl --user show-environment | grep '^OP_SESSION=' | cut -d= -f2-)\"",
-                  },
-                })
-              end
-            '';
+        settings = {
+          strategies = {
+            agent = {
+              adapter = "openai";
+            };
+            chat = {
+              adapter = "openai";
+            };
+            inline = {
+              adapter = "openai";
+            };
+          };
+          adapters = {
+            openai = {
+              __raw = ''
+                function()
+                  return require("codecompanion.adapters").extend("openai", {
+                    env = {
+                      api_key = "cmd:op read op://personal/OpenAI/credential --no-newline --session \"$(systemctl --user show-environment | grep '^OP_SESSION=' | cut -d= -f2-)\"",
+                    },
+                  })
+                end
+              '';
+            };
           };
         };
       };
