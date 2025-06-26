@@ -68,7 +68,9 @@ in
       enable = true;
       settings = {
         keybindings = {
-          "f" = "search";
+          "Ctrl+s" = "focus search";
+          "Ctrl+q" = "focus queue";
+          "Ctrl+l" = "focus library";
         };
       };
     };
