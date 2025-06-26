@@ -3,7 +3,7 @@
     inputs.nixvim.homeManagerModules.nixvim
     ./auto-complete.nix
     ./lsp.nix
-    # ./debugger.nix
+    ./debugger.nix
     ./keybindings.nix
   ];
 
