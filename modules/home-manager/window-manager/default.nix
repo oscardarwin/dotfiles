@@ -32,6 +32,7 @@
     systemd.enable = true;
 
     config = {
+      menu = "wofi --show run";
       modifier = "Mod1";
       terminal = "kitty";
       bars = [ ];

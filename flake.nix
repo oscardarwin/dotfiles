@@ -88,6 +88,7 @@
         ./modules/home-manager/packages.nix
         stylix.homeModules.stylix
         ./modules/home-manager/stylix.nix
+        ./modules/home-manager/wofi.nix
       ];
 
       nixos_modules = [

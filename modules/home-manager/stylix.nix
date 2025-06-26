@@ -26,6 +26,7 @@
         enable = true;
         useWallpaper = true;
       };
+      wofi.enable = true;
     };
   };
 }
