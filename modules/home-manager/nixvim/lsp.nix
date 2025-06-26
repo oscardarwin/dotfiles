@@ -30,8 +30,7 @@
     conform-nvim = {
       enable = true;
       settings = {
-        formattersByFt = {
-          python = [ "black" ];
+        formatters_by_ft = {
           rust = [ "rustfmt" ];
           nix = [ "nixpkgs-fmt" ];
         };

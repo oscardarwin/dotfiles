@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   programs = {
     fish = {
       shellAliases = {
@@ -21,8 +21,8 @@
     };
 
     git = {
-      userName = "oscar.darwin@understand.ai";
-      userEmail = "oscar.darwin@understand.ai";
+      userName = lib.mkForce null;
+      userEmail = lib.mkForce null;
     };
 
     ssh.matchBlocks."gitlab.com" = {
@@ -38,4 +38,20 @@
     "flakes"
     "auto-allocate-uids"
   ];
+
+  programs.nixvim.plugins.conform-nvim = {
+    enable = true;
+    settings = {
+      formatters_by_ft = {
+        python = [ "virtual-env-black" ];
+      };
+      formatters = {
+        virtual-env-black = {
+          command = "poetry";
+          args = [ "run" "black" "--quiet" "--config" "../black_config/pyproject.toml" "-" ];
+          stdin = true;
+        };
+      };
+    };
+  };
 }
