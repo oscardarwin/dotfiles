@@ -15,8 +15,8 @@ in
       inside-color = lib.mkForce "ffffff00";
       inside-wrong-color = lib.mkForce "ffffff00";
       inside-ver-color = lib.mkForce "ffffff00";
-      text-ver-color = lib.mkForce colors.base00;
-      text-error-color = lib.mkForce colors.base00;
+      text-ver-color = lib.mkForce "${colors.base01}aa";
+      text-error-color = lib.mkForce "${colors.base01}aa";
     };
   };
 }
