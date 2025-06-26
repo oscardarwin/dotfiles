@@ -3,6 +3,7 @@
     enable = true;
     autoEnable = false;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml";
+    image = ./background.png;
 
     targets = {
       kitty.enable = true;
@@ -21,6 +22,10 @@
       feh.enable = true;
       btop.enable = true;
       bat.enable = true;
+      swaylock = {
+        enable = true;
+        useWallpaper = true;
+      };
     };
   };
 }

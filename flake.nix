@@ -49,7 +49,7 @@
 
       specialArgs = { inherit inputs; };
 
-      ghastly-home = home-modules: home-modules ++ [
+      ghastly_home = home_modules: home_modules ++ [
         {
           home.username = "oscar";
           home.homeDirectory = "/home/oscar";
@@ -58,7 +58,7 @@
         }
       ];
 
-      nixos-home = home-modules: [
+      nixos_home = home_modules: [
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = {
@@ -67,14 +67,14 @@
             extraSpecialArgs = specialArgs;
             backupFileExtension = "backup";
             users.hallayus = {
-              imports = home-modules;
+              imports = home_modules;
               home.stateVersion = "21.11";
             };
           };
         }
       ];
 
-      home-modules = [
+      home_modules = [
         ./modules/home-manager/fonts.nix
         ./modules/home-manager/firefox.nix
         ./modules/home-manager/git.nix
@@ -90,7 +90,7 @@
         ./modules/home-manager/stylix.nix
       ];
 
-      nixos-modules = [
+      nixos_modules = [
         ./modules/nixos/lockscreen.nix
         ./modules/nixos/display-manager.nix
         ./modules/nixos/1password.nix
@@ -100,14 +100,14 @@
         ./modules/nixos/networking.nix
         ./modules/nixos/locale.nix
         ./modules/nixos/screensharing.nix
-      ] ++ nixos-home home-modules;
+      ] ++ nixos_home (home_modules ++ [ ./modules/home-manager/swaylock.nix ]);
 
     in
     {
       nixosConfigurations.squirtle = nixpkgs.lib.nixosSystem {
         inherit specialArgs system pkgs;
 
-        modules = nixos-modules ++ [
+        modules = nixos_modules ++ [
           ./squirtle_configuration.nix
           ./hardware/squirtle.nix
           inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
@@ -117,20 +117,19 @@
       nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {
         inherit specialArgs system pkgs;
 
-        modules = nixos-modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ./modules/nixos/minecraft.nix ] ++ nixos-home [ ./modules/home-manager/tyranitar/keyboard.nix ];
+        modules = nixos_modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ./modules/nixos/minecraft.nix ] ++ nixos_home [ ./modules/home-manager/tyranitar/keyboard.nix ];
       };
 
       homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = specialArgs;
 
-        modules = ghastly-home ([
-          # ./modules/home-manager/theme
+        modules = ghastly_home ([
           ./modules/home-manager/uai-keybindings.nix
           ./modules/home-manager/chrome.nix
           ./modules/home-manager/nixGL.nix
           ./modules/home-manager/ghastly_settings.nix
-        ] ++ home-modules);
+        ] ++ home_modules);
       };
 
     };
