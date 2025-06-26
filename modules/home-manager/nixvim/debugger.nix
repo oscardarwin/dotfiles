@@ -4,19 +4,15 @@
   ];
 
   programs.nixvim = {
-    plugins.dap = {
-      enable = true;
-      extensions = {
-        dap-ui.enable = true;
-        dap-virtual-text.enable = true;
-        dap-go.enable = true;
-        dap-python.enable = true;
+    plugins = {
+      dap.enable = true;
+      dap-virtual-text.enable = true;
+      dap-ui.enable = true;
+      dap-python.enable = true;
+      rust-tools.server.hover.actions = {
+        enable = true;
+        debug.enable = true;
       };
-    };
-
-    plugins.rust-tools.server.hover.actions = {
-      enable = true;
-      debug.enable = true;
     };
     extraPlugins = with pkgs.vimPlugins; [
       nvim-gdb
@@ -70,7 +66,7 @@
     '';
     keymaps = [
       {
-        key = "<C-h>";
+        key = "qh";
         mode = "n";
         action = ":lua require'rust-tools'.hover_actions.hover_actions()";
         options = {
@@ -80,7 +76,7 @@
         };
       }
       {
-        key = "<C-b>";
+        key = "qb";
         mode = "n";
         action = ":lua require'dap'.toggle_breakpoint()<CR>";
         options = {
@@ -90,7 +86,7 @@
         };
       }
       {
-        key = "<C-e>";
+        key = "qr";
         mode = "n";
         action = ":lua require'dap'.repl.open()<CR>";
         options = {
@@ -100,7 +96,7 @@
         };
       }
       {
-        key = "<C-d>";
+        key = "qc";
         mode = "n";
         action = ":lua require'dap'.continue()<CR>";
         options = {
@@ -110,7 +106,7 @@
         };
       }
       {
-        key = "<F10>";
+        key = "<qs>";
         mode = "n";
         action = ":lua require'dap'.step_over()<CR>";
         options = {
@@ -120,7 +116,7 @@
         };
       }
       {
-        key = "<F11>";
+        key = "<qi>";
         mode = "n";
         action = ":lua require'dap'.step_into()<CR>";
         options = {
@@ -130,7 +126,7 @@
         };
       }
       {
-        key = "<F12>";
+        key = "<qo>";
         mode = "n";
         action = ":lua require'dap'.step_out()<CR>";
         options = {
