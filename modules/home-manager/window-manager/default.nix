@@ -1,25 +1,40 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [
     ./waybar.nix
     ./keybindings.nix
   ];
 
-  home.sessionVariables = {
-    XDG_CURRENT_DESKTOP = "sway";
-    XDG_SESSION_DESKTOP = "sway";
+  home = {
+    sessionVariables = {
+      XDG_CURRENT_DESKTOP = "sway";
+      XDG_SESSION_DESKTOP = "sway";
 
-    CLUTTER_BACKEND = "wayland";
-    ECORE_EVAS_ENGINE = "wayland_egl";
-    ELM_ENGINE = "wayland_egl";
-    GDK_BACKEND = "wayland";
-    # chromium
-    NIXOS_OZONE_WL = "1";
-    QT_QPA_PLATFORM = "wayland-egl";
-    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    QT_WAYLAND_FORCE_DPI = "physical";
-    SDL_VIDEODRIVER = "wayland";
-    XDG_SESSION_TYPE = "wayland";
-    _JAVA_AWT_WM_NONREPARENTING = "1";
+      CLUTTER_BACKEND = "wayland";
+      ECORE_EVAS_ENGINE = "wayland_egl";
+      ELM_ENGINE = "wayland_egl";
+      GDK_BACKEND = "wayland";
+      # chromium
+      NIXOS_OZONE_WL = "1";
+      QT_QPA_PLATFORM = "wayland-egl";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      QT_WAYLAND_FORCE_DPI = "physical";
+      SDL_VIDEODRIVER = "wayland";
+      XDG_SESSION_TYPE = "wayland";
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+    };
+    pointerCursor = {
+      enable = true;
+      sway.enable = true;
+      package = pkgs.capitaine-cursors;
+      name = "capitaine-cursors-white";
+      size = 24;
+    };
+  };
+
+  gtk.cursorTheme = {
+    name = "capitaine-cursors-white";
+    package = pkgs.capitaine-cursors;
+    size = 24;
   };
   wayland.windowManager.sway = {
     enable = true;
