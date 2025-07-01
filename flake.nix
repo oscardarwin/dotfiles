@@ -94,7 +94,6 @@
       nixos_modules = [
         ./modules/nixos/lockscreen.nix
         ./modules/nixos/display-manager.nix
-        ./modules/nixos/1password.nix
         ./modules/nixos/bootloader.nix
         ./modules/nixos/ssh.nix
         ./modules/nixos/audio.nix

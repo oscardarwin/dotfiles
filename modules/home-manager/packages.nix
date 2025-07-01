@@ -8,5 +8,6 @@
     pkgs.soundfont-fluid
     pkgs.zathura
     pkgs.viu
+    pkgs._1password-gui
   ];
 }
