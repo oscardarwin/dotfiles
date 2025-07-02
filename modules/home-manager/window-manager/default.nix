@@ -54,4 +54,12 @@
       defaultWorkspace = "workspace number 1";
     };
   };
+
+  xdg.mimeApps.defaultApplications = {
+    "text/html" = [ "chromium.desktop" ];
+    "text/xml" = [ "chromium.desktop" ];
+    "x-scheme-handler/http" = [ "chromium.desktop" ];
+    "x-scheme-handler/https" = [ "chromium.desktop" ];
+  };
+
 }
