@@ -1,4 +1,7 @@
 { pkgs, lib, ... }: {
+  home.packages = [
+    pkgs.slack
+  ];
   programs = {
     fish = {
       shellAliases = {
