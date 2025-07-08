@@ -30,7 +30,7 @@
 
     ssh.matchBlocks."gitlab.com" = {
       hostname = "gitlab.com";
-      identityFile = "~/.ssh/id_ed25519";
+      identityFile = "~/.ssh/uai_gitlab_oscar";
       forwardAgent = true;
     };
 
