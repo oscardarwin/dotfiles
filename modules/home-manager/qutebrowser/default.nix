@@ -12,7 +12,7 @@
     quickmarks = {
       cheatsheet = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
       nixvim = "https://nix-community.github.io/nixvim";
-      home-manager = "https://nix-community.github.io/home-manager/options.xhtml";
+      home-manager = "https://home-manager-options.extranix.com";
       beeper = "https://chat.beeper.com/";
       chatgpt = "https://chatgpt.com";
       calendar = "https://calendar.google.com/calendar/u/0/r";
