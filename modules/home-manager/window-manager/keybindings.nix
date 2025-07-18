@@ -5,7 +5,6 @@
       modifier = config.wayland.windowManager.sway.config.modifier;
       menu = config.wayland.windowManager.sway.config.menu;
       execute_in_workspace_script_path = pkgs.writeScript "execute_in_workspace.sh" (builtins.readFile ./execute_in_workspace.sh);
-
       launch_ncspot = pkgs.writeScript "launch_ncspot.sh" ''kitty -e ncspot'';
 
       volume-notification-id = "2";
@@ -33,7 +32,7 @@
     in
     lib.mkOptionDefault {
       "${modifier}+w" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} qutebrowser w"'';
-      "${modifier}+p" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} 1password p"'';
+      "${modifier}+p" = ''exec wofi_1password_picker'';
       "${modifier}+m" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} ${launch_ncspot} m"'';
       "${modifier}+q" = "kill";
       "${modifier}+d" = "exec ${menu}";

@@ -32,6 +32,11 @@
       url = "github:danth/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    wofi-1password-picker = {
+      url = "github:oscardarwin/wofi_1password_picker/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, stylix, ... }@inputs:
@@ -89,6 +94,7 @@
         stylix.homeModules.stylix
         ./modules/home-manager/stylix.nix
         ./modules/home-manager/wofi.nix
+        ./modules/home-manager/khal.nix
       ];
 
       nixos_modules = [
