@@ -1,4 +1,8 @@
-{ pkgs, inputs, system, ... }: {
+{ pkgs, inputs, ... }:
+let
+  qutebrowser = "org.qutebrowser.qutebrowser.desktop";
+in
+{
   home.packages = [
     pkgs.libresprite
     pkgs.rclone
@@ -11,4 +15,11 @@
     pkgs._1password-gui
     inputs.wofi-1password-picker.packages."x86_64-linux".default
   ];
+
+  xdg.mimeApps.defaultApplications = {
+    "text/html" = [ qutebrowser ];
+    "text/xml" = [ qutebrowser ];
+    "x-scheme-handler/http" = [ qutebrowser ];
+    "x-scheme-handler/https" = [ qutebrowser ];
+  };
 }
