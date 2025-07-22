@@ -37,6 +37,11 @@
       url = "github:oscardarwin/wofi_1password_picker/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    python-dev-flake = {
+      url = "path:./dev_flakes/python";
+      flake = true;
+    };
   };
 
   outputs = { nixpkgs, stylix, home-manager, ... }@inputs:
@@ -54,7 +59,7 @@
 
       specialArgs = { inherit inputs; };
 
-      ghastly_home = home_modules: home_modules ++ [
+      gastly_home = home_modules: home_modules ++ [
         {
           home.username = "oscar";
           home.homeDirectory = "/home/oscar";
@@ -130,7 +135,7 @@
         inherit pkgs;
         extraSpecialArgs = specialArgs;
 
-        modules = ghastly_home ([
+        modules = gastly_home ([
           ./modules/home-manager/uai-keybindings.nix
           ./modules/home-manager/chrome.nix
           ./modules/home-manager/nixGL.nix
