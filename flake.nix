@@ -32,9 +32,14 @@
       url = "github:danth/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    wofi-1password-picker = {
+      url = "github:oscardarwin/wofi_1password_picker/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, stylix, ... }@inputs:
+  outputs = { nixpkgs, stylix, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -59,7 +64,7 @@
       ];
 
       nixos_home = home_modules: [
-        inputs.home-manager.nixosModules.home-manager
+        home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
@@ -89,6 +94,7 @@
         stylix.homeModules.stylix
         ./modules/home-manager/stylix.nix
         ./modules/home-manager/wofi.nix
+        # ./modules/home-manager/khal.nix
       ];
 
       nixos_modules = [
@@ -120,7 +126,7 @@
         modules = nixos_modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ./modules/nixos/minecraft.nix ] ++ nixos_home [ ./modules/home-manager/tyranitar/keyboard.nix ];
       };
 
-      homeConfigurations.oscar = inputs.home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.oscar = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = specialArgs;
 
