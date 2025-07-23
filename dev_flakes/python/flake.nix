@@ -41,18 +41,19 @@
           mesa
           xwayland
           tbb_2021
+          nodejs_24
         ] ++ [
           (import nixGL { inherit pkgs; }).nixGLIntel
         ];
 
         shellHook = ''
-          #!/usr/bin/env fish
           export LD_LIBRARY_PATH="${nixpkgs.lib.makeLibraryPath packages}"
           export XDG_SESSION_TYPE=x11
           if [ ! -d .venv ]; then
             nixGLIntel python -m venv .venv
           fi
-          source .venv/bin/activate.fish
+          source .venv/bin/activate
+          fish
         '';
       };
     };
