@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +46,7 @@
     };
   };
 
-  outputs = { nixpkgs, stylix, home-manager, ... }@inputs:
+  outputs = { nixpkgs, nixpkgs-unstable, stylix, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -57,7 +59,11 @@
         };
       };
 
-      specialArgs = { inherit inputs; };
+      unstable-pkgs = (import nixpkgs-unstable) {
+        inherit system;
+      };
+
+      specialArgs = { inherit inputs unstable-pkgs; };
 
       gastly_home = home_modules: home_modules ++ [
         {
@@ -102,6 +108,11 @@
         # ./modules/home-manager/khal.nix
       ];
 
+      nixos_home_modules = [
+        ./modules/home-manager/social_media.nix
+        ./modules/home-manager/swaylock.nix
+      ];
+
       nixos_modules = [
         ./modules/nixos/lockscreen.nix
         ./modules/nixos/display-manager.nix
@@ -111,7 +122,7 @@
         ./modules/nixos/networking.nix
         ./modules/nixos/locale.nix
         ./modules/nixos/screensharing.nix
-      ] ++ nixos_home (home_modules ++ [ ./modules/home-manager/swaylock.nix ]);
+      ] ++ nixos_home (home_modules ++ nixos_home_modules);
 
     in
     {
