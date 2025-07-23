@@ -139,7 +139,7 @@
           ./modules/home-manager/uai-keybindings.nix
           ./modules/home-manager/chrome.nix
           ./modules/home-manager/nixGL.nix
-          ./modules/home-manager/ghastly_settings.nix
+          ./modules/home-manager/gastly_settings.nix
         ] ++ home_modules);
       };
 
