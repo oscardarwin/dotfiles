@@ -46,12 +46,21 @@
       };
 
       url.start_pages = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
+
+    };
+
+    keyBindings = {
+      "normal" = {
+        "<Ctrl-p>" = "mode-enter passthrough";
+        "<Ctrl-v>" = "nop";
+      };
     };
 
     aliases = {
       t = "tab-select";
       f = "spawn --userscript 1password.sh";
     };
+
   };
 
   home.file.".config/qutebrowser/userscripts/1password.sh" = {
