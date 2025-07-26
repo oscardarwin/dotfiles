@@ -35,7 +35,8 @@
       "${modifier}+p" = ''exec wofi_1password_picker'';
       "${modifier}+m" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} ${launch_ncspot} m"'';
       "${modifier}+q" = "kill";
-      "${modifier}+d" = "exec ${menu}";
+      "${modifier}+o" = "exec ${menu}";
+      "${modifier}+d" = "nop";
 
       "${modifier}+h" = "focus left";
       "${modifier}+j" = "focus down";
