@@ -105,7 +105,6 @@
         stylix.homeModules.stylix
         ./modules/home-manager/stylix.nix
         ./modules/home-manager/wofi.nix
-        # ./modules/home-manager/khal.nix
       ];
 
       nixos_home_modules = [
