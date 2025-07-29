@@ -10,7 +10,8 @@
         ruff = "poetry run ruff check --fix .";
         login_prod = "uai_dev_login --environment_name=PRODUCTION";
         login_stage = "uai_dev_login --environment_name=STAGING";
-        pf = "nix develop path:${inputs.python-dev-flake}";
+        pf10 = "nix develop path:${inputs.python-dev-flake}";
+        pf11 = "nix develop path:${inputs.python-dev-flake}#python311";
       };
       shellInitLast = ''
         set -x PYENV_ROOT $HOME/.pyenv

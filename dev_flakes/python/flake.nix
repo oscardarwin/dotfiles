@@ -20,11 +20,9 @@
       nixglPkgs = nixGL.packages.${system};
       glewLibPath = pkgs.lib.makeLibraryPath [ pkgs.glew ];
 
-    in
-    {
-      devShells.${system}.default = pkgs.mkShell rec {
+      shell = python_package: pkgs.mkShell rec {
         packages = with pkgs; [
-          python310
+          python_package
           python3Packages.debugpy
           libglvnd
           gcc.cc.lib
@@ -55,6 +53,12 @@
           source .venv/bin/activate
           fish
         '';
+      };
+    in
+    {
+      devShells.${system} = {
+        default = shell pkgs.python310;
+        python311 = shell pkgs.python311;
       };
     };
 }
