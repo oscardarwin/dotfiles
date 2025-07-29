@@ -3,7 +3,9 @@
 
     keymaps = [
       {
-        action = "<cmd>Telescope find_files<cr>";
+        action = ''
+          <cmd>lua require("telescope.builtin").find_files({ hidden = true })<CR>
+        '';
         key = "ff";
         options = {
           silent = true;
