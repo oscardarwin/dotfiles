@@ -138,7 +138,7 @@
       nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {
         inherit specialArgs system pkgs;
 
-        modules = nixos_modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ./modules/nixos/minecraft.nix ] ++ nixos_home [ ./modules/home-manager/tyranitar/keyboard.nix ];
+        modules = nixos_modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ] ++ nixos_home [ ./modules/home-manager/tyranitar/keyboard.nix ];
       };
 
       homeConfigurations.oscar = home-manager.lib.homeManagerConfiguration {

@@ -19,6 +19,7 @@
 
   environment.systemPackages = with pkgs; [
     android-studio
+    hmcl
   ];
 
   # Configure console keymap
