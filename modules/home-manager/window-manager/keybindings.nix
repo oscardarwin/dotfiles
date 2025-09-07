@@ -27,6 +27,22 @@
             ${volume_set_command "100"} 
           fi
       '';
+      sed-brightnessctl = "sed -En 's/.*\\(([0-9]+)%\\).*/\\1/p'";
+      brightness-notification-id = "1";
+
+      brightness-increase = pkgs.writeShellScript "brightnessctl-inc" ''
+        current_brightness=$(${pkgs.brightnessctl}/bin/brightnessctl | ${sed-brightnessctl})
+        new_brightness=$(echo "(sqrt($current_brightness)+1)^2"|${pkgs.bc}/bin/bc)
+        ${pkgs.brightnessctl}/bin/brightnessctl set ''${new_brightness}%
+        ${pkgs.libnotify}/bin/notify-send --hint int:value:$new_brightness --replace-id ${brightness-notification-id} "Brightness"
+      '';
+
+      brightness-decrease = pkgs.writeShellScript "brightnessctl-dec" ''
+        current_brightness=$(${pkgs.brightnessctl}/bin/brightnessctl | ${sed-brightnessctl})
+        new_brightness=$(echo "(sqrt($current_brightness)-1)^2"|${pkgs.bc}/bin/bc)
+        ${pkgs.brightnessctl}/bin/brightnessctl set ''${new_brightness}%
+        ${pkgs.libnotify}/bin/notify-send --hint int:value:$new_brightness --replace-id ${brightness-notification-id} "Brightness"
+      '';
 
       run = "exec systemd-run --user --scope --quiet";
     in
@@ -89,5 +105,9 @@
 
       # Screenshot
       "--no-repeat --no-warn Print" = "exec grim -g \"$(slurp)\" - | wl-copy";
+
+      # Brightness
+      "--no-repeat --no-warn XF86MonBrightnessUp" = "exec ${brightness-increase}";
+      "--no-repeat --no-warn XF86MonBrightnessDown" = "exec ${brightness-decrease}";
     };
 }
