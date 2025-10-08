@@ -29,7 +29,7 @@
           xorg.libX11
           libudev-zero
           libz
-
+          glib
           glfw
           libGL
           mesa
@@ -57,7 +57,7 @@
     in
     {
       devShells.${system} = {
-        default = shell pkgs.python310;
+        python310 = shell pkgs.python310;
         python311 = shell pkgs.python311;
       };
     };
