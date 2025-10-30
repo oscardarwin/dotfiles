@@ -123,6 +123,7 @@
         ./modules/nixos/networking.nix
         ./modules/nixos/locale.nix
         ./modules/nixos/screensharing.nix
+        ./modules/nixos/docker.nix
       ] ++ nixos_home (home_modules ++ nixos_home_modules);
 
     in
