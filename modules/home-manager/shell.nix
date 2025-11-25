@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 let
   connect_hotspot = pkgs.writeScript "hotspot.sh" (builtins.readFile ./hotspot.sh);
 in
@@ -25,6 +25,8 @@ in
         hotspot = "${connect_hotspot}";
         bs = "brightnessctl set";
         mn = "rclone mount gdrive:notes ~/notes --daemon --vfs-cache-mode full --buffer-size 256M --dir-cache-time 72h --drive-chunk-size 32M";
+        pf10 = "nix develop path:${inputs.python-dev-flake}";
+        pf11 = "nix develop path:${inputs.python-dev-flake}#python311";
       };
     };
     ripgrep.enable = true;
@@ -93,7 +95,7 @@ in
     du-dust
     wiki-tui
 
-    _1password-cli
+    # _1password-cli
     grim
     slurp
   ];
