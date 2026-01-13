@@ -4,7 +4,7 @@
     keymaps = [
       {
         action = ''
-          <cmd>lua require("telescope.builtin").find_files({ hidden = true })<CR>
+          <cmd>lua require("telescope.builtin").find_files({ hidden = false })<CR>
         '';
         key = "ff";
         options = {

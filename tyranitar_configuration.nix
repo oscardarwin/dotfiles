@@ -13,14 +13,20 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
-
   programs.dconf.enable = true;
 
   environment.systemPackages = with pkgs; [
     android-studio
     hmcl
+    ardour
+    autotalent
+    qpwgraph
   ];
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   # Configure console keymap
   console.keyMap = "uk";

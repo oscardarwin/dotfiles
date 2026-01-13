@@ -24,7 +24,10 @@
       drive = "https://drive.google.com/drive/my-drive";
     };
     settings = {
-      qt.chromium.process_model = "process-per-site";
+      qt = {
+        force_software_rendering = "chromium";
+        chromium.process_model = "process-per-site";
+      };
       colors.webpage = {
         darkmode.enabled = true;
         preferred_color_scheme = "dark";
