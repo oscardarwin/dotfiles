@@ -48,7 +48,7 @@
 
     config = {
       menu = "wofi --show run";
-      modifier = "Mod1";
+      modifier = "Mod4";
       terminal = "kitty";
       bars = [ ];
       defaultWorkspace = "workspace number 1";
@@ -58,8 +58,9 @@
   xdg.mimeApps.defaultApplications = {
     "text/html" = [ "chromium.desktop" ];
     "text/xml" = [ "chromium.desktop" ];
-    "x-scheme-handler/http" = [ "chromium.desktop" ];
-    "x-scheme-handler/https" = [ "chromium.desktop" ];
+    "x-scheme-handler/http" = "chromium.desktop";
+    "x-scheme-handler/https" = "chromium.desktop";
+    "application/https" = "chromium.desktop";
   };
 
 }
