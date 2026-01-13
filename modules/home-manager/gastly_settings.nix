@@ -1,6 +1,8 @@
 { pkgs, lib, inputs, ... }: {
   home.packages = [
     pkgs.slack
+    pkgs.vscode
+    pkgs.openconnect
   ];
   programs = {
     fish = {
