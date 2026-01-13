@@ -63,7 +63,9 @@
         inherit system;
       };
 
-      specialArgs = { inherit inputs unstable-pkgs; };
+      execute_in_workspace = (import ./modules/home-manager/window-manager/execute_in_workspace.nix) unstable-pkgs;
+
+      specialArgs = { inherit inputs unstable-pkgs execute_in_workspace; };
 
       gastly_home = home_modules: home_modules ++ [
         {
