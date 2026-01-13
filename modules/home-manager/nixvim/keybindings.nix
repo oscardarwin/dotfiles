@@ -26,13 +26,6 @@
         };
       }
       {
-        action = "<cmd>Telescope manix<cr>";
-        key = "fn";
-        options = {
-          silent = true;
-        };
-      }
-      {
         action = "<cmd>Telescope lsp_references<cr>";
         key = "gr";
         options = {
