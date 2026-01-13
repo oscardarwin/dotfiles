@@ -45,69 +45,67 @@
       '';
 
       run = "exec systemd-run --user --scope --quiet";
+
+      workspace_modifier = "Mod1";
+      setup_numbered_workspace = number: {
+        "${workspace_modifier}+${number}" = "workspace number ${number}";
+        "${workspace_modifier}+Shift+${number}" = "move container to workspace number ${number}";
+      };
     in
-    lib.mkOptionDefault {
-      "${modifier}+w" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} qutebrowser w"'';
-      "${modifier}+p" = ''exec wofi_1password_picker'';
-      "${modifier}+m" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} ${launch_ncspot} m"'';
-      "${modifier}+q" = "kill";
-      "${modifier}+o" = "exec ${menu}";
-      "${modifier}+d" = "nop";
+    lib.mkOptionDefault
+      (lib.traceVal
+        ({
+          "${modifier}+w" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} qutebrowser w"'';
+          "${modifier}+p" = ''exec wofi_1password_picker'';
+          "${modifier}+m" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} ${launch_ncspot} m"'';
+          "${modifier}+q" = "kill";
+          "${modifier}+o" = "exec ${menu}";
+          "${modifier}+d" = "nop";
 
-      "${modifier}+h" = "focus left";
-      "${modifier}+j" = "focus down";
-      "${modifier}+k" = "focus up";
-      "${modifier}+l" = "focus right";
+          "${modifier}+h" = "focus left";
+          "${modifier}+j" = "focus down";
+          "${modifier}+k" = "focus up";
+          "${modifier}+l" = "focus right";
 
-      "${modifier}+Shift+l" = "move left";
-      "${modifier}+Shift+j" = "move down";
-      "${modifier}+Shift+k" = "move up";
-      "${modifier}+Shift+h" = "move right";
+          "${modifier}+Shift+l" = "move left";
+          "${modifier}+Shift+j" = "move down";
+          "${modifier}+Shift+k" = "move up";
+          "${modifier}+Shift+h" = "move right";
 
-      "${modifier}+f" = "fullscreen toggle";
+          "${modifier}+f" = "fullscreen toggle";
 
-      "${modifier}+1" = "workspace number 1";
-      "${modifier}+2" = "workspace number 2";
-      "${modifier}+3" = "workspace number 3";
-      "${modifier}+4" = "workspace number 4";
-      "${modifier}+5" = "workspace number 5";
-      "${modifier}+6" = "workspace number 6";
-      "${modifier}+7" = "workspace number 7";
-      "${modifier}+8" = "workspace number 8";
-      "${modifier}+9" = "workspace number 9";
-      "${modifier}+0" = "workspace number 10";
+          "${modifier}+Shift+c" = "reload";
+          "${modifier}+Shift+r" = "restart";
 
-      "${modifier}+Shift+1" = "move container to workspace number 1";
-      "${modifier}+Shift+2" = "move container to workspace number 2";
-      "${modifier}+Shift+3" = "move container to workspace number 3";
-      "${modifier}+Shift+4" = "move container to workspace number 4";
-      "${modifier}+Shift+5" = "move container to workspace number 5";
-      "${modifier}+Shift+6" = "move container to workspace number 6";
-      "${modifier}+Shift+7" = "move container to workspace number 7";
-      "${modifier}+Shift+8" = "move container to workspace number 8";
-      "${modifier}+Shift+9" = "move container to workspace number 9";
-      "${modifier}+Shift+0" = "move container to workspace number 10";
+          "${modifier}+r" = "mode resize";
 
-      "${modifier}+Shift+c" = "reload";
-      "${modifier}+Shift+r" = "restart";
+          "${modifier}+v" = "split h; exec kitty";
+          "${modifier}+s" = "split v; exec kitty";
 
-      "${modifier}+r" = "mode resize";
+          "${modifier}+e" = "nop";
 
-      "${modifier}+v" = "split h; exec kitty";
-      "${modifier}+s" = "split v; exec kitty";
+          # Volume
+          "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";
+          "--no-repeat --no-warn XF86AudioLowerVolume" = "exec ${volume-decrease}";
+          "--no-repeat --no-warn XF86AudioMute" = "exec ${volume-toggle}";
 
-      "${modifier}+e" = "nop";
+          # Screenshot
+          "--no-repeat --no-warn Print" = "exec grim -g \"$(slurp)\" - | wl-copy";
 
-      # Volume
-      "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";
-      "--no-repeat --no-warn XF86AudioLowerVolume" = "exec ${volume-decrease}";
-      "--no-repeat --no-warn XF86AudioMute" = "exec ${volume-toggle}";
-
-      # Screenshot
-      "--no-repeat --no-warn Print" = "exec grim -g \"$(slurp)\" - | wl-copy";
-
-      # Brightness
-      "--no-repeat --no-warn XF86MonBrightnessUp" = "exec ${brightness-increase}";
-      "--no-repeat --no-warn XF86MonBrightnessDown" = "exec ${brightness-decrease}";
-    };
+          # Brightness
+          "--no-repeat --no-warn XF86MonBrightnessUp" = "exec ${brightness-increase}";
+          "--no-repeat --no-warn XF86MonBrightnessDown" = "exec ${brightness-decrease}";
+        } // lib.foldr (elem: acc: (setup_numbered_workspace elem) // acc) { } [
+          "0"
+          "1"
+          "2"
+          "3"
+          "4"
+          "5"
+          "6"
+          "7"
+          "8"
+          "9"
+          "t"
+        ]));
 }
