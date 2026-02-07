@@ -2,6 +2,7 @@
   imports = [
     ./waybar.nix
     ./keybindings.nix
+    ./update_border.nix
   ];
 
   home = {
@@ -52,6 +53,7 @@
       terminal = "kitty";
       bars = [ ];
       defaultWorkspace = "workspace number 1";
+      window.titlebar = false;
     };
   };
 
