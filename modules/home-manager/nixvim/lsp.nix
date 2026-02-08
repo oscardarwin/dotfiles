@@ -33,6 +33,7 @@
         formatters_by_ft = {
           rust = [ "rustfmt" ];
           nix = [ "nixpkgs-fmt" ];
+          javascript = [ "prettierd" ];
         };
         default_format_opts.lsp_format = "fallback";
         format_on_save = {
@@ -69,6 +70,7 @@
         jsonls.enable = true;
         pyright.enable = true;
         marksman.enable = true;
+        ts_ls.enable = true;
       };
     };
   };
