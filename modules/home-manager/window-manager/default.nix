@@ -49,7 +49,7 @@
 
     config = {
       menu = "wofi --show run";
-      modifier = "Mod4";
+      modifier = "Mod1";
       terminal = "kitty";
       bars = [ ];
       defaultWorkspace = "workspace number 1";

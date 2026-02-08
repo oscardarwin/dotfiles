@@ -46,66 +46,74 @@
 
       run = "exec systemd-run --user --scope --quiet";
 
-      workspace_modifier = "Mod1";
       setup_numbered_workspace = number: {
-        "${workspace_modifier}+${number}" = "workspace number ${number}";
-        "${workspace_modifier}+Shift+${number}" = "move container to workspace number ${number}";
+        "${modifier}+${number}" = "workspace number ${number}";
+        "${modifier}+Shift+${number}" = "move container to workspace number ${number}";
+      };
+
+      setup_lettered_workspace = { letter, program ? menu }: {
+        "${modifier}+${letter}" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} ${program} ${letter}"'';
+        "${modifier}+Shift+${letter}" = ''move container to workspace ${letter}'';
       };
     in
-    lib.mkOptionDefault
-      (lib.traceVal
-        ({
-          "${modifier}+w" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} qutebrowser w"'';
-          "${modifier}+p" = ''exec wofi_1password_picker'';
-          "${modifier}+m" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} ${launch_ncspot} m"'';
-          "${modifier}+q" = "kill";
-          "${modifier}+o" = "exec ${menu}";
-          "${modifier}+d" = "nop";
+    {
+      "${modifier}+q" = "kill";
+      "${modifier}+o" = "exec ${menu}";
+      "${modifier}+d" = "nop";
 
-          "${modifier}+h" = "focus left";
-          "${modifier}+j" = "focus down";
-          "${modifier}+k" = "focus up";
-          "${modifier}+l" = "focus right";
+      "${modifier}+h" = "focus left";
+      "${modifier}+j" = "focus down";
+      "${modifier}+k" = "focus up";
+      "${modifier}+l" = "focus right";
 
-          "${modifier}+Shift+l" = "move left";
-          "${modifier}+Shift+j" = "move down";
-          "${modifier}+Shift+k" = "move up";
-          "${modifier}+Shift+h" = "move right";
+      "${modifier}+Shift+l" = "move left";
+      "${modifier}+Shift+j" = "move down";
+      "${modifier}+Shift+k" = "move up";
+      "${modifier}+Shift+h" = "move right";
 
-          "${modifier}+f" = "fullscreen toggle";
+      "${modifier}+f" = "fullscreen toggle";
 
-          "${modifier}+Shift+c" = "reload";
-          "${modifier}+Shift+r" = "restart";
+      "${modifier}+Shift+c" = "reload";
+      "${modifier}+Shift+r" = "restart";
 
-          "${modifier}+r" = "mode resize";
+      "${modifier}+r" = "mode resize";
 
-          "${modifier}+v" = "split h; exec kitty";
-          "${modifier}+s" = "split v; exec kitty";
+      "${modifier}+v" = "split h; exec kitty";
+      "${modifier}+s" = "split v; exec kitty";
 
-          "${modifier}+e" = "nop";
+      "${modifier}+e" = "nop";
 
-          # Volume
-          "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";
-          "--no-repeat --no-warn XF86AudioLowerVolume" = "exec ${volume-decrease}";
-          "--no-repeat --no-warn XF86AudioMute" = "exec ${volume-toggle}";
+      # Volume
+      "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";
+      "--no-repeat --no-warn XF86AudioLowerVolume" = "exec ${volume-decrease}";
+      "--no-repeat --no-warn XF86AudioMute" = "exec ${volume-toggle}";
 
-          # Screenshot
-          "--no-repeat --no-warn Print" = "exec grim -g \"$(slurp)\" - | wl-copy";
+      # Screenshot
+      "--no-repeat --no-warn Print" = "exec grim -g \"$(slurp)\" - | wl-copy";
 
-          # Brightness
-          "--no-repeat --no-warn XF86MonBrightnessUp" = "exec ${brightness-increase}";
-          "--no-repeat --no-warn XF86MonBrightnessDown" = "exec ${brightness-decrease}";
-        } // lib.foldr (elem: acc: (setup_numbered_workspace elem) // acc) { } [
-          "0"
-          "1"
-          "2"
-          "3"
-          "4"
-          "5"
-          "6"
-          "7"
-          "8"
-          "9"
-          "t"
-        ]));
+      # Brightness
+      "--no-repeat --no-warn XF86MonBrightnessUp" = "exec ${brightness-increase}";
+      "--no-repeat --no-warn XF86MonBrightnessDown" = "exec ${brightness-decrease}";
+    } // lib.foldr (elem: acc: (setup_numbered_workspace elem) // acc) { } [
+      "0"
+      "1"
+      "2"
+      "3"
+      "4"
+      "5"
+      "6"
+      "7"
+      "8"
+      "9"
+    ] // lib.foldr (elem: acc: (setup_lettered_workspace elem) // acc) { } [
+      {
+        letter = "w";
+        program = "qutebrowser";
+      }
+      {
+        letter = "m";
+        program = "${launch_ncspot}";
+      }
+    ];
 }
+

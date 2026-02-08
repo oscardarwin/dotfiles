@@ -1,6 +1,6 @@
 { inputs, ... }: {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     ./auto-complete.nix
     ./lsp.nix
     ./debugger.nix
