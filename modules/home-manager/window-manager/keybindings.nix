@@ -52,7 +52,7 @@
       };
 
       setup_lettered_workspace = { letter, program ? menu }: {
-        "${modifier}+${letter}" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} ${program} ${letter}"'';
+        "${modifier}+${letter}" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} '${program}' ${letter}"'';
         "${modifier}+Shift+${letter}" = ''move container to workspace ${letter}'';
       };
     in
@@ -71,17 +71,9 @@
       "${modifier}+Shift+k" = "move up";
       "${modifier}+Shift+h" = "move right";
 
-      "${modifier}+f" = "fullscreen toggle";
-
-      "${modifier}+Shift+c" = "reload";
-      "${modifier}+Shift+r" = "restart";
-
       "${modifier}+r" = "mode resize";
-
       "${modifier}+v" = "split h; exec kitty";
       "${modifier}+s" = "split v; exec kitty";
-
-      "${modifier}+e" = "nop";
 
       # Volume
       "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";
@@ -113,6 +105,19 @@
       {
         letter = "m";
         program = "${launch_ncspot}";
+      }
+      {
+        letter = "e";
+      }
+      {
+        letter = "d";
+      }
+      {
+        letter = "f";
+      }
+      {
+        letter = "p";
+        program = "1password";
       }
     ];
 }
