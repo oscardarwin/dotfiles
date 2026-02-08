@@ -57,6 +57,8 @@
       };
     in
     {
+      "${modifier}+Return" = "exec ${config.wayland.windowManager.sway.config.terminal}";
+
       "${modifier}+q" = "kill";
       "${modifier}+o" = "exec ${menu}";
       "${modifier}+d" = "nop";
