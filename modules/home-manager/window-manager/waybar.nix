@@ -99,7 +99,9 @@ let
     pname = "check-services-statuses";
     version = "1.0.0";
     src = ./check_services; # Path to your Rust project
-    cargoBuildFlags = [ "--release" ];
+    cargoLock = {
+      lockFile = ./check_services/Cargo.lock;
+    };
   };
 
   mainBar = {
