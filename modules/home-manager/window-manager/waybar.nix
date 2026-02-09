@@ -95,73 +95,12 @@ let
     }
   '';
 
-  servicesScript = pkgs.writeShellScript "check-services-statuses" ''
-    #!/usr/bin/env sh
-    set -eu
-
-    # Print store path for debugging (stderr so Waybar ignores it)
-    echo "Running from store path: $0" >&2
-
-    # List of user services to monitor
-    SERVICES="
-    pipewire.service
-    wireplumber.service
-    swayidle.service
-    keyboard-monitor.service
-    "
-
-    bad=0
-    warn=0
-    tooltip="Service status:\\n"
-
-    for svc in $SERVICES; do
-      # Get relevant systemd properties, tolerate failures
-      props=$(systemctl --user show "$svc" \
-        --property=ActiveState,SubState,NRestarts,Result --no-pager || true)
-
-      # Evaluate properties safely
-      eval "$props" || true
-
-      # Ensure NRestarts is always numeric
-      nrestarts=0
-      if [ -n "${NRestarts:-}" ] && [ "${NRestarts:-0}" -eq "${NRestarts:-0}" ] 2>/dev/null; then
-        nrestarts=$NRestarts
-      fi
-
-      # Build tooltip (escape newlines for JSON)
-      tooltip="$tooltip$svc:\\n"
-      tooltip="$tooltip  ActiveState=$ActiveState\\n"
-      tooltip="$tooltip  SubState=$SubState\\n"
-      tooltip="$tooltip  Restarts=$nrestarts\\n"
-
-      # Warning if not active
-      if [ "$ActiveState" != "active" ]; then
-        warn=1
-      fi
-
-      # Critical if restart count too high or failed to start
-      if [ "$nrestarts" -ge 5 ] || [ "$Result" = "start-limit-hit" ]; then
-        bad=1
-      fi
-    done
-
-    # Determine icon and class
-    if [ "$bad" -eq 1 ]; then
-      class="critical"
-      icon=""
-    elif [ "$warn" -eq 1 ]; then
-      class="warning"
-      icon=""
-    else
-      class="ok"
-      icon=""
-    fi
-
-    # Output JSON for Waybar
-    printf '{ "text": "%s", "class": "%s", "tooltip": "%s" }\n' \
-      "$icon" "$class" "$tooltip"
-  '';
-
+  servicesScript = pkgs.rustPlatform.buildRustPackage {
+    pname = "check-services-statuses";
+    version = "1.0.0";
+    src = ./check_services; # Path to your Rust project
+    cargoBuildFlags = [ "--release" ];
+  };
 
   mainBar = {
     layer = "top";
