@@ -52,6 +52,15 @@ in
 
   systemd.user.services.keyboard-monitor = {
     Unit.Description = "update border size on no keyboard";
-    Service.ExecStart = keyboard-monitor-script;
+
+    Service = {
+      ExecStart = keyboard-monitor-script;
+      Restart = "always";
+      RestartSec = 2;
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
   };
 }
