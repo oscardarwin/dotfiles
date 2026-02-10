@@ -46,7 +46,7 @@
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, stylix, home-manager, ... }@inputs:
+  outputs = { nixpkgs, nixpkgs-unstable, stylix, home-manager, nixos-hardware, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -150,7 +150,7 @@
 
       makeNixosSystem = makeHostModules: nixpkgs.lib.nixosSystem {
         inherit system specialArgs pkgs;
-        modules = makeHostModules { inherit inputs stylix makeNixosModules importHomeModules importNixosModules; };
+        modules = makeHostModules { inherit inputs stylix nixos-hardware makeNixosModules importHomeModules importNixosModules; };
       };
     in
     {
@@ -165,7 +165,7 @@
       # };
 
       nixosConfigurations = {
-        squirtle = makeNixosSystem ./hosts/squirtle.nix;
+        squirtle = makeNixosSystem (import ./hosts/squirtle.nix);
         tyranitar = makeNixosSystem (import ./hosts/tyranitar.nix);
       };
       # nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {

@@ -17,7 +17,7 @@ let
     }
 
     export XDG_RUNTIME_DIR=/run/user/${toString uid}
-    device_dir="/dev/input/by-id"
+    device_dir="/dev/input/by-path"
 
     update_border() {
       log "Checking connected keyboards..."

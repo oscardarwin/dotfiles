@@ -1,4 +1,4 @@
-{ stylix, makeModules, nixos-hardware, importHomeModules, importNixosModules, ... }: makeModules {
+{ stylix, makeNixosModules, nixos-hardware, importHomeModules, importNixosModules, ... }: makeNixosModules {
   homeModules = importHomeModules [
     "fonts.nix"
     "firefox.nix"
@@ -29,8 +29,6 @@
     "locale.nix"
     "screensharing.nix"
     "docker.nix"
-    "squirtle_configuration.nix"
-    "squirtle_hardware.nix"
   ] ++ [
     nixos-hardware.nixosModules.microsoft-surface-laptop-amd
   ];

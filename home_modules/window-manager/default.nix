@@ -2,7 +2,7 @@
   imports = [
     ./waybar.nix
     ./keybindings.nix
-    ./update_border.nix
+    ./keyboard_missing_warning.nix
   ];
 
   home = {
