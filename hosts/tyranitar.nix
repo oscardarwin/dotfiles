@@ -1,6 +1,4 @@
-{ stylix, makeModules, importHomeModules, importNixosModules, ... }: makeModules {
-
-
+{ stylix, makeNixosModules, importHomeModules, importNixosModules, ... }: makeNixosModules {
 
   homeModules = importHomeModules [
     "fonts.nix"
@@ -18,7 +16,6 @@
     "wofi.nix"
     "social_media.nix"
     "swaylock.nix"
-    "tyranitar_keyboard.nix"
   ] ++ [
     stylix.homeModules.stylix
     {
@@ -42,9 +39,6 @@
   ];
 
   config = { pkgs, ... }: {
-    # Bootloader - move to hardware.
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
 
     programs.dconf.enable = true;
 
@@ -96,10 +90,18 @@
         (modulesPath + "/installer/scan/not-detected.nix")
       ];
 
-    boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-    boot.initrd.kernelModules = [ ];
-    boot.kernelModules = [ "kvm-amd" ];
-    boot.extraModulePackages = [ ];
+    boot = {
+      initrd = {
+        availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+        kernelModules = [ ];
+      };
+      kernelModules = [ "kvm-amd" ];
+      extraModulePackages = [ ];
+      loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
+      };
+    };
 
     fileSystems."/" =
       {

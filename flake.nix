@@ -126,7 +126,7 @@
         ./modules/nixos/docker.nix
       ] ++ nixos_home (home_modules ++ nixos_home_modules);
 
-      makeModules = { config, nixosModules, homeModules, hardware }: nixosModules ++ [
+      makeNixosModules = { config, nixosModules, homeModules, hardware }: nixosModules ++ [
         { nix.settings.experimental-features = [ "nix-command" "flakes" ]; }
         hardware
         config
@@ -148,9 +148,9 @@
       importHomeModules = moduleNames: map (name: ./home_modules + "/${name}") moduleNames;
       importNixosModules = moduleNames: map (name: ./nixos_modules + "/${name}") moduleNames;
 
-      makeNixosHost = host: nixpkgs.lib.nixosSystem {
+      makeNixosSystem = makeHostModules: nixpkgs.lib.nixosSystem {
         inherit system specialArgs pkgs;
-        modules = host { inherit inputs stylix makeModules importHomeModules importNixosModules; };
+        modules = makeHostModules { inherit inputs stylix makeNixosModules importHomeModules importNixosModules; };
       };
     in
     {
@@ -165,8 +165,8 @@
       # };
 
       nixosConfigurations = {
-        squirtle = makeNixosHost ./hosts/squirtle.nix;
-        tyranitar = makeNixosHost (import ./hosts/tyranitar.nix);
+        squirtle = makeNixosSystem ./hosts/squirtle.nix;
+        tyranitar = makeNixosSystem (import ./hosts/tyranitar.nix);
       };
       # nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {
       #   inherit specialArgs system pkgs;
@@ -174,18 +174,18 @@
       #   modules = nixos_modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ] ++ nixos_home [ ./modules/home-manager/tyranitar/keyboard.nix ];
 
 
-      #   homeConfigurations.oscar = home-manager.lib.homeManagerConfiguration {
-      #     inherit pkgs;
-      #     extraSpecialArgs = specialArgs;
+      homeConfigurations.oscar = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = specialArgs;
 
-      #     modules = gastly_home ([
-      #       ./modules/home-manager/uai-keybindings.nix
-      #       ./modules/home-manager/chrome.nix
-      #       ./modules/home-manager/nixGL.nix
-      #       ./modules/home-manager/gastly_settings.nix
-      #     ] ++ home_modules);
-      #   };
-
-      # };
+        modules =
+          let
+            host = (import ./host/gastly) { inherit inputs stylix importHomeModules; };
+          in
+          [
+            host.homeModules
+            host.config
+          ];
+      };
     };
 }
