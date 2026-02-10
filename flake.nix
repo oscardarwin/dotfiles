@@ -126,35 +126,66 @@
         ./modules/nixos/docker.nix
       ] ++ nixos_home (home_modules ++ nixos_home_modules);
 
+      makeModules = { config, nixosModules, homeModules, hardware }: nixosModules ++ [
+        { nix.settings.experimental-features = [ "nix-command" "flakes" ]; }
+        hardware
+        config
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = specialArgs;
+            backupFileExtension = "backup";
+            users.hallayus = {
+              imports = homeModules;
+              home.stateVersion = "21.11";
+            };
+          };
+        }
+      ];
+
+      importHomeModules = moduleNames: map (name: ./home_modules + "/${name}") moduleNames;
+      importNixosModules = moduleNames: map (name: ./nixos_modules + "/${name}") moduleNames;
+
+      makeNixosHost = host: nixpkgs.lib.nixosSystem {
+        inherit system specialArgs pkgs;
+        modules = host { inherit inputs stylix makeModules importHomeModules importNixosModules; };
+      };
     in
     {
-      nixosConfigurations.squirtle = nixpkgs.lib.nixosSystem {
-        inherit specialArgs system pkgs;
+      # nixosConfigurations.squirtle = nixpkgs.lib.nixosSystem {
+      #   inherit specialArgs system pkgs;
 
-        modules = nixos_modules ++ [
-          ./squirtle_configuration.nix
-          ./hardware/squirtle.nix
-          inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
-        ];
+      #   modules = nixos_modules ++ [
+      #     ./squirtle_configuration.nix
+      #     ./hardware/squirtle.nix
+      #     inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
+      #   ];
+      # };
+
+      nixosConfigurations = {
+        squirtle = makeNixosHost ./hosts/squirtle.nix;
+        tyranitar = makeNixosHost (import ./hosts/tyranitar.nix);
       };
+      # nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {
+      #   inherit specialArgs system pkgs;
 
-      nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {
-        inherit specialArgs system pkgs;
+      #   modules = nixos_modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ] ++ nixos_home [ ./modules/home-manager/tyranitar/keyboard.nix ];
 
-        modules = nixos_modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ] ++ nixos_home [ ./modules/home-manager/tyranitar/keyboard.nix ];
-      };
 
-      homeConfigurations.oscar = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = specialArgs;
+      #   homeConfigurations.oscar = home-manager.lib.homeManagerConfiguration {
+      #     inherit pkgs;
+      #     extraSpecialArgs = specialArgs;
 
-        modules = gastly_home ([
-          ./modules/home-manager/uai-keybindings.nix
-          ./modules/home-manager/chrome.nix
-          ./modules/home-manager/nixGL.nix
-          ./modules/home-manager/gastly_settings.nix
-        ] ++ home_modules);
-      };
+      #     modules = gastly_home ([
+      #       ./modules/home-manager/uai-keybindings.nix
+      #       ./modules/home-manager/chrome.nix
+      #       ./modules/home-manager/nixGL.nix
+      #       ./modules/home-manager/gastly_settings.nix
+      #     ] ++ home_modules);
+      #   };
 
+      # };
     };
 }

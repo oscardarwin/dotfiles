@@ -3,8 +3,16 @@ TODO:
 uai ubuntu:
  - screen positions
 
-codecompanion api key
-debugger
+## Long Term
+### Home Data Center
+1. NextCloud
+    1. Password Manager on Nextcloud
+    2. Compressed/Encrypted Backups to Cloud Solution
+2. Matrix Messenging
+
+#### Plan
+Nix machine runs services on boot. 
+Make test docker container for the machine with resouces that mimic the machine I want to buy.
 
 ## Rebuild
 sudo nixos-rebuild switch --flake .#squirtle --show-trace
@@ -34,4 +42,3 @@ focus the screen that you aren't moving, then list outputs:
 move unfocused screen to position
 
 `swaymsg "output 'Dell Inc. DELL U2520D FRTJ923' pos -320 -1440"`
-
