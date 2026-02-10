@@ -95,7 +95,7 @@ let
     }
   '';
 
-  servicesScript = pkgs.rustPlatform.buildRustPackage {
+  servicesScriptDerivation = pkgs.rustPlatform.buildRustPackage {
     pname = "check-services-statuses";
     version = "1.0.0";
     src = ./check_services; # Path to your Rust project
@@ -103,6 +103,9 @@ let
       lockFile = ./check_services/Cargo.lock;
     };
   };
+
+  servicesScript = "${servicesScriptDerivation}/bin/check-services-statuses";
+
 
   mainBar = {
     layer = "top";
