@@ -6,7 +6,7 @@
       "fonts.nix"
       "firefox.nix"
       "git.nix"
-      "window-manager"
+      "sway"
       "nixvim"
       "startup.nix"
       "shell.nix"
@@ -37,7 +37,7 @@
     nixos-hardware.nixosModules.microsoft-surface-laptop-amd
   ];
 
-  config = _: {
+  config = {
     # added so that regreet can read the generated session (which is not generated in home manager)
     programs.sway = {
       enable = true;
