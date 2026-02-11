@@ -1,27 +1,30 @@
 { stylix, makeNixosModules, nixos-hardware, importHomeModules, importNixosModules, ... }: makeNixosModules {
-  homeModules = importHomeModules [
-    "fonts.nix"
-    "firefox.nix"
-    "git.nix"
-    "window-manager"
-    "nixvim"
-    "startup.nix"
-    "shell.nix"
-    "terminal.nix"
-    "screen.nix"
-    "qutebrowser"
-    "packages.nix"
-    "stylix.nix"
-    "wofi.nix"
-    "social_media.nix"
-    "swaylock.nix"
-  ] ++ [
-    stylix.homeModules.stylix
-  ];
+
+  users.oscar = {
+    home.stateVersion = "21.11";
+    imports = importHomeModules [
+      "fonts.nix"
+      "firefox.nix"
+      "git.nix"
+      "window-manager"
+      "nixvim"
+      "startup.nix"
+      "shell.nix"
+      "terminal.nix"
+      "screen.nix"
+      "qutebrowser"
+      "packages.nix"
+      "stylix.nix"
+      "wofi.nix"
+      "social_media.nix"
+      "swaylock.nix"
+    ] ++ [
+      stylix.homeModules.stylix
+    ];
+  };
 
   nixosModules = importNixosModules [
     "lockscreen.nix"
-    "display-manager.nix"
     "bootloader.nix"
     "ssh.nix"
     "audio.nix"
@@ -35,19 +38,32 @@
 
   config = { pkgs, ... }: {
     programs.dconf.enable = true;
-    services.printing.enable = true;
+    services = {
 
-    environment.systemPackages = with pkgs; [ brightnessctl ];
-    # Configure keymap in X11 -- can remove??
-    services.xserver.xkb = {
-      layout = "us";
-      variant = "";
+      printing.enable = true;
+
+      greetd = {
+        enable = true;
+        settings = rec {
+          initial_session = {
+            command = "${pkgs.sway}/bin/sway";
+            user = "oscar";
+          };
+          default_session = initial_session;
+        };
+      };
+
+      # Configure keymap in X11 -- can remove??
+      xserver.xkb = {
+        layout = "us";
+        variant = "";
+      };
     };
+    environment.systemPackages = with pkgs; [ brightnessctl ];
 
-    # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.hallayus = {
+    users.users.oscar = {
       isNormalUser = true;
-      description = "hallayus";
+      description = "oscar";
       extraGroups = [ "networkmanager" "wheel" ];
     };
 

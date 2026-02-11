@@ -1,5 +1,5 @@
 {
-  description = "hallayus system config";
+  description = "dotfiles";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
@@ -126,21 +126,18 @@
         ./modules/nixos/docker.nix
       ] ++ nixos_home (home_modules ++ nixos_home_modules);
 
-      makeNixosModules = { config, nixosModules, homeModules, hardware }: nixosModules ++ [
+      makeNixosModules = { config, nixosModules, users, hardware }: nixosModules ++ [
         { nix.settings.experimental-features = [ "nix-command" "flakes" ]; }
         hardware
         config
         home-manager.nixosModules.home-manager
         {
           home-manager = {
+            inherit users;
             useGlobalPkgs = true;
             useUserPackages = true;
             extraSpecialArgs = specialArgs;
             backupFileExtension = "backup";
-            users.hallayus = {
-              imports = homeModules;
-              home.stateVersion = "21.11";
-            };
           };
         }
       ];

@@ -15,6 +15,7 @@ in
     pkgs._1password-gui
     inputs.wofi-1password-picker.packages."x86_64-linux".default
     pkgs.steam
+    pkgs.pavucontrol
   ];
 
   xdg.mimeApps.defaultApplications = {

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+_: {
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -8,5 +8,4 @@
     pulse.enable = true;
     jack.enable = true;
   };
-  home-manager.users.hallayus.home.packages = with pkgs; [ pavucontrol ];
 }
