@@ -36,7 +36,6 @@
   ];
 
   config = {
-    # added so that regreet can read the generated session (which is not generated in home manager)
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
