@@ -39,9 +39,11 @@
   };
   wayland.windowManager.sway = {
     enable = true;
+    package = pkgs.sway;
 
     extraSessionCommands = ''
       export WLR_NO_HARDWARE_CURSORS=1
+      export XDG_CONFIG_HOME=$HOME/.config
     '';
 
     wrapperFeatures.gtk = true;

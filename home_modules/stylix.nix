@@ -27,6 +27,7 @@
         useWallpaper = true;
       };
       wofi.enable = true;
+      gtk.enable = true;
     };
   };
 }
