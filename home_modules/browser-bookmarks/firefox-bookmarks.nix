@@ -1,7 +1,7 @@
 [
   {
     name = "dotfiles";
-    url = "https://github.com/hallayus/dotfiles";
+    url = "https://github.com/oscardarwin/dotfiles";
   }
   {
     name = "nix";
