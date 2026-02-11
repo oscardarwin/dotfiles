@@ -92,7 +92,7 @@ in
     nixdoc
     unzip
     manix
-    du-dust
+    dust
     wiki-tui
 
     # _1password-cli
