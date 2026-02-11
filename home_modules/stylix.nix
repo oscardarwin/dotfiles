@@ -22,10 +22,6 @@
       feh.enable = true;
       btop.enable = true;
       bat.enable = true;
-      swaylock = {
-        enable = true;
-        useWallpaper = true;
-      };
       wofi.enable = true;
       gtk.enable = true;
     };

@@ -17,7 +17,6 @@
       "stylix.nix"
       "wofi.nix"
       "social_media.nix"
-      "swaylock.nix"
     ] ++ [
       stylix.homeModules.stylix
       {
@@ -31,8 +30,8 @@
   };
 
   nixosModules = importNixosModules [
-    "lockscreen.nix"
     "display-manager.nix"
+    "greetd.nix"
     "bootloader.nix"
     "ssh.nix"
     "audio.nix"
@@ -58,6 +57,8 @@
       enable = true;
       enable32Bit = true;
     };
+
+    security.polkit.enable = true;
 
     # Configure console keymap
     console.keyMap = "uk";

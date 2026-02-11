@@ -106,7 +106,6 @@
 
       nixos_home_modules = [
         ./modules/home-manager/social_media.nix
-        ./modules/home-manager/swaylock.nix
       ];
 
       nixos_modules = [

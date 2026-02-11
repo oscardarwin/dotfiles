@@ -17,14 +17,12 @@
       "stylix.nix"
       "wofi.nix"
       "social_media.nix"
-      "swaylock.nix"
     ] ++ [
       stylix.homeModules.stylix
     ];
   };
 
   nixosModules = importNixosModules [
-    "lockscreen.nix"
     "bootloader.nix"
     "ssh.nix"
     "audio.nix"
@@ -32,7 +30,7 @@
     "locale.nix"
     "screensharing.nix"
     "docker.nix"
-    "regreet.nix"
+    "greetd.nix"
   ] ++ [
     nixos-hardware.nixosModules.microsoft-surface-laptop-amd
   ];
@@ -59,6 +57,8 @@
       description = "oscar";
       extraGroups = [ "networkmanager" "wheel" ];
     };
+
+    security.polkit.enable = true;
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

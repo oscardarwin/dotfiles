@@ -8,6 +8,8 @@
         command = ''
           ${pkgs.cage}/bin/cage -s -- \
             ${pkgs.gtkgreet}/bin/gtkgreet
+              --layer-shell \
+              --command=${pkgs.sway}
         '';
         user = "greeter";
       };
