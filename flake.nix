@@ -177,11 +177,11 @@
 
         modules =
           let
-            host = (import ./host/gastly) { inherit inputs stylix importHomeModules; };
+            hostModules = (import ./hosts/gastly.nix) { inherit inputs stylix importHomeModules; };
           in
+          hostModules.homeModules ++
           [
-            host.homeModules
-            host.config
+            hostModules.config
           ];
       };
     };

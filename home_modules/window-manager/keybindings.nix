@@ -121,6 +121,9 @@
         letter = "p";
         program = "1password";
       }
+      {
+        letter = "c";
+      }
     ];
 }
 

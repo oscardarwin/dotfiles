@@ -3,7 +3,6 @@
     "uai-keybindings.nix"
     "chrome.nix"
     "nixGL.nix"
-    "gastly_settings.nix"
 
     "fonts.nix"
     "firefox.nix"
