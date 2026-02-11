@@ -7,7 +7,7 @@
     "fonts.nix"
     "firefox.nix"
     "git.nix"
-    "window-manager"
+    "sway"
     "nixvim"
     "startup.nix"
     "shell.nix"
