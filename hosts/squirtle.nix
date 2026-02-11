@@ -1,4 +1,4 @@
-{ stylix, makeNixosModules, nixos-hardware, importHomeModules, importNixosModules, ... }: makeNixosModules {
+{ stylix, nixos-hardware, makeNixosModules, importHomeModules, importNixosModules, ... }: makeNixosModules {
 
   users.oscar = {
     home.stateVersion = "21.11";
@@ -32,52 +32,24 @@
     "locale.nix"
     "screensharing.nix"
     "docker.nix"
+    "regreet.nix"
   ] ++ [
     nixos-hardware.nixosModules.microsoft-surface-laptop-amd
   ];
 
-  config = { pkgs, config, ... }: {
+  config = _: {
+    # added so that regreet can read the generated session (which is not generated in home manager)
+    programs.sway.enable = true;
     programs.dconf.enable = true;
+
     services = {
-
       printing.enable = true;
-
-      greetd = {
-        enable = true;
-        settings = rec {
-          initial_session = {
-            command =
-              let
-                colors = config.lib.stylix.colors;
-                # Not working yet
-                tuigreetTheme =
-                  "text=${colors.base05};" +
-                  "time=${colors.base0F};" +
-                  "container=${colors.base00};" +
-                  "border=${colors.base03};" +
-                  "title=${colors.base0A};" +
-                  "greet=${colors.base0D};" +
-                  "prompt=${colors.base0B};" +
-                  "input=${colors.base08};" +
-                  "action=${colors.base0C};" +
-                  "button=${colors.base0E}";
-              in
-              "${pkgs.tuigreet}/bin/tuigreet --theme '${tuigreetTheme}' --cmd ${pkgs.sway}/bin/sway";
-            user = "oscar";
-          };
-          default_session = initial_session;
-        };
-        useTextGreeter = true;
-      };
-
       # Configure keymap in X11 -- can remove??
       xserver.xkb = {
         layout = "us";
         variant = "";
       };
     };
-
-    environment.systemPackages = with pkgs; [ brightnessctl ];
 
     users.users.oscar = {
       isNormalUser = true;

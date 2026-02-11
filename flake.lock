@@ -425,15 +425,14 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-K1agEvy8pNoKqTYPqK8oPP5NEHLe4IyIYWwMi3dsZjQ=",
         "path": "./dev_flakes/python",
         "type": "path"
       },
       "original": {
         "path": "./dev_flakes/python",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "root": {
       "inputs": {

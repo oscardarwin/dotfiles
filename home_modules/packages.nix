@@ -15,6 +15,7 @@ in
     pkgs._1password-gui
     pkgs.steam
     pkgs.pavucontrol
+    pkgs.brightnessctl
   ];
 
   xdg.mimeApps.defaultApplications = {
