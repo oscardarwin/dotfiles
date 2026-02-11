@@ -2,12 +2,12 @@
   description = "dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -21,7 +21,7 @@
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.05";
+      url = "github:nix-community/nixvim/nixos-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -31,12 +31,7 @@
     };
 
     stylix = {
-      url = "github:danth/stylix/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    wofi-1password-picker = {
-      url = "github:oscardarwin/wofi_1password_picker/main";
+      url = "github:danth/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -63,7 +58,7 @@
         inherit system;
       };
 
-      execute_in_workspace = (import ./modules/home-manager/window-manager/execute_in_workspace.nix) unstable-pkgs;
+      execute_in_workspace = (import ./modules/home-manager/window-manager/execute_in_workspace.nix) pkgs;
 
       specialArgs = { inherit inputs unstable-pkgs execute_in_workspace; };
 

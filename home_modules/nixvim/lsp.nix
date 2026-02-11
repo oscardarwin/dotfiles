@@ -15,7 +15,6 @@
         latex
         lua
         nix
-        norg
         python
         rust
         vimdoc

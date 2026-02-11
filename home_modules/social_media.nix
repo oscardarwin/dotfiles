@@ -1,6 +1,6 @@
-{ unstable-pkgs, ... }: {
+{ pkgs, ... }: {
   home.packages = [
-    unstable-pkgs.neonmodem
+    pkgs.neonmodem
   ];
 
   programs.freetube.enable = true;
