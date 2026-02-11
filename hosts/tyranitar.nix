@@ -1,31 +1,35 @@
 { stylix, makeNixosModules, importHomeModules, importNixosModules, ... }: makeNixosModules {
 
-  homeModules = importHomeModules [
-    "fonts.nix"
-    "firefox.nix"
-    "git.nix"
-    "window-manager"
-    "nixvim"
-    "startup.nix"
-    "shell.nix"
-    "terminal.nix"
-    "screen.nix"
-    "qutebrowser"
-    "packages.nix"
-    "stylix.nix"
-    "wofi.nix"
-    "social_media.nix"
-    "swaylock.nix"
-  ] ++ [
-    stylix.homeModules.stylix
-    {
-      wayland.windowManager.sway.extraConfig = ''
-        input * {
-          xkb_layout "gb"
-        }
-      '';
-    }
-  ];
+  users.hallayus = {
+    home.stateVersion = "21.11";
+    imports = importHomeModules [
+      "fonts.nix"
+      "firefox.nix"
+      "git.nix"
+      "window-manager"
+      "nixvim"
+      "startup.nix"
+      "shell.nix"
+      "terminal.nix"
+      "screen.nix"
+      "qutebrowser"
+      "packages.nix"
+      "stylix.nix"
+      "wofi.nix"
+      "social_media.nix"
+      "swaylock.nix"
+    ] ++ [
+      stylix.homeModules.stylix
+      {
+        wayland.windowManager.sway.extraConfig = ''
+          input * {
+            xkb_layout "gb"
+          }
+        '';
+      }
+    ];
+  };
+
   nixosModules = importNixosModules [
     "lockscreen.nix"
     "display-manager.nix"
