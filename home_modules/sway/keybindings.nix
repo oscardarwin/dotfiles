@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, executeInWorkspace, ... }: {
 
   wayland.windowManager.sway.config.keybindings =
     let
@@ -51,10 +51,7 @@
         "${modifier}+Shift+${number}" = "move container to workspace number ${number}";
       };
 
-      setup_lettered_workspace = { letter, program ? menu }: {
-        "${modifier}+${letter}" = ''exec swaymsg "${run} ${execute_in_workspace_script_path} '${program}' ${letter}"'';
-        "${modifier}+Shift+${letter}" = ''move container to workspace ${letter}'';
-      };
+      setup_lettered_workspace = { letter, program ? menu }: executeInWorkspace letter program;
     in
     {
       "${modifier}+Return" = "exec ${config.wayland.windowManager.sway.config.terminal}";

@@ -39,9 +39,14 @@
       url = "path:./dev_flakes/python";
       flake = true;
     };
+
+    haumea = {
+      url = "github:nix-community/haumea/v0.2.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, stylix, home-manager, nixos-hardware, ... }@inputs:
+  outputs = { nixpkgs, nixpkgs-unstable, stylix, home-manager, nixos-hardware, haumea, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -58,56 +63,42 @@
         inherit system;
       };
 
-      execute_in_workspace = (import ./modules/home-manager/window-manager/execute_in_workspace.nix) pkgs;
+      executeInWorkspace = (import ./modules/home-manager/window-manager/execute_in_workspace.nix) pkgs;
 
-      specialArgs = { inherit inputs unstable-pkgs execute_in_workspace; };
+      specialArgs = { inherit inputs unstable-pkgs executeInWorkspace; };
 
-      makeNixosModules = { config, nixosModules, users, hardware }: nixosModules ++ [
-        { nix.settings.experimental-features = [ "nix-command" "flakes" ]; }
-        hardware
-        config
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            inherit users;
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            extraSpecialArgs = specialArgs;
-            backupFileExtension = "backup";
-          };
-        }
-      ];
+      makeNixosSystem = { config, nixosModules, users, hardware }: nixpkgs.lib.nixosSystem {
 
+        inherit system specialArgs pkgs;
+        modules = nixosModules ++ [
+          { nix.settings.experimental-features = [ "nix-command" "flakes" ]; }
+          hardware
+          config
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              inherit users;
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = specialArgs;
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
       importHomeModules = moduleNames: map (name: ./home_modules + "/${name}") moduleNames;
       importNixosModules = moduleNames: map (name: ./nixos_modules + "/${name}") moduleNames;
 
-      makeNixosSystem = makeHostModules: nixpkgs.lib.nixosSystem {
-        inherit system specialArgs pkgs;
-        modules = makeHostModules { inherit inputs stylix nixos-hardware makeNixosModules importHomeModules importNixosModules; };
-      };
+      makeNixosSystemFromHostName = hostName:
+        let
+          makeHost = import (./hosts + "/${hostName}.nix");
+        in
+        makeHost { inherit inputs stylix nixos-hardware makeNixosSystem importHomeModules importNixosModules; };
     in
     {
-      # nixosConfigurations.squirtle = nixpkgs.lib.nixosSystem {
-      #   inherit specialArgs system pkgs;
+      nixosConfigurations = pkgs.lib.genAttrs [ "squirtle" "tyranitar" "porygon" ] makeNixosSystemFromHostName;
 
-      #   modules = nixos_modules ++ [
-      #     ./squirtle_configuration.nix
-      #     ./hardware/squirtle.nix
-      #     inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
-      #   ];
-      # };
-
-      nixosConfigurations = {
-        squirtle = makeNixosSystem (import ./hosts/squirtle.nix);
-        tyranitar = makeNixosSystem (import ./hosts/tyranitar.nix);
-      };
-      # nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {
-      #   inherit specialArgs system pkgs;
-
-      #   modules = nixos_modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ] ++ nixos_home [ ./modules/home-manager/tyranitar/keyboard.nix ];
-
-
-      homeConfigurations.oscar = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.gastly = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = specialArgs;
 
