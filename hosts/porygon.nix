@@ -1,29 +1,31 @@
-{ makeNixosModules, importHomeModules, importNixosModules, ... }: makeNixosModules {
-
-  homeModules = importHomeModules [
-    "git.nix"
-    "nixvim"
-    "shell.nix"
-  ];
+{ makeNixosSystem, importHomeModules, importNixosModules, ... }: makeNixosSystem {
+  users.testuser = {
+    home.stateVersion = "21.11";
+    imports = importHomeModules [
+      "git.nix"
+      "nixvim"
+      "shell.nix"
+    ];
+  };
 
   nixosModules = importNixosModules [
     "ssh.nix"
     "networking.nix"
     "locale.nix"
-    "docker.nix"
   ];
 
-  config = _: {
+  config = { pkgs, ... }: {
     programs.dconf.enable = true;
 
     # Configure console keymap
     console.keyMap = "uk";
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.porygon = {
+    users.users.testuser = {
       isNormalUser = true;
       description = "-- All Powerful Data Manager --";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      initialPassword = "testpassword";
     };
 
     # This value determines the NixOS release from which the default
@@ -33,6 +35,11 @@
     # Before changing this value read the documentation for this option
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
     system.stateVersion = "24.05"; # Did you read the comment?
+
+    environment.systemPackages = with pkgs; [
+      gcc
+      gnumake
+    ];
   };
 
   hardware = { config, lib, modulesPath, ... }: {

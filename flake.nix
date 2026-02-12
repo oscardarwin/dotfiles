@@ -63,7 +63,7 @@
         inherit system;
       };
 
-      executeInWorkspace = (import ./modules/home-manager/window-manager/execute_in_workspace.nix) pkgs;
+      executeInWorkspace = (import ./home_modules/sway/execute_in_workspace.nix) pkgs;
 
       specialArgs = { inherit inputs unstable-pkgs executeInWorkspace; };
 

@@ -6,6 +6,7 @@
         incremental_selection.enable = true;
         ensure_installed = [ "nix" "bash" "c" "json" "xml" "wgsl" ];
       };
+      nixGrammars = true;
 
       grammarPackages = with pkgs.vimPlugins.nvim-treesitter.passthru.builtGrammars; [
         bash
