@@ -5,7 +5,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --user-menu --greet-align left --cmd ${pkgs.sway}/bin/sway";
+        command = "${pkgs.tuigreet}/bin/tuigreet --user-menu --remember --greet-align left --cmd ${pkgs.sway}/bin/sway";
         user = "greeter";
       };
       terminal = {
