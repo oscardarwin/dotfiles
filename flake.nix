@@ -39,9 +39,14 @@
       url = "path:./dev_flakes/python";
       flake = true;
     };
+
+    haumea = {
+      url = "github:nix-community/haumea/v0.2.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, stylix, home-manager, nixos-hardware, ... }@inputs:
+  outputs = { nixpkgs, nixpkgs-unstable, stylix, home-manager, nixos-hardware, haumea, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -58,113 +63,42 @@
         inherit system;
       };
 
-      execute_in_workspace = (import ./modules/home-manager/window-manager/execute_in_workspace.nix) pkgs;
+      executeInWorkspace = (import ./home_modules/sway/execute_in_workspace.nix) pkgs;
 
-      specialArgs = { inherit inputs unstable-pkgs execute_in_workspace; };
+      specialArgs = { inherit inputs unstable-pkgs executeInWorkspace; };
 
-      gastly_home = home_modules: home_modules ++ [
-        {
-          home.username = "oscar";
-          home.homeDirectory = "/home/oscar";
-          home.stateVersion = "23.11";
-          programs.home-manager.enable = true;
-        }
-      ];
+      makeNixosSystem = { config, nixosModules, users, hardware }: nixpkgs.lib.nixosSystem {
 
-      nixos_home = home_modules: [
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            extraSpecialArgs = specialArgs;
-            backupFileExtension = "backup";
-            users.hallayus = {
-              imports = home_modules;
-              home.stateVersion = "21.11";
+        inherit system specialArgs pkgs;
+        modules = nixosModules ++ [
+          { nix.settings.experimental-features = [ "nix-command" "flakes" ]; }
+          hardware
+          config
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              inherit users;
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = specialArgs;
+              backupFileExtension = "backup";
             };
-          };
-        }
-      ];
-
-      home_modules = [
-        ./modules/home-manager/fonts.nix
-        ./modules/home-manager/firefox.nix
-        ./modules/home-manager/git.nix
-        ./modules/home-manager/window-manager
-        ./modules/home-manager/nixvim
-        ./modules/home-manager/shell.nix
-        ./modules/home-manager/terminal.nix
-        ./modules/home-manager/screen.nix
-        ./modules/home-manager/qutebrowser
-        ./modules/home-manager/packages.nix
-        stylix.homeModules.stylix
-        ./modules/home-manager/stylix.nix
-        ./modules/home-manager/wofi.nix
-      ];
-
-      nixos_home_modules = [
-        ./modules/home-manager/social_media.nix
-      ];
-
-      nixos_modules = [
-        ./modules/nixos/lockscreen.nix
-        ./modules/nixos/display-manager.nix
-        ./modules/nixos/bootloader.nix
-        ./modules/nixos/ssh.nix
-        ./modules/nixos/audio.nix
-        ./modules/nixos/networking.nix
-        ./modules/nixos/locale.nix
-        ./modules/nixos/screensharing.nix
-        ./modules/nixos/docker.nix
-      ] ++ nixos_home (home_modules ++ nixos_home_modules);
-
-      makeNixosModules = { config, nixosModules, users, hardware }: nixosModules ++ [
-        { nix.settings.experimental-features = [ "nix-command" "flakes" ]; }
-        hardware
-        config
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            inherit users;
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            extraSpecialArgs = specialArgs;
-            backupFileExtension = "backup";
-          };
-        }
-      ];
-
+          }
+        ];
+      };
       importHomeModules = moduleNames: map (name: ./home_modules + "/${name}") moduleNames;
       importNixosModules = moduleNames: map (name: ./nixos_modules + "/${name}") moduleNames;
 
-      makeNixosSystem = makeHostModules: nixpkgs.lib.nixosSystem {
-        inherit system specialArgs pkgs;
-        modules = makeHostModules { inherit inputs stylix nixos-hardware makeNixosModules importHomeModules importNixosModules; };
-      };
+      makeNixosSystemFromHostName = hostName:
+        let
+          makeHost = import (./hosts + "/${hostName}.nix");
+        in
+        makeHost { inherit inputs stylix nixos-hardware makeNixosSystem importHomeModules importNixosModules; };
     in
     {
-      # nixosConfigurations.squirtle = nixpkgs.lib.nixosSystem {
-      #   inherit specialArgs system pkgs;
+      nixosConfigurations = pkgs.lib.genAttrs [ "squirtle" "tyranitar" "porygon" ] makeNixosSystemFromHostName;
 
-      #   modules = nixos_modules ++ [
-      #     ./squirtle_configuration.nix
-      #     ./hardware/squirtle.nix
-      #     inputs.nixos-hardware.nixosModules.microsoft-surface-laptop-amd
-      #   ];
-      # };
-
-      nixosConfigurations = {
-        squirtle = makeNixosSystem (import ./hosts/squirtle.nix);
-        tyranitar = makeNixosSystem (import ./hosts/tyranitar.nix);
-      };
-      # nixosConfigurations.tyranitar = nixpkgs.lib.nixosSystem {
-      #   inherit specialArgs system pkgs;
-
-      #   modules = nixos_modules ++ [ ./tyranitar_configuration.nix ./hardware/tyranitar.nix ] ++ nixos_home [ ./modules/home-manager/tyranitar/keyboard.nix ];
-
-
-      homeConfigurations.oscar = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.gastly = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = specialArgs;
 
