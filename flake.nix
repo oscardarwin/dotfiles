@@ -62,63 +62,6 @@
 
       specialArgs = { inherit inputs unstable-pkgs execute_in_workspace; };
 
-      gastly_home = home_modules: home_modules ++ [
-        {
-          home.username = "oscar";
-          home.homeDirectory = "/home/oscar";
-          home.stateVersion = "23.11";
-          programs.home-manager.enable = true;
-        }
-      ];
-
-      nixos_home = home_modules: [
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            extraSpecialArgs = specialArgs;
-            backupFileExtension = "backup";
-            users.hallayus = {
-              imports = home_modules;
-              home.stateVersion = "21.11";
-            };
-          };
-        }
-      ];
-
-      home_modules = [
-        ./modules/home-manager/fonts.nix
-        ./modules/home-manager/firefox.nix
-        ./modules/home-manager/git.nix
-        ./modules/home-manager/window-manager
-        ./modules/home-manager/nixvim
-        ./modules/home-manager/shell.nix
-        ./modules/home-manager/terminal.nix
-        ./modules/home-manager/screen.nix
-        ./modules/home-manager/qutebrowser
-        ./modules/home-manager/packages.nix
-        stylix.homeModules.stylix
-        ./modules/home-manager/stylix.nix
-        ./modules/home-manager/wofi.nix
-      ];
-
-      nixos_home_modules = [
-        ./modules/home-manager/social_media.nix
-      ];
-
-      nixos_modules = [
-        ./modules/nixos/lockscreen.nix
-        ./modules/nixos/display-manager.nix
-        ./modules/nixos/bootloader.nix
-        ./modules/nixos/ssh.nix
-        ./modules/nixos/audio.nix
-        ./modules/nixos/networking.nix
-        ./modules/nixos/locale.nix
-        ./modules/nixos/screensharing.nix
-        ./modules/nixos/docker.nix
-      ] ++ nixos_home (home_modules ++ nixos_home_modules);
-
       makeNixosModules = { config, nixosModules, users, hardware }: nixosModules ++ [
         { nix.settings.experimental-features = [ "nix-command" "flakes" ]; }
         hardware
