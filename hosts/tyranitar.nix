@@ -8,7 +8,34 @@
       "git.nix"
       "sway"
       "nixvim"
-      "startup.nix"
+      "shell.nix"
+      "terminal.nix"
+      "screen.nix"
+      "qutebrowser"
+      "packages.nix"
+      "stylix.nix"
+      "wofi.nix"
+      "social_media.nix"
+    ] ++ [
+      stylix.homeModules.stylix
+      {
+        wayland.windowManager.sway.extraConfig = ''
+          input * {
+            xkb_layout "gb"
+          }
+        '';
+      }
+    ];
+  };
+
+  users.oscar = {
+    home.stateVersion = "21.11";
+    imports = importHomeModules [
+      "fonts.nix"
+      "firefox.nix"
+      "git.nix"
+      "sway"
+      "nixvim"
       "shell.nix"
       "terminal.nix"
       "screen.nix"
@@ -30,7 +57,6 @@
   };
 
   nixosModules = importNixosModules [
-    "display-manager.nix"
     "greetd.nix"
     "bootloader.nix"
     "ssh.nix"
@@ -42,6 +68,10 @@
   ];
 
   config = { pkgs, ... }: {
+    programs.sway = {
+      enable = true;
+      wrapperFeatures.gtk = true;
+    };
 
     programs.dconf.enable = true;
 
@@ -76,6 +106,12 @@
       extraGroups = [ "networkmanager" "wheel" ];
     };
 
+    users.users.oscar = {
+      isNormalUser = true;
+      description = "Oscar";
+      extraGroups = [ "networkmanager" "wheel" ];
+    };
+
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
     # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -106,6 +142,12 @@
         systemd-boot.enable = true;
         efi.canTouchEfiVariables = true;
       };
+      kernelParams = [
+        "quiet"
+        "loglevel=3"
+        "rd.systemd.show_status=false"
+        "udev.log_level=3"
+      ];
     };
 
     fileSystems."/" =

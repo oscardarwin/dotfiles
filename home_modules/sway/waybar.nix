@@ -98,7 +98,7 @@ let
   servicesScriptDerivation = pkgs.rustPlatform.buildRustPackage {
     pname = "check-services-statuses";
     version = "1.0.0";
-    src = ./check_services; # Path to your Rust project
+    src = ./check_services;
     cargoLock = {
       lockFile = ./check_services/Cargo.lock;
     };
@@ -223,8 +223,12 @@ in
   programs.waybar = {
     enable = true;
     settings.mainBar = mainBar;
-    style = lib.mkForce css; # Use the inline string instead of a file
+    style = lib.mkForce css;
   };
+
+  wayland.windowManager.sway.config.startup = [
+    { command = "waybar"; }
+  ];
 }
 
 

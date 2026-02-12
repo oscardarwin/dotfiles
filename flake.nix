@@ -93,7 +93,6 @@
         ./modules/home-manager/git.nix
         ./modules/home-manager/window-manager
         ./modules/home-manager/nixvim
-        ./modules/home-manager/startup.nix
         ./modules/home-manager/shell.nix
         ./modules/home-manager/terminal.nix
         ./modules/home-manager/screen.nix

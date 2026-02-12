@@ -8,7 +8,6 @@
       "git.nix"
       "sway"
       "nixvim"
-      "startup.nix"
       "shell.nix"
       "terminal.nix"
       "screen.nix"
@@ -56,8 +55,6 @@
       description = "oscar";
       extraGroups = [ "networkmanager" "wheel" ];
     };
-
-    security.polkit.enable = true;
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

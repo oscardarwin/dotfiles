@@ -9,8 +9,9 @@
         user = "oscar";
       };
     };
+    useTextGreeter = true;
   };
 
   services.dbus.enable = true;
-
+  security.polkit.enable = true;
 }
