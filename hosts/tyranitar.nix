@@ -1,33 +1,5 @@
 { stylix, makeNixosModules, importHomeModules, importNixosModules, ... }: makeNixosModules {
 
-  users.hallayus = {
-    home.stateVersion = "21.11";
-    imports = importHomeModules [
-      "fonts.nix"
-      "firefox.nix"
-      "git.nix"
-      "sway"
-      "nixvim"
-      "shell.nix"
-      "terminal.nix"
-      "screen.nix"
-      "qutebrowser"
-      "packages.nix"
-      "stylix.nix"
-      "wofi.nix"
-      "social_media.nix"
-    ] ++ [
-      stylix.homeModules.stylix
-      {
-        wayland.windowManager.sway.extraConfig = ''
-          input * {
-            xkb_layout "gb"
-          }
-        '';
-      }
-    ];
-  };
-
   users.oscar = {
     home.stateVersion = "21.11";
     imports = importHomeModules [
@@ -99,13 +71,6 @@
     # Enable touchpad support (enabled default in most desktopManager).
     # services.xserver.libinput.enable = true;
 
-    # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.hallayus = {
-      isNormalUser = true;
-      description = "Hallayus";
-      extraGroups = [ "networkmanager" "wheel" ];
-    };
-
     users.users.oscar = {
       isNormalUser = true;
       description = "Oscar";
@@ -134,7 +99,7 @@
     boot = {
       initrd = {
         availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-        kernelModules = [ ];
+        kernelModules = [ "amdgpu" ];
       };
       kernelModules = [ "kvm-amd" ];
       extraModulePackages = [ ];
