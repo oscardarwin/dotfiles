@@ -7,7 +7,7 @@ use std::os::unix::fs::PermissionsExt;
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
 
-pub fn select_from_list(prompt: &str, options: &[String]) -> Result<String> {
+pub fn select_from_list(prompt: &str, options: &Vec<String>) -> Result<String> {
     let input = options.join("\n");
 
     let mut child = Command::new("wofi")
@@ -35,6 +35,7 @@ pub fn select_from_list(prompt: &str, options: &[String]) -> Result<String> {
 
     Ok(selected)
 }
+
 fn executables_in_path() -> Result<Vec<String>> {
     let path_var = env::var("PATH")?;
 
@@ -56,7 +57,22 @@ fn executables_in_path() -> Result<Vec<String>> {
     Ok(programs.into_iter().collect())
 }
 
-pub fn select_program() -> Result<String> {
+pub fn select_program_from_path(letter: char) -> Result<String> {
     let programs = executables_in_path()?;
-    select_from_list("Run:", &programs)
+
+    let filtered: Vec<String> = programs
+        .into_iter()
+        .filter(|name| {
+            name.chars()
+                .next()
+                .map(|c| c.eq_ignore_ascii_case(&letter))
+                .unwrap_or(false)
+        })
+        .collect();
+
+    if filtered.is_empty() {
+        anyhow::bail!("No programs found starting with '{}'", letter);
+    }
+
+    select_from_list("Run:", &filtered)
 }

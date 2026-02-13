@@ -1,4 +1,5 @@
 use anyhow::Result;
+use std::collections::HashMap;
 use std::process::Command;
 use swayipc::Connection;
 
@@ -8,35 +9,62 @@ use crate::wofi;
 
 pub fn create_or_switch_to_workspace(letter: char) -> Result<()> {
     let current_context = get_context()?;
-
     let workspaces = ContextAwareWorkspaces::read()?;
 
-    let maybe_workspace = workspaces.items.into_iter().find(|caw| {
-        caw.context_name == current_context
-            && caw
-                .workspace_display_name
-                .chars()
-                .next()
-                .map(|c| c.eq_ignore_ascii_case(&letter))
-                .unwrap_or(false)
-    });
+    let mut matches: Vec<ContextAwareWorkspace> = workspaces
+        .items
+        .into_iter()
+        .filter(|caw| {
+            caw.context_name == current_context
+                && caw
+                    .workspace_display_name
+                    .chars()
+                    .next()
+                    .map(|c| c.eq_ignore_ascii_case(&letter))
+                    .unwrap_or(false)
+        })
+        .collect();
 
-    let is_new_workspace = maybe_workspace.is_none();
+    let is_new_workspace = matches.is_empty();
 
-    let target_workspace = maybe_workspace.unwrap_or_else(|| {
-        let program = wofi::select_program().expect("Failed to launch wofi run");
+    let target_workspace = match matches.len() {
+        0 => {
+            // Case 1: No matching workspace → select program from PATH
+            let program = wofi::select_program_from_path(letter)?;
 
-        ContextAwareWorkspace {
-            workspace_display_name: program,
-            context_name: current_context.clone(),
+            ContextAwareWorkspace {
+                workspace_display_name: program,
+                context_name: current_context.clone(),
+            }
         }
-    });
+
+        1 => matches.remove(0),
+
+        _ => {
+            let options: HashMap<String, ContextAwareWorkspace> = matches
+                .into_iter()
+                .map(|caw| (caw.workspace_display_name.clone(), caw))
+                .collect();
+
+            // Collect keys into a Vec<String> first (owned, stable)
+            let option_names: Vec<String> = options.keys().cloned().collect();
+
+            let selected = wofi::select_from_list("Workspace:", &option_names)?;
+
+            // Now safely retrieve
+            options
+                .get(&selected)
+                .expect("Selected workspace not found")
+                .clone()
+        }
+    };
 
     let workspace_name = String::from(target_workspace.clone());
 
     let mut conn = Connection::new()?;
     conn.run_command(format!("workspace {}", workspace_name))?;
 
+    // Only launch program if this is a newly created workspace
     if is_new_workspace {
         Command::new(&target_workspace.workspace_display_name).spawn()?;
     }

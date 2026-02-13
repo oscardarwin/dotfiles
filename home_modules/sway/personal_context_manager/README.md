@@ -25,6 +25,7 @@ The nix half of this software should generate sway nix keybindings from the give
 
 pcp context letter
 pcp workspace letter
+pcp program letter
 pcp move letter
 
 Then the rust program should perform the associated function.
