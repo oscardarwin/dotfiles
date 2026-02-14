@@ -4,12 +4,14 @@ use std::env;
 use crate::{
     create_or_switch_to_context::create_or_switch_to_context,
     create_or_switch_to_workspace::create_or_switch_to_workspace,
+    move_to_workspace::move_to_workspace,
 };
 
 mod context_aware_workspace;
 mod create_or_switch_to_context;
 mod create_or_switch_to_workspace;
 mod manage_context_daemon;
+mod move_to_workspace;
 mod wofi;
 
 fn get_first_character(arg: &String) -> Result<char> {
@@ -30,7 +32,6 @@ fn main() -> Result<()> {
             let character = get_first_character(letter_str)?;
             create_or_switch_to_context(character)
         }
-
         Some("create-or-switch-to-workspace") => {
             let letter_str = args
                 .get(2)
@@ -38,6 +39,14 @@ fn main() -> Result<()> {
 
             let character = get_first_character(letter_str)?;
             create_or_switch_to_workspace(character)
+        }
+        Some("move-to-workspace") => {
+            let letter_str = args
+                .get(2)
+                .ok_or_else(|| anyhow!("Usage: client move-to-workspace <letter>"))?;
+
+            let character = get_first_character(letter_str)?;
+            move_to_workspace(character)
         }
         Some("get") => manage_context_daemon::get_context().map(|context| {
             println!("Context: {}", &context);

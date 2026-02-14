@@ -1,13 +1,18 @@
 use anyhow::Result;
-use swayipc::{Connection, Workspace};
+use swayipc::Connection;
+
+fn matches_first_letter(word: &String, letter: &char) -> bool {
+    word.chars()
+        .next()
+        .map_or(false, |c| c.eq_ignore_ascii_case(letter))
+}
 
 pub type WorkspaceName = String;
 
-/// Represents a workspace split into display name and context
 #[derive(Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ContextAwareWorkspace {
-    pub workspace_display_name: String, // e.g., "qutebrowser"
-    pub context_name: String,           // e.g., "code"
+    pub workspace_display_name: String,
+    pub context_name: String,
 }
 
 impl From<&str> for ContextAwareWorkspace {
@@ -28,14 +33,18 @@ impl From<ContextAwareWorkspace> for WorkspaceName {
     }
 }
 
-/// Collection of ContextAwareWorkspace
+impl ContextAwareWorkspace {
+    pub fn first_letter_of_workspace_matches(&self, letter: &char) -> bool {
+        matches_first_letter(&self.workspace_display_name, letter)
+    }
+}
+
 #[derive(Clone)]
 pub struct ContextAwareWorkspaces {
     pub items: Vec<ContextAwareWorkspace>,
 }
 
 impl ContextAwareWorkspaces {
-    /// Factory method: reads all workspaces from Sway and parses them
     pub fn read() -> Result<Self> {
         let mut conn = Connection::new()?;
         let workspaces = conn.get_workspaces()?;
@@ -46,16 +55,10 @@ impl ContextAwareWorkspaces {
         Ok(ContextAwareWorkspaces { items })
     }
 
-    /// Return contexts filtered by starting letter
-    pub fn filter_by_letter(&self, letter: char) -> Vec<String> {
+    pub fn filter_by_context_first_letter(&self, letter: char) -> Vec<String> {
         self.items
             .iter()
-            .filter(|caw| {
-                caw.context_name
-                    .chars()
-                    .next()
-                    .map_or(false, |c| c.eq_ignore_ascii_case(&letter))
-            })
+            .filter(|caw| matches_first_letter(&caw.context_name, &letter))
             .map(|caw| caw.context_name.clone())
             .collect()
     }

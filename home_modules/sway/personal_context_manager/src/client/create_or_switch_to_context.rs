@@ -9,7 +9,7 @@ use swayipc::Connection;
 pub fn create_or_switch_to_context(letter: char) -> Result<()> {
     let workspaces = ContextAwareWorkspaces::read()?;
 
-    let contexts = workspaces.filter_by_letter(letter);
+    let contexts = workspaces.filter_by_context_first_letter(letter);
 
     let selected_context = wofi::select_from_list("Context:", &contexts)?;
 
