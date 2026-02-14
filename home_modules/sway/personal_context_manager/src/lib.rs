@@ -18,24 +18,23 @@ pub enum Response {
 /// Synchronous in-memory state for the daemon.
 #[derive(Debug, Default)]
 pub struct State {
-    pub context: Option<String>,
+    pub context: String,
 }
 
 impl State {
     pub fn new() -> Self {
-        Self { context: None }
+        Self {
+            context: "default".to_string(),
+        }
     }
 
     pub fn handle(&mut self, req: Request) -> Response {
         match req {
             Request::SetContext(ctx) => {
-                self.context = Some(ctx);
+                self.context = ctx;
                 Response::Ok
             }
-            Request::GetContext => match &self.context {
-                Some(ctx) => Response::Context(ctx.clone()),
-                None => Response::Error("No context set".into()),
-            },
+            Request::GetContext => Response::Context(self.context.clone()),
         }
     }
 }

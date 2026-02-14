@@ -31,7 +31,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 fn handle_connection(mut stream: UnixStream, state: &mut State) -> Result<()> {
-    let reader_stream = stream.try_clone()?; // clone for reading
+    let reader_stream = stream.try_clone()?;
     let reader = BufReader::new(reader_stream);
 
     for line in reader.lines() {
