@@ -31,3 +31,32 @@ pcp move letter
 Then the rust program should perform the associated function.
 
 Let's start with the rust program. Is it possible write a program to call a picked of lock controller memory that can be started separately as a daemon and persisted outside the life of the program? Please don't write any code to solve the above yet. Let's just get some questions out the way first.
+
+## Nix Side
+
+Next up we will generate our sway keybindings.
+
+We need the following options as input:
+
+setWorkspaceKeybindings - contains a map from letter/numbers to a attr set of workspace names and executable paths.
+
+contextSwitchKeyModifiers
+for every letter / number writes a sway keybinding with the specified modifiers + the letter / number.
+exec systemd-run --user --scope --quiet pcp-client -- create-or-switch-to-context <letter/number>
+
+containerMoveKeyModifiers - set of keyboard modifiers (alt, alt gr, windows key)
+for every letter / number writes a sway keybinding with the specified modifiers + the letter / number.
+exec systemd-run --user --scope --quiet pcp-client -- move-to-workspace <letter/number>
+
+workspaceSwitchKeyModifiers
+for every letter / number writes a sway keybinding with the specified modifiers + the letter / number.
+If the letter matches to an entry in setWorkspaceKeybindings, the run the following command:
+
+exec systemd-run --user --scope --quiet pcp-client -- create-or-switch-to-set-workspace <workspace name> <executable path>
+
+or if nothing matches in setWorkspaceKeybindings:
+
+exec systemd-run --user --scope --quiet pcp-client -- create-or-switch-to-workspace <letter>
+
+please create the module.nix that accomplishes this
+

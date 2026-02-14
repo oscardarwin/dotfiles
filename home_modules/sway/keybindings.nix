@@ -1,4 +1,21 @@
-{ config, pkgs, lib, executeInWorkspace, ... }: {
+{ config, pkgs, lib, executeInWorkspace, inputs, ... }: {
+  imports = [
+    inputs.pco.homeManagerModules.pco
+  ];
+
+  programs.pcp-sway = {
+    enable = true;
+
+    clientPackage = inputs.pco.packages.${pkgs.system}.pco-client;
+    daemonPackage = inputs.pco.packages.${pkgs.system}.pco-daemon;
+
+    setWorkspaceKeybindings = {
+      "f" = {
+        workspaceName = "firefox";
+        executable = "${pkgs.firefox}/bin/firefox";
+      };
+    };
+  };
 
   wayland.windowManager.sway.config.keybindings =
     let
@@ -44,14 +61,10 @@
         ${pkgs.libnotify}/bin/notify-send --hint int:value:$new_brightness --replace-id ${brightness-notification-id} "Brightness"
       '';
 
-      run = "exec systemd-run --user --scope --quiet";
-
       setup_numbered_workspace = number: {
         "${modifier}+${number}" = "workspace number ${number}";
         "${modifier}+Shift+${number}" = "move container to workspace number ${number}";
       };
-
-      setup_lettered_workspace = { letter, program ? menu }: executeInWorkspace letter program;
     in
     {
       "${modifier}+Return" = "exec ${config.wayland.windowManager.sway.config.terminal}";
@@ -96,31 +109,6 @@
       "7"
       "8"
       "9"
-    ] // lib.foldr (elem: acc: (setup_lettered_workspace elem) // acc) { } [
-      {
-        letter = "w";
-        program = "qutebrowser";
-      }
-      {
-        letter = "m";
-        program = "${launch_ncspot}";
-      }
-      {
-        letter = "e";
-      }
-      {
-        letter = "d";
-      }
-      {
-        letter = "f";
-      }
-      {
-        letter = "p";
-        program = "1password";
-      }
-      {
-        letter = "c";
-      }
     ];
 }
 

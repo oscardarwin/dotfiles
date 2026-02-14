@@ -29,13 +29,17 @@ impl From<&str> for ContextAwareWorkspace {
 
 impl From<ContextAwareWorkspace> for WorkspaceName {
     fn from(caw: ContextAwareWorkspace) -> Self {
-        format!("{}:{}", caw.context_name, caw.workspace_display_name)
+        ContextAwareWorkspace::create_workspace_name(&caw.workspace_display_name, &caw.context_name)
     }
 }
 
 impl ContextAwareWorkspace {
     pub fn first_letter_of_workspace_matches(&self, letter: &char) -> bool {
         matches_first_letter(&self.workspace_display_name, letter)
+    }
+
+    pub fn create_workspace_name(workspace_display_name: &String, context_name: &String) -> String {
+        format!("{}:{}", context_name, workspace_display_name)
     }
 }
 
