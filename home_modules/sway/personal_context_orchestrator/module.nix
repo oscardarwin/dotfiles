@@ -15,7 +15,7 @@ let
     lib.concatStringsSep "+" mods;
 
   runner =
-    "exec systemd-run --user --scope --quiet ${cfg.clientPackage}/bin/client --";
+    "exec ${cfg.clientPackage}/bin/client";
 
   allKeys =
     lib.unique (

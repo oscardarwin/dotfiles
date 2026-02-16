@@ -1,3 +1,5 @@
+use std::process::Command;
+
 use anyhow::Result;
 use swayipc::Connection;
 
@@ -16,15 +18,20 @@ pub fn create_or_switch_to_set_workspace(
     });
 
     let mut conn = Connection::new()?;
+
+    let workspace_name =
+        ContextAwareWorkspace::create_workspace_name(workspace_display_name, &current_context);
     match matches {
         Some(_) => {
-            conn.run_command(format!(
-                "workspace {}; exec systemd-run --user --scope --quiet {}",
-                workspace_display_name, executable_path
-            ))?;
+            conn.run_command(format!("workspace {}", workspace_name))?;
         }
         None => {
-            conn.run_command(format!("workspace {}", workspace_display_name))?;
+            let command_string = format!(
+                "workspace {}; exec systemd-run --user --scope --quiet {}",
+                workspace_name, executable_path
+            );
+
+            conn.run_command(command_string)?;
         }
     }
     Ok(())

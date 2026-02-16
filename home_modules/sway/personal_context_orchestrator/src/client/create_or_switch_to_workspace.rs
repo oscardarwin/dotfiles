@@ -1,5 +1,4 @@
 use anyhow::Result;
-use std::collections::HashMap;
 use std::process::Command;
 use swayipc::Connection;
 
@@ -25,7 +24,10 @@ pub fn create_or_switch_to_workspace(letter: char) -> Result<()> {
             // Case 1: No matching workspace → select program from PATH
             let program = wofi::select_program_from_path(letter)?;
             conn.run_command(format!("workspace {}", program))?;
-            Command::new(&program).spawn()?;
+            conn.run_command(format!(
+                "exec systemd-run --user --scope --quiet {}",
+                program
+            ))?;
         }
 
         1 => {
