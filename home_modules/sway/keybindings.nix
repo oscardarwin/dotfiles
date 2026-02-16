@@ -14,6 +14,18 @@
         workspaceName = "firefox";
         executable = "${pkgs.firefox}/bin/firefox";
       };
+      "c" = {
+        workspaceName = "slack";
+        executable = "${pkgs.slack}/bin/slack";
+      };
+      "w" = {
+        workspaceName = "web";
+        executable = "${pkgs.qutebrowser}/bin/qutebrowser";
+      };
+      "d" = {
+        workspaceName = "dotfiles";
+        executable = "${pkgs.kitty}/bin/kitty --working-directory ~/dotfiles";
+      };
     };
   };
 
@@ -71,7 +83,6 @@
 
       "${modifier}+q" = "kill";
       "${modifier}+o" = "exec ${menu}";
-      "${modifier}+d" = "nop";
 
       "${modifier}+h" = "focus left";
       "${modifier}+j" = "focus down";

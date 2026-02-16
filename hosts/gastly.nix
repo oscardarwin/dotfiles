@@ -65,6 +65,15 @@
         forwardAgent = true;
       };
 
+      pcp-sway = {
+        setWorkspaceKeybindings = {
+          "w" = lib.mkForce {
+            workspaceName = "web";
+            executable = "${pkgs.firefox}/bin/firefox";
+          };
+        };
+      };
+
     };
     nix.package = pkgs.nix;
     nix.settings.experimental-features = [
