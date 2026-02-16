@@ -511,14 +511,15 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-iNV9sMm0sNizLICYL5o/TcSvmkHXYd+S8pv7ogewF8s=",
         "path": "./home_modules/sway/personal_context_orchestrator",
         "type": "path"
       },
       "original": {
         "path": "./home_modules/sway/personal_context_orchestrator",
         "type": "path"
-      },
-      "parent": []
+      }
     },
     "python-dev-flake": {
       "inputs": {
