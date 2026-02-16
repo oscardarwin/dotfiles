@@ -44,6 +44,11 @@
       url = "github:nix-community/haumea/v0.2.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    pco = {
+      url = "path:./home_modules/sway/personal_context_orchestrator";
+      flake = true;
+    };
   };
 
   outputs = { nixpkgs, nixpkgs-unstable, stylix, home-manager, nixos-hardware, haumea, ... }@inputs:
