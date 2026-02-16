@@ -98,7 +98,7 @@
     {
       nixosConfigurations = pkgs.lib.genAttrs [ "squirtle" "tyranitar" "porygon" ] makeNixosSystemFromHostName;
 
-      homeConfigurations.gastly = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.oscar = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = specialArgs;
 

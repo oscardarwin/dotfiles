@@ -9,7 +9,6 @@
     "git.nix"
     "sway"
     "nixvim"
-    "startup.nix"
     "shell.nix"
     "terminal.nix"
     "screen.nix"
@@ -55,10 +54,10 @@
         '';
       };
 
-      git = {
-        userName = lib.mkForce null;
-        userEmail = lib.mkForce null;
-      };
+      # git = {
+      #   userName = lib.mkForce null;
+      #   userEmail = lib.mkForce null;
+      # };
 
       ssh.matchBlocks."gitlab.com" = {
         hostname = "gitlab.com";
