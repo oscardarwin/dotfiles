@@ -14,17 +14,17 @@
         workspaceName = "firefox";
         executable = "${pkgs.firefox}/bin/firefox";
       };
-      "c" = {
-        workspaceName = "slack";
-        executable = "${pkgs.slack}/bin/slack";
-      };
       "w" = {
         workspaceName = "web";
         executable = "${pkgs.qutebrowser}/bin/qutebrowser";
       };
       "d" = {
         workspaceName = "dotfiles";
-        executable = "${pkgs.kitty}/bin/kitty --working-directory ~/dotfiles";
+        executable = "'${pkgs.kitty}/bin/kitty --working-directory ~/dotfiles'";
+      };
+      "p" = {
+        workspaceName = "passwords";
+        executable = "'${pkgs._1password-gui}/bin/1password";
       };
     };
   };

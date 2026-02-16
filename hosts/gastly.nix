@@ -71,6 +71,10 @@
             workspaceName = "web";
             executable = "${pkgs.firefox}/bin/firefox";
           };
+          "c" = lib.mkForce {
+            workspaceName = "chat";
+            executable = "${pkgs.slack}/bin/slack";
+          };
         };
       };
 
