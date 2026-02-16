@@ -40,6 +40,8 @@
           xwayland
           tbb_2021
           nodejs_24
+          awscli2
+          git-lfs
         ] ++ [
           (import nixGL { inherit pkgs; }).nixGLIntel
         ];
@@ -59,6 +61,7 @@
       devShells.${system} = {
         python310 = shell pkgs.python310;
         python311 = shell pkgs.python311;
+        python312 = shell pkgs.python312;
       };
     };
 }

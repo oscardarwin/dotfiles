@@ -19,21 +19,22 @@
     "wofi.nix"
   ] ++ [
     stylix.homeModules.stylix
-    {
-      home.username = "oscar";
-      home.homeDirectory = "/home/oscar";
-      home.stateVersion = "23.11";
-      programs.home-manager.enable = true;
-    }
   ];
 
   config = { pkgs, lib, ... }: {
-    home.packages = [
-      pkgs.slack
-      pkgs.vscode
-      pkgs.openconnect
-    ];
+    home = {
+      packages = [
+        pkgs.slack
+        pkgs.vscode
+        pkgs.openconnect
+
+      ];
+      username = "oscar";
+      homeDirectory = "/home/oscar";
+      stateVersion = "23.11";
+    };
     programs = {
+      home-manager.enable = true;
       fish = {
         shellAliases = {
           bl = "poetry run black --config ../black_config/pyproject.toml";
