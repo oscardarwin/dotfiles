@@ -1,20 +1,9 @@
 use anyhow::{anyhow, Ok, Result};
 use std::env;
 
-use crate::{
-    create_or_switch_to_context::create_or_switch_to_context,
-    create_or_switch_to_set_workspace::create_or_switch_to_set_workspace,
-    create_or_switch_to_workspace::create_or_switch_to_workspace, move_to_context::move_to_context,
-    move_to_workspace::move_to_workspace,
-};
-
+mod command;
 mod context_aware_workspace;
-mod create_or_switch_to_context;
-mod create_or_switch_to_set_workspace;
-mod create_or_switch_to_workspace;
 mod manage_context_daemon;
-mod move_to_context;
-mod move_to_workspace;
 mod wofi;
 
 fn get_first_character(arg: &String) -> Result<char> {
@@ -33,7 +22,7 @@ fn main() -> Result<()> {
                 .ok_or_else(|| anyhow!("Usage: client create-or-switch-to-context <letter>"))?;
 
             let character = get_first_character(letter_str)?;
-            create_or_switch_to_context(character)
+            command::create_or_switch_to_context(character)
         }
         Some("move-to-context") => {
             let letter_str = args
@@ -41,7 +30,7 @@ fn main() -> Result<()> {
                 .ok_or_else(|| anyhow!("Usage: client create-or-switch-to-workspace <letter>"))?;
 
             let character = get_first_character(letter_str)?;
-            move_to_context(character)
+            command::move_to_context(character)
         }
         Some("create-or-switch-to-workspace") => {
             let letter_str = args
@@ -49,7 +38,7 @@ fn main() -> Result<()> {
                 .ok_or_else(|| anyhow!("Usage: client create-or-switch-to-workspace <letter>"))?;
 
             let character = get_first_character(letter_str)?;
-            create_or_switch_to_workspace(character)
+            command::create_or_switch_to_workspace(character)
         }
         Some("move-to-workspace") => {
             let letter_str = args
@@ -57,18 +46,18 @@ fn main() -> Result<()> {
                 .ok_or_else(|| anyhow!("Usage: client move-to-workspace <letter>"))?;
 
             let character = get_first_character(letter_str)?;
-            move_to_workspace(character)
+            command::move_to_workspace(character)
         }
         Some("create-or-switch-to-set-workspace") => {
             let workspace_display_name = args
                 .get(2)
-                .ok_or_else(|| anyhow!("Usage: client move-to-set-workspace <workspace_display_name> <executable_path>"))?;
+                .ok_or_else(|| anyhow!("Usage: client create-or-switch-to-set-workspace <workspace_display_name> <executable_path>"))?;
 
             let executable_path = args
                 .get(3)
-                .ok_or_else(|| anyhow!("Usage: client move-to-set-workspace <workspace_display_name> <executable_path>"))?;
+                .ok_or_else(|| anyhow!("Usage: client create-or-switch-to-set-workspace <workspace_display_name> <executable_path>"))?;
 
-            create_or_switch_to_set_workspace(workspace_display_name, executable_path)
+            command::create_or_switch_to_set_workspace(workspace_display_name, executable_path)
         }
         Some("get") => manage_context_daemon::get_context().map(|context| {
             println!("Context: {}", &context);
@@ -79,6 +68,10 @@ fn main() -> Result<()> {
                 .get(2)
                 .ok_or_else(|| anyhow!("Usage: client set <value>"))?;
             manage_context_daemon::set_context(value)
+        }
+        Some("listen-to-context-aware-workspaces") => {
+            _ = command::listen_to_context_aware_workspaces();
+            Ok(())
         }
         _ => {
             eprintln!("Usage:");

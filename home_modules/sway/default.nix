@@ -1,6 +1,8 @@
 { pkgs, ... }: {
   imports = [
     ./waybar.nix
+    ./eww.nix
+    # ./ironbar.nix
     ./keybindings.nix
     ./keyboard_missing_warning.nix
   ];

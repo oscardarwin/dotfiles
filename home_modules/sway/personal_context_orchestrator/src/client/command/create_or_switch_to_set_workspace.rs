@@ -1,5 +1,3 @@
-use std::process::Command;
-
 use anyhow::Result;
 use swayipc::Connection;
 
@@ -13,7 +11,7 @@ pub fn create_or_switch_to_set_workspace(
     let current_context = get_context()?;
     let workspaces = ContextAwareWorkspaces::read()?;
 
-    let mut matches: Option<ContextAwareWorkspace> = workspaces.items.into_iter().find(|caw| {
+    let matches: Option<ContextAwareWorkspace> = workspaces.items.into_iter().find(|caw| {
         caw.context_name == current_context && caw.workspace_display_name == *workspace_display_name
     });
 
@@ -21,8 +19,10 @@ pub fn create_or_switch_to_set_workspace(
 
     let workspace_name =
         ContextAwareWorkspace::create_workspace_name(workspace_display_name, &current_context);
+
     match matches {
         Some(_) => {
+            println!("switching to workspace {}", workspace_name);
             conn.run_command(format!("workspace {}", workspace_name))?;
         }
         None => {

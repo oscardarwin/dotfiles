@@ -1,3 +1,4 @@
+use anyhow::Error;
 use anyhow::{anyhow, Result};
 use std::collections::BTreeSet;
 use std::env;
@@ -71,7 +72,9 @@ pub fn select_program_from_path(letter: char) -> Result<String> {
         .collect();
 
     if filtered.is_empty() {
-        anyhow::bail!("No programs found starting with '{}'", letter);
+        return Err(anyhow!(
+            "No programs found beginning with the letter {letter}"
+        ));
     }
 
     select_from_list("Run:", &filtered)

@@ -27,6 +27,8 @@
         executable = "'${pkgs._1password-gui}/bin/1password";
       };
     };
+
+    extraKeys = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" "a" "b" "c" "d" "e" "g" "i" "m" "n" "r" "s" "t" "u" "v" "x" "y" "z" ];
   };
 
   wayland.windowManager.sway.config.keybindings =
@@ -94,10 +96,6 @@
       "${modifier}+Shift+k" = "move up";
       "${modifier}+Shift+h" = "move right";
 
-      "${modifier}+r" = "mode resize";
-      "${modifier}+v" = "split h; exec kitty";
-      "${modifier}+s" = "split v; exec kitty";
-
       # Volume
       "--no-repeat --no-warn XF86AudioRaiseVolume" = "exec ${volume-increase}";
       "--no-repeat --no-warn XF86AudioLowerVolume" = "exec ${volume-decrease}";
@@ -109,17 +107,6 @@
       # Brightness
       "--no-repeat --no-warn XF86MonBrightnessUp" = "exec ${brightness-increase}";
       "--no-repeat --no-warn XF86MonBrightnessDown" = "exec ${brightness-decrease}";
-    } // lib.foldr (elem: acc: (setup_numbered_workspace elem) // acc) { } [
-      "0"
-      "1"
-      "2"
-      "3"
-      "4"
-      "5"
-      "6"
-      "7"
-      "8"
-      "9"
-    ];
+    };
 }
 

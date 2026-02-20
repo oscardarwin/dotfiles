@@ -1,0 +1,77 @@
+
+;; ================================
+;; Variables
+;; ================================
+
+(defpoll time
+  :interval "5s"
+  "date '+%H:%M'")
+
+;; (deflisten context_aware_workspace_info :initial '{"contexts":[],"workspaces":[]}'
+;;  "/nix/store/wdn1j0kpfb0lqcz92hxwxy06f586xzpa-pco-client-0.1.0/bin/client listen-to-context-aware-workspaces")
+
+(deflisten context_aware_workspace_info :initial '{"contexts":[],"workspaces":[]}'
+  "@pco-client listen-to-context-aware-workspaces")
+
+(defwidget context-item-list []
+  (box :orientation "h"
+    (for item in {context_aware_workspace_info.contexts}
+      (button
+        :key {item.label}
+        :onclick "@pco-client create-or-switch-to-context "
+        {item.label}))))
+
+(defwidget workspace-item-list []
+  (box :orientation "h"
+    (for item in {context_aware_workspace_info.workspaces}
+      (button
+        :onclick "sway workspace ${item.context_name}:${item.workspace_display_name}"
+        {item.associated_char}))))
+
+(defwidget battery []
+  (box :class "battery"
+       :spacing 5
+       (label :text "${EWW_BATTERY.BAT1.capacity}%")))
+
+(defwidget clock []
+  (label :class "clock"
+         :text time))
+
+(defwidget left-content []
+  (box :halign "start"
+       :spacing 15
+       (workspace-item-list)))
+
+(defwidget center-content []
+  (box :halign "center"
+       :spacing 15
+       (battery)
+       (clock)))
+
+(defwidget right-content []
+  (box :halign "end"
+       :spacing 15
+       (context-item-list)))
+
+;; ================================
+;; Window
+;; ================================
+
+(defwindow bar
+  :monitor 0
+  :geometry (geometry
+              :x "0%"
+              :y "0%"
+              :width "100%"
+              :height "30px"
+              :anchor "top center")
+  :stacking "fg"
+  :exclusive true
+  (box :class "bar"
+       :orientation "h"
+       :space-evenly false
+       (left-content)
+       (box :hexpand true) ;; pushes content right
+       (center-content)
+       (box :hexpand true) ;; pushes content right
+       (right-content)))
