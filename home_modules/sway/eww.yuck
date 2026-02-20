@@ -1,14 +1,6 @@
-
-;; ================================
-;; Variables
-;; ================================
-
 (defpoll time
   :interval "5s"
   "date '+%H:%M'")
-
-;; (deflisten context_aware_workspace_info :initial '{"contexts":[],"workspaces":[]}'
-;;  "/nix/store/wdn1j0kpfb0lqcz92hxwxy06f586xzpa-pco-client-0.1.0/bin/client listen-to-context-aware-workspaces")
 
 (deflisten context_aware_workspace_info :initial '{"contexts":[],"workspaces":[]}'
   "@pco-client listen-to-context-aware-workspaces")
@@ -52,10 +44,6 @@
   (box :halign "end"
        :spacing 15
        (context-item-list)))
-
-;; ================================
-;; Window
-;; ================================
 
 (defwindow bar
   :monitor 0

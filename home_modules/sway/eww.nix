@@ -3,7 +3,6 @@
 let
   colors = config.lib.stylix.colors;
 
-  # Rust service checker
   servicesScriptDerivation = pkgs.rustPlatform.buildRustPackage {
     pname = "check-services-statuses";
     version = "1.0.0";
@@ -13,21 +12,27 @@ let
 
   servicesScript = "${servicesScriptDerivation}/bin/check-services-statuses";
 
-  # PCO client context listener
   pcoClientPackage = inputs.pco.packages.${pkgs.system}.pco-client;
   contextsScript = "${pcoClientPackage}/bin/client listen-for-contexts";
 
-  # Inline Eww config as a string
-
   ewwYuck = builtins.readFile ./eww.yuck;
-  # Inline SCSS for styling
   ewwScss = ''
   '';
 
 in
 {
-  xdg.configFile."eww/eww.yuck".text = builtins.replaceStrings [ "@pco-client" ] [ "${contextsScript}" ] ewwYuck;
-  xdg.configFile."eww/eww.scss".text = ewwScss;
+  xdg.configFile."eww/eww.yuck".text = builtins.replaceStrings [
+    "@pco-client"
+    "@check-services"
+  ] [
+    "${contextsScript}"
+    "${servicesScript}"
+  ]
+    ewwYuck;
+
+  xdg.configFile."
+    eww/eww.scss
+    ".text = ewwScss;
 
   home.packages = with pkgs; [
     pamixer
@@ -43,15 +48,23 @@ in
 
   wayland.windowManager.sway.config.startup = [
     {
-      command = "eww daemon";
+      command = "
+    eww
+    daemon
+    ";
       always = true;
     }
     {
-      command = "eww open mainbar";
+      command = "
+    eww
+    open
+    mainbar
+    ";
     }
   ];
 }
   
+
 
 
 
