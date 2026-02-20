@@ -2,12 +2,6 @@ use anyhow::Result;
 use serde::Serialize;
 use swayipc::Connection;
 
-fn matches_first_letter(word: &String, letter: &char) -> bool {
-    word.chars()
-        .next()
-        .map_or(false, |c| c.eq_ignore_ascii_case(letter))
-}
-
 pub type WorkspaceName = String;
 pub type ContextName = String;
 
@@ -98,13 +92,5 @@ impl ContextAwareWorkspaces {
             .filter_map(|ws| ContextAwareWorkspace::try_from(ws.name.as_str()).ok())
             .collect();
         Ok(ContextAwareWorkspaces { items })
-    }
-
-    pub fn filter_by_context_first_letter(&self, letter: char) -> Vec<String> {
-        self.items
-            .iter()
-            .filter(|caw| matches_first_letter(&caw.context_name, &letter))
-            .map(|caw| caw.context_name.clone())
-            .collect()
     }
 }
