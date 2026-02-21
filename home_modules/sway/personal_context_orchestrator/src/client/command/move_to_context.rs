@@ -1,7 +1,7 @@
 use anyhow::Result;
 use swayipc::Connection;
 
-use crate::context_aware_workspace::{ContextAwareWorkspace, ContextAwareWorkspaces};
+use crate::context_workspace::{ContextWorkspace, ContextWorkspaces};
 use crate::manage_context_daemon::get_context;
 use crate::wofi;
 

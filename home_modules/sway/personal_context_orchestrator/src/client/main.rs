@@ -2,7 +2,7 @@ use anyhow::{anyhow, Ok, Result};
 use std::env;
 
 mod command;
-mod context_aware_workspace;
+mod context_workspace;
 mod manage_context_daemon;
 mod wofi;
 
@@ -69,8 +69,8 @@ fn main() -> Result<()> {
                 .ok_or_else(|| anyhow!("Usage: client set <value>"))?;
             manage_context_daemon::set_context(value)
         }
-        Some("listen-to-context-aware-workspaces") => {
-            _ = command::listen_to_context_aware_workspaces();
+        Some("listen-to-context-workspaces") => {
+            _ = command::listen_to_context_workspaces();
             Ok(())
         }
         _ => {

@@ -13,11 +13,10 @@ let
   servicesScript = "${servicesScriptDerivation}/bin/check-services-statuses";
 
   pcoClientPackage = inputs.pco.packages.${pkgs.system}.pco-client;
-  contextsScript = "${pcoClientPackage}/bin/client listen-for-contexts";
+  contextsScript = "${pcoClientPackage}/bin/client";
 
   ewwYuck = builtins.readFile ./eww.yuck;
-  ewwScss = ''
-  '';
+  ewwScss = builtins.readFile ./eww.scss;
 
 in
 {
@@ -26,13 +25,11 @@ in
     "@check-services"
   ] [
     "${contextsScript}"
-    "${servicesScript}"
+    "${servicesScript} "
   ]
     ewwYuck;
 
-  xdg.configFile."
-    eww/eww.scss
-    ".text = ewwScss;
+  xdg.configFile."eww/eww.scss".text = builtins.readFile ./eww.scss;
 
   home.packages = with pkgs; [
     pamixer
@@ -48,22 +45,16 @@ in
 
   wayland.windowManager.sway.config.startup = [
     {
-      command = "
-    eww
-    daemon
-    ";
+      command = "eww daemon";
       always = true;
     }
     {
-      command = "
-    eww
-    open
-    mainbar
-    ";
+      command = "eww open mainbar";
     }
   ];
 }
   
+
 
 
 

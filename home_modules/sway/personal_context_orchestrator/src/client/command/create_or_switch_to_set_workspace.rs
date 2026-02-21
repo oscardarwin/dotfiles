@@ -1,7 +1,7 @@
 use anyhow::Result;
 use swayipc::Connection;
 
-use crate::context_aware_workspace::{ContextAwareWorkspace, ContextAwareWorkspaces};
+use crate::context_workspace::{ContextWorkspace, ContextWorkspaces};
 use crate::manage_context_daemon::get_context;
 
 pub fn create_or_switch_to_set_workspace(
@@ -9,16 +9,17 @@ pub fn create_or_switch_to_set_workspace(
     executable_path: &String,
 ) -> Result<()> {
     let current_context = get_context()?;
-    let workspaces = ContextAwareWorkspaces::read()?;
+    let workspaces = ContextWorkspaces::read()?;
 
-    let matches: Option<ContextAwareWorkspace> = workspaces.items.into_iter().find(|caw| {
-        caw.context_name == current_context && caw.workspace_display_name == *workspace_display_name
-    });
+    let matches: Option<ContextWorkspace> = workspaces
+        .items
+        .into_iter()
+        .find(|caw| caw.context.name == current_context && caw.name == *workspace_display_name);
 
     let mut conn = Connection::new()?;
 
     let workspace_name =
-        ContextAwareWorkspace::create_workspace_name(workspace_display_name, &current_context);
+        ContextWorkspace::create_workspace_name(workspace_display_name, &current_context);
 
     match matches {
         Some(_) => {

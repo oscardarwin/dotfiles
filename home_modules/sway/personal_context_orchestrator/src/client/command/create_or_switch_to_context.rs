@@ -1,8 +1,6 @@
 use std::collections::BTreeSet;
 
-use crate::context_aware_workspace::{
-    ContextAwareWorkspace, ContextAwareWorkspaces, ContextName, WorkspaceName,
-};
+use crate::context_workspace::{ContextName, ContextWorkspace, ContextWorkspaces};
 use crate::manage_context_daemon::set_context;
 use crate::wofi;
 use anyhow::Result;
@@ -15,21 +13,21 @@ fn matches_first_letter(word: &String, letter: &char) -> bool {
 }
 
 fn filter_by_context_first_letter(
-    context_aware_workspaces: &ContextAwareWorkspaces,
+    context_workspaces: &ContextWorkspaces,
     letter: char,
 ) -> Vec<ContextName> {
-    let deduplicated: BTreeSet<_> = context_aware_workspaces
+    let deduplicated: BTreeSet<_> = context_workspaces
         .items
         .iter()
-        .filter(|caw| matches_first_letter(&caw.context_name, &letter))
-        .map(|caw| caw.context_name.clone())
+        .filter(|caw| matches_first_letter(&caw.context.name, &letter))
+        .map(|caw| caw.context.name.clone())
         .collect();
 
     deduplicated.into_iter().collect()
 }
 
 pub fn create_or_switch_to_context(letter: char) -> Result<()> {
-    let workspaces = ContextAwareWorkspaces::read()?;
+    let workspaces = ContextWorkspaces::read()?;
 
     let mut contexts = filter_by_context_first_letter(&workspaces, letter);
 
@@ -41,16 +39,13 @@ pub fn create_or_switch_to_context(letter: char) -> Result<()> {
     let target_workspace = workspaces
         .items
         .into_iter()
-        .find(|caw| caw.context_name == selected_context)
-        .unwrap_or(ContextAwareWorkspace::new("1".to_string(), selected_context.clone()).unwrap());
+        .find(|caw| caw.context.name == selected_context)
+        .unwrap_or(ContextWorkspace::new("1".to_string(), selected_context.clone(), true).unwrap());
 
-    println!("{}", WorkspaceName::from(target_workspace.clone()));
+    println!("{}", String::from(&target_workspace));
 
     let mut conn = Connection::new()?;
-    conn.run_command(format!(
-        "workspace {}",
-        WorkspaceName::from(target_workspace)
-    ))?;
+    conn.run_command(format!("workspace {}", String::from(&target_workspace)))?;
 
     set_context(&selected_context)?;
 

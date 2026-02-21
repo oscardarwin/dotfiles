@@ -2,23 +2,8 @@
   :interval "5s"
   "date '+%H:%M'")
 
-(deflisten context_aware_workspace_info :initial '{"contexts":[],"workspaces":[]}'
-  "@pco-client listen-to-context-aware-workspaces")
-
-(defwidget context-item-list []
-  (box :orientation "h"
-    (for item in {context_aware_workspace_info.contexts}
-      (button
-        :key {item.label}
-        :onclick "@pco-client create-or-switch-to-context "
-        {item.label}))))
-
-(defwidget workspace-item-list []
-  (box :orientation "h"
-    (for item in {context_aware_workspace_info.workspaces}
-      (button
-        :onclick "sway workspace ${item.context_name}:${item.workspace_display_name}"
-        {item.associated_char}))))
+(deflisten context_workspace_info :initial '{"contexts":[],"workspaces":[]}'
+  "@pco-client listen-to-context-workspaces")
 
 (defwidget battery []
   (box :class "battery"
@@ -31,19 +16,41 @@
 
 (defwidget left-content []
   (box :halign "start"
-       :spacing 15
-       (workspace-item-list)))
+       :hexpand true
+       :spacing 2
+
+       ;; Context buttons
+       (for item in {context_workspace_info.contexts}
+         (button
+           :hexpand true
+           :halign "fill"
+           :class {"context-button " + (item.focused ? "focused" : "")}
+           :tooltip {item.context.name}
+           :onclick "@pco-client create-or-switch-to-context"
+           {item.context.associated_char}))
+
+       ;; Workspace buttons
+       (for item in {context_workspace_info.workspaces}
+         (button
+           :hexpand true
+           :halign "fill"
+           :class {"workspace-button " + (item.focused ? "focused" : "")}
+           :tooltip {item.name}
+           :onclick {"sway workspace "
+                     + item.context.name
+                     + ":"
+                     + item.name}
+           {item.associated_char}))))
 
 (defwidget center-content []
   (box :halign "center"
-       :spacing 15
-       (battery)
+       :spacing 5
        (clock)))
 
 (defwidget right-content []
   (box :halign "end"
-       :spacing 15
-       (context-item-list)))
+       :spacing 2
+       (battery)))
 
 (defwindow bar
   :monitor 0
@@ -55,11 +62,13 @@
               :anchor "top center")
   :stacking "fg"
   :exclusive true
-  (box :class "bar"
-       :orientation "h"
-       :space-evenly false
-       (left-content)
-       (box :hexpand true) ;; pushes content right
-       (center-content)
-       (box :hexpand true) ;; pushes content right
-       (right-content)))
+  (overlay
+    (box :class "bar"
+         :orientation "h"
+         (left-content)
+         (box :hexpand true)
+         (right-content))
+
+    (box :halign "center"
+         :valign "center"
+         (center-content))))
