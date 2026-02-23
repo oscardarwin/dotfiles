@@ -17,13 +17,18 @@ let
 
   ewwYuck = builtins.readFile ./eww.yuck;
 
-  workspaceColor = "4c769b";
+  workspaceColor = "3d5773";
   workspaceColorFocused = colorTheme.base0D;
-  workspaceColorHovered = "45637f";
+  workspaceColorHovered = colorTheme.base0D;
 
-  contextColor = "8b5655";
+  contextColor = "5a383a";
   contextColorFocused = colorTheme.base0F;
-  contextColorHovered = "695a52";
+  contextColorHovered = colorTheme.base0F;
+
+  healthy = colorTheme.base0B;
+  used = colorTheme.base0A;
+  warning = colorTheme.base09;
+  critical = colorTheme.base08;
 
   textColor = colorTheme.base07;
   ewwScss = ''
@@ -76,9 +81,27 @@ let
       font-weight: 500;
     }
 
-    // ===== Battery =====
-    .battery {
+
+    // ===== Resources =====
+    .resource-icon {
+      font-size: 1.4em;
       color: #${textColor};
+    }
+
+    .resource-high {
+      color: #${healthy};
+    }
+    
+    .resource-medium {
+      color: #${used};
+    }
+    
+    .resource-low {
+      color: #${warning};
+    }
+    
+    .resource-critical {
+      color: #${critical};
     }
   '';
 in
@@ -87,10 +110,12 @@ in
     "@pco-client"
     "@check-services"
     "@date"
+    "@nmcli"
   ] [
     "${contextsScript}"
     "${servicesScript}"
     "${pkgs.coreutils}/bin/date"
+    "${pkgs.networkmanager}/bin/nmcli"
   ]
     ewwYuck;
 
