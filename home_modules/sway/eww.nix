@@ -1,7 +1,7 @@
 { pkgs, lib, config, inputs, ... }:
 
 let
-  colors = config.lib.stylix.colors;
+  colorTheme = config.lib.stylix.colors;
 
   servicesScriptDerivation = pkgs.rustPlatform.buildRustPackage {
     pname = "check-services-statuses";
@@ -16,7 +16,71 @@ let
   contextsScript = "${pcoClientPackage}/bin/client";
 
   ewwYuck = builtins.readFile ./eww.yuck;
-  ewwScss = builtins.readFile ./eww.scss;
+
+  workspaceColor = "4c769b";
+  workspaceColorFocused = colorTheme.base0D;
+  workspaceColorHovered = "45637f";
+
+  contextColor = "957c66";
+  contextColorFocused = colorTheme.base09;
+  contextColorHovered = "695a52";
+
+  textColor = colorTheme.base07;
+  ewwScss = ''
+    // ===== Base Bar =====
+    .bar {
+      background-color: #${colorTheme.base00};
+      padding: 0 8px;
+      font-family: sans-serif;
+      font-size: 14px;
+    }
+
+    // ===== Shared Button Styling =====
+    button {
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      min-width: 24px;
+      color: #${textColor};
+    }
+
+    // ===== Context Buttons =====
+    .context-button {
+      background-color: #${contextColor};
+
+      &:hover {
+        background-color: #${contextColorHovered};
+      }
+
+      &.focused {
+        background-color: #${contextColorFocused};
+      }
+    }
+
+    // ===== Workspace Buttons =====
+    .workspace-button {
+      background-color: #${workspaceColor};
+
+      &:hover {
+        background-color: #${workspaceColorHovered};
+      }
+
+      &.focused {
+        background-color: #${workspaceColorFocused};
+      }
+    }
+
+    // ===== Clock =====
+    .clock {
+      color: #${textColor};
+      font-weight: 500;
+    }
+
+    // ===== Battery =====
+    .battery {
+      color: #${textColor};
+    }
+  '';
 in
 {
   xdg.configFile."eww/eww.yuck".text = builtins.replaceStrings [
@@ -30,7 +94,7 @@ in
   ]
     ewwYuck;
 
-  xdg.configFile."eww/eww.scss".text = builtins.readFile ./eww.scss;
+  xdg.configFile."eww/eww.scss".text = ewwScss;
 
   home.packages = with pkgs; [
     pamixer
