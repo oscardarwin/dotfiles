@@ -54,10 +54,17 @@
       modifier = "Mod1";
       terminal = "kitty";
       bars = [ ];
-      defaultWorkspace = "workspace number 1";
+      defaultWorkspace = "default:1";
       window.titlebar = false;
+
+      startup = [
+        {
+          command = "swaymsg workspace default:1";
+        }
+      ];
     };
   };
+
 
   xdg.mimeApps.defaultApplications = {
     "text/html" = [ "chromium.desktop" ];

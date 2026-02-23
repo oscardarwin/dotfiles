@@ -47,6 +47,7 @@
 
     pco = {
       url = "path:./home_modules/sway/personal_context_orchestrator";
+      inputs.nixpkgs.follows = "nixpkgs";
       flake = true;
     };
   };

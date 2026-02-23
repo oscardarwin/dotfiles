@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, ... }:
+{ pkgs, lib, config, inputs, ... }:
 
 let
   colors = config.lib.stylix.colors;
@@ -17,15 +17,16 @@ let
 
   ewwYuck = builtins.readFile ./eww.yuck;
   ewwScss = builtins.readFile ./eww.scss;
-
 in
 {
   xdg.configFile."eww/eww.yuck".text = builtins.replaceStrings [
     "@pco-client"
     "@check-services"
+    "@date"
   ] [
     "${contextsScript}"
-    "${servicesScript} "
+    "${servicesScript}"
+    "${pkgs.coreutils}/bin/date"
   ]
     ewwYuck;
 
@@ -43,15 +44,9 @@ in
     eww
   ];
 
-  wayland.windowManager.sway.config.startup = [
-    {
-      command = "eww daemon";
-      always = true;
-    }
-    {
-      command = "eww open mainbar";
-    }
-  ];
+  wayland.windowManager.sway.extraConfig = ''
+    exec_always --no-startup-id /bin/sh -c "${pkgs.eww}/bin/eww daemon && until ${pkgs.eww}/bin/eww ping; do sleep 1; done && ${pkgs.eww}/bin/eww open bar"
+  '';
 }
   
 

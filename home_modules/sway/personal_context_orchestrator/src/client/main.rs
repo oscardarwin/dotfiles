@@ -69,10 +69,10 @@ fn main() -> Result<()> {
                 .ok_or_else(|| anyhow!("Usage: client set <value>"))?;
             manage_context_daemon::set_context(value)
         }
-        Some("listen-to-context-workspaces") => {
+        Some("listen-to-context-workspaces") => loop {
             _ = command::listen_to_context_workspaces();
-            Ok(())
-        }
+            std::thread::sleep(std::time::Duration::from_secs(1));
+        },
         _ => {
             eprintln!("Usage:");
             eprintln!("  client create-or-switch");
