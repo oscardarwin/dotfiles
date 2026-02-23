@@ -21,8 +21,8 @@ let
   workspaceColorFocused = colorTheme.base0D;
   workspaceColorHovered = "45637f";
 
-  contextColor = "957c66";
-  contextColorFocused = colorTheme.base09;
+  contextColor = "8b5655";
+  contextColorFocused = colorTheme.base0F;
   contextColorHovered = "695a52";
 
   textColor = colorTheme.base07;
