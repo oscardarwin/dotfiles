@@ -103,6 +103,23 @@ let
     .resource-critical {
       color: #${critical};
     }
+
+    .system-on {
+      color: #${colorTheme.base0C};
+    }
+    
+    .system-off {
+      color: #${colorTheme.base05};
+    }
+
+    tooltip {
+      background-color: #${colorTheme.base04};
+      border: 1px solid #${colorTheme.base07};
+    }
+    
+    tooltip label {
+      color: #${textColor};
+    }
   '';
 in
 {
