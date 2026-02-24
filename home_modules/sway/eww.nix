@@ -21,9 +21,9 @@ let
   workspaceColorFocused = colorTheme.base0D;
   workspaceColorHovered = colorTheme.base0D;
 
-  contextColor = "5a383a";
-  contextColorFocused = colorTheme.base0F;
-  contextColorHovered = colorTheme.base0F;
+  contextColor = "785189";
+  contextColorFocused = colorTheme.base0E;
+  contextColorHovered = colorTheme.base0E;
 
   healthy = colorTheme.base0B;
   used = colorTheme.base0A;

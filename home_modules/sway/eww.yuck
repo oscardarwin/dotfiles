@@ -8,11 +8,6 @@
 (deflisten services_info :initial '[]'
   "@check-services")
 
-(defwidget battery []
-  (box :class "battery"
-       :spacing 5
-       (label :text "${EWW_BATTERY.BAT1.capacity}%")))
-
 (defpoll WIFI_SSID
   :interval "15s"
   "@nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2")
@@ -28,6 +23,11 @@
   "bash -c 'pamixer --get-volume; pactl subscribe | grep --line-buffered sink | while read _; do pamixer --get-volume; done'")
 
 (defvar NET_IFACE "wlp2s0")
+
+(defwidget battery []
+  (box :class "battery"
+       :spacing 5
+       (label :text "${EWW_BATTERY.BAT1.capacity}%")))
 
 (defwidget battery []
   (box :class "battery"
