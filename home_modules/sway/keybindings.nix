@@ -1,4 +1,4 @@
-{ config, pkgs, lib, executeInWorkspace, inputs, ... }: {
+{ config, pkgs, inputs, ... }: {
   imports = [
     inputs.pco.homeManagerModules.pco
   ];

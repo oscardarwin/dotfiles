@@ -4,8 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,11 +38,6 @@
       flake = true;
     };
 
-    haumea = {
-      url = "github:nix-community/haumea/v0.2.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     pco = {
       url = "path:./home_modules/sway/personal_context_orchestrator";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -52,7 +45,7 @@
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, stylix, home-manager, nixos-hardware, haumea, ... }@inputs:
+  outputs = { nixpkgs, stylix, home-manager, nixos-hardware, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -65,13 +58,7 @@
         };
       };
 
-      unstable-pkgs = (import nixpkgs-unstable) {
-        inherit system;
-      };
-
-      executeInWorkspace = (import ./home_modules/sway/execute_in_workspace.nix) pkgs;
-
-      specialArgs = { inherit inputs unstable-pkgs executeInWorkspace; };
+      specialArgs = { inherit inputs; };
 
       makeNixosSystem = { config, nixosModules, users, hardware }: nixpkgs.lib.nixosSystem {
 

@@ -69,7 +69,7 @@
         setWorkspaceKeybindings = {
           "w" = lib.mkForce {
             workspaceName = "web";
-            executable = "${pkgs.firefox}/bin/firefox";
+            executable = "${pkgs.chromium}/bin/chromium";
           };
           "c" = lib.mkForce {
             workspaceName = "chat";
