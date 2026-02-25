@@ -3,13 +3,15 @@
     luasnip.enable = true;
     lspkind = {
       enable = true;
-      mode = "symbol";
-      cmp.menu = {
-        nvim_lsp = "[LSP]";
-        buffer = "[Buffer]";
-        path = "[Path]";
-        treesitter = "[Treesitter]";
-        luasnip = "[LuaSnip]";
+      settings = {
+        mode = "symbol";
+        cmp.menu = {
+          nvim_lsp = "[LSP]";
+          buffer = "[Buffer]";
+          path = "[Path]";
+          treesitter = "[Treesitter]";
+          luasnip = "[LuaSnip]";
+        };
       };
     };
 
