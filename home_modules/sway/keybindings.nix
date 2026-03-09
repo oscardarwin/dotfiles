@@ -24,11 +24,15 @@
       };
       "p" = {
         workspaceName = "passwords";
-        executable = "'${pkgs._1password-gui}/bin/1password";
+        executable = "${pkgs._1password-gui}/bin/1password";
+      };
+      "c" = {
+        workspaceName = "chat";
+        executable = "${pkgs.beeper}/bin/beeper";
       };
     };
 
-    extraKeys = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" "a" "b" "c" "d" "e" "g" "i" "m" "n" "r" "s" "t" "u" "v" "x" "y" "z" ];
+    extraKeys = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" "a" "b" "d" "e" "g" "i" "m" "n" "r" "s" "t" "u" "v" "x" "y" "z" ];
   };
 
   wayland.windowManager.sway.config.keybindings =
