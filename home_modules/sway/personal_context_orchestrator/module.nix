@@ -31,11 +31,19 @@ let
       )
       (lib.genAttrs allKeys (_: null));
 
-  containerMoveBindings =
+  moveToWorkspaceBindings =
     mapAttrs'
       (key: _: nameValuePair
-        "${mkModifierString cfg.containerMoveKeyModifiers}+${key}"
+        "${mkModifierString cfg.moveToWorkspaceModifiers}+${key}"
         "${runner} move-to-workspace ${key}"
+      )
+      (lib.genAttrs allKeys (_: null));
+
+  moveToContextBindings =
+    mapAttrs'
+      (key: _: nameValuePair
+        "${mkModifierString cfg.moveToContextModifiers}+${key}"
+        "${runner} move-to-context ${key}"
       )
       (lib.genAttrs allKeys (_: null));
 
@@ -102,7 +110,12 @@ in
       default = [ "Mod4" ];
     };
 
-    containerMoveKeyModifiers = mkOption {
+    moveToContextModifiers = mkOption {
+      type = types.listOf types.str;
+      default = [ "Mod4" "Shift" ];
+    };
+
+    moveToWorkspaceModifiers = mkOption {
       type = types.listOf types.str;
       default = [ "Mod1" "Shift" ];
     };
@@ -120,8 +133,9 @@ in
       config.keybindings =
         mkMerge [
           contextBindings
-          containerMoveBindings
+          moveToWorkspaceBindings
           workspaceSwitchBindings
+          moveToContextBindings
         ];
     };
     systemd.user.services.pco-daemon = {

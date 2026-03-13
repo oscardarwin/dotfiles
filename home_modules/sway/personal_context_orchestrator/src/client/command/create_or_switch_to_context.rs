@@ -1,35 +1,13 @@
-use std::collections::BTreeSet;
-
-use crate::context_workspace::{ContextName, ContextWorkspace, ContextWorkspaces};
+use crate::context_workspace::{ContextWorkspace, ContextWorkspaces};
 use crate::manage_context_daemon::set_context;
 use crate::wofi;
 use anyhow::Result;
 use swayipc::Connection;
 
-fn matches_first_letter(word: &String, letter: &char) -> bool {
-    word.chars()
-        .next()
-        .map_or(false, |c| c.eq_ignore_ascii_case(letter))
-}
-
-fn filter_by_context_first_letter(
-    context_workspaces: &ContextWorkspaces,
-    letter: char,
-) -> Vec<ContextName> {
-    let deduplicated: BTreeSet<_> = context_workspaces
-        .items
-        .iter()
-        .filter(|caw| matches_first_letter(&caw.context.name, &letter))
-        .map(|caw| caw.context.name.clone())
-        .collect();
-
-    deduplicated.into_iter().collect()
-}
-
 pub fn create_or_switch_to_context(letter: char) -> Result<()> {
     let workspaces = ContextWorkspaces::read()?;
 
-    let mut contexts = filter_by_context_first_letter(&workspaces, letter);
+    let mut contexts = workspaces.filter_by_context_first_letter(letter);
 
     let selected_context = match contexts.len() {
         1 => contexts.remove(0),

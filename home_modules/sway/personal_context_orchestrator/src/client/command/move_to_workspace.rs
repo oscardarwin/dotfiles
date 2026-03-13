@@ -35,6 +35,7 @@ pub fn move_to_workspace(letter: char) -> Result<()> {
 
     let mut conn = Connection::new()?;
     conn.run_command(format!("move container to workspace {}", workspace_name))?;
+    conn.run_command(format!("workspace {}", workspace_name))?;
 
     Ok(())
 }

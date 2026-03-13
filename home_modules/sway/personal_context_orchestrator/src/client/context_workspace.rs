@@ -1,3 +1,5 @@
+use std::collections::BTreeSet;
+
 use anyhow::Result;
 use serde::Serialize;
 use swayipc::{Connection, Workspace};
@@ -116,5 +118,22 @@ impl ContextWorkspaces {
             .filter_map(|ws| ContextWorkspace::try_from(ws).ok())
             .collect();
         Ok(ContextWorkspaces { items })
+    }
+
+    fn matches_first_letter(word: &String, letter: &char) -> bool {
+        word.chars()
+            .next()
+            .map_or(false, |c| c.eq_ignore_ascii_case(letter))
+    }
+
+    pub fn filter_by_context_first_letter(&self, letter: char) -> Vec<ContextName> {
+        let deduplicated: BTreeSet<_> = self
+            .items
+            .iter()
+            .filter(|caw| Self::matches_first_letter(&caw.context.name, &letter))
+            .map(|caw| caw.context.name.clone())
+            .collect();
+
+        deduplicated.into_iter().collect()
     }
 }
