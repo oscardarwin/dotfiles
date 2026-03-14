@@ -1,5 +1,6 @@
 use std::collections::BTreeSet;
 
+use anyhow::anyhow;
 use anyhow::Result;
 use serde::Serialize;
 use swayipc::{Connection, Workspace};
@@ -135,5 +136,12 @@ impl ContextWorkspaces {
             .collect();
 
         deduplicated.into_iter().collect()
+    }
+
+    pub fn get_focused(&self) -> Result<&ContextWorkspace> {
+        self.items
+            .iter()
+            .find(|cw| cw.focused)
+            .ok_or_else(|| anyhow!("no focused workspace"))
     }
 }

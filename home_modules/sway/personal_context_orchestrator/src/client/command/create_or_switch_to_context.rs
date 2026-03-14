@@ -1,11 +1,13 @@
 use crate::context_workspace::{ContextWorkspace, ContextWorkspaces};
 use crate::manage_context_daemon::set_context;
 use crate::wofi;
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use swayipc::Connection;
 
 pub fn create_or_switch_to_context(letter: char) -> Result<()> {
     let workspaces = ContextWorkspaces::read()?;
+
+    let focused = workspaces.get_focused()?.clone();
 
     let mut contexts = workspaces.filter_by_context_first_letter(letter);
 
@@ -14,13 +16,18 @@ pub fn create_or_switch_to_context(letter: char) -> Result<()> {
         _ => wofi::select_from_list("Context:", &contexts)?,
     };
 
-    let target_workspace = workspaces
+    let workspaces_with_context: Vec<ContextWorkspace> = workspaces
         .items
         .into_iter()
-        .find(|caw| caw.context.name == selected_context)
-        .unwrap_or(ContextWorkspace::new("1".to_string(), selected_context.clone(), true).unwrap());
+        .filter(|caw| caw.context.name == selected_context)
+        .collect();
 
-    println!("{}", String::from(&target_workspace));
+    let target_workspace = workspaces_with_context
+        .iter()
+        .find(|cw| cw.name == focused.name)
+        .or(workspaces_with_context.iter().next())
+        .cloned()
+        .unwrap_or(ContextWorkspace::new("1".to_string(), selected_context.clone(), true).unwrap());
 
     let mut conn = Connection::new()?;
     conn.run_command(format!("workspace {}", String::from(&target_workspace)))?;
