@@ -25,7 +25,7 @@ in
         hotspot = "${connect_hotspot}";
         bs = "brightnessctl set";
         mn = "rclone mount gdrive:notes ~/notes --daemon --vfs-cache-mode full --buffer-size 256M --dir-cache-time 72h --drive-chunk-size 32M";
-        pf10 = "nix develop path:${inputs.python-dev-flake}";
+        pf10 = "nix develop path:${inputs.python-dev-flake}#python310";
         pf11 = "nix develop path:${inputs.python-dev-flake}#python311";
         pf12 = "nix develop path:${inputs.python-dev-flake}#python312";
       };

@@ -1,6 +1,7 @@
-{ pkgs, lib, config, inputs, ... }:
+{ pkgs, config, lib, inputs, ... }:
 
 let
+  cfg = config.modules.eww;
   colorTheme = config.lib.stylix.colors;
 
   servicesScriptDerivation = pkgs.rustPlatform.buildRustPackage {
@@ -43,35 +44,39 @@ let
     // ===== Shared Button Styling =====
     button {
       border: none;
-      border-radius: 4px;
+      border-radius: 2px;
       padding: 4px 8px;
       min-width: 24px;
+      font-size: 16px;
+
+      box-shadow: none;
+      text-shadow: none;
+
       color: #${textColor};
     }
 
     // ===== Context Buttons =====
     .context-button {
-      background-color: #${contextColor};
-
+      background: #${contextColor};
       &:hover {
-        background-color: #${contextColorHovered};
+        background: #${contextColorHovered};
       }
 
       &.focused {
-        background-color: #${contextColorFocused};
+        background: #${contextColorFocused};
       }
     }
 
     // ===== Workspace Buttons =====
     .workspace-button {
-      background-color: #${workspaceColor};
+      background: #${workspaceColor};
 
       &:hover {
-        background-color: #${workspaceColorHovered};
+        background: #${workspaceColorHovered};
       }
 
       &.focused {
-        background-color: #${workspaceColorFocused};
+        background: #${workspaceColorFocused};
       }
     }
 
@@ -123,36 +128,56 @@ let
   '';
 in
 {
-  xdg.configFile."eww/eww.yuck".text = builtins.replaceStrings [
-    "@pco-client"
-    "@check-services"
-    "@date"
-    "@nmcli"
-  ] [
-    "${contextsScript}"
-    "${servicesScript}"
-    "${pkgs.coreutils}/bin/date"
-    "${pkgs.networkmanager}/bin/nmcli"
-  ]
-    ewwYuck;
+  options.modules.eww = {
+    networkInterface = lib.mkOption {
+      type = lib.types.str;
+      default = "eth0";
+      description = "Network interface to monitor";
+    };
 
-  xdg.configFile."eww/eww.scss".text = ewwScss;
+    battery = lib.mkOption {
+      type = lib.types.str;
+      default = "BAT0";
+      description = "Battery device name";
+    };
+  };
 
-  home.packages = with pkgs; [
-    pamixer
-    pavucontrol
-    jq
-    coreutils
-    procps
-    gnugrep
-    gawk
-    networkmanager
-    eww
-  ];
+  config = {
+    xdg.configFile."eww/eww.yuck".text = builtins.replaceStrings [
+      "@pco-client"
+      "@check-services"
+      "@date"
+      "@nmcli"
+      "@battery"
+      "@networkinterface"
+    ] [
+      "${contextsScript}"
+      "${servicesScript}"
+      "${pkgs.coreutils}/bin/date"
+      "${pkgs.networkmanager}/bin/nmcli"
+      cfg.battery
+      cfg.networkInterface
+    ]
+      ewwYuck;
 
-  wayland.windowManager.sway.extraConfig = ''
-    exec_always --no-startup-id /bin/sh -c "${pkgs.eww}/bin/eww daemon && until ${pkgs.eww}/bin/eww ping; do sleep 1; done && ${pkgs.eww}/bin/eww open bar"
-  '';
+    xdg.configFile."eww/eww.scss".text = ewwScss;
+
+    home.packages = with pkgs; [
+      pamixer
+      pavucontrol
+      jq
+      coreutils
+      procps
+      gnugrep
+      gawk
+      networkmanager
+      eww
+    ];
+
+    wayland.windowManager.sway.extraConfig = ''
+      exec_always --no-startup-id /bin/sh -c "${pkgs.eww}/bin/eww daemon && until ${pkgs.eww}/bin/eww ping; do sleep 1; done && ${pkgs.eww}/bin/eww open bar"
+    '';
+  };
 }
   
 

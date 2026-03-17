@@ -20,29 +20,30 @@
   "bash -c 'pamixer --get-mute; pactl subscribe | grep --line-buffered sink | while read _; do pamixer --get-mute; done'")
 
 (deflisten AUDIO_VOLUME
+  :initial 100
   "bash -c 'pamixer --get-volume; pactl subscribe | grep --line-buffered sink | while read _; do pamixer --get-volume; done'")
 
-(defvar NET_IFACE "wlp2s0")
+(defvar NET_IFACE "@networkinterface")
 
 (defwidget battery []
   (box :class "battery"
        :spacing 5
-       (label :text "${EWW_BATTERY.BAT1.capacity}%")))
+       (label :text "${EWW_BATTERY.@battery.capacity}%")))
 
 (defwidget battery []
   (box :class "battery"
-       :tooltip "${EWW_BATTERY.BAT1.status} - ${EWW_BATTERY.BAT1.capacity}%"
+       :tooltip "${EWW_BATTERY.@battery.status} - ${EWW_BATTERY.@battery.capacity}%"
        (label
-         :class "resource-icon ${EWW_BATTERY.BAT1.status == "Charging" ? "system-on" :
-                                EWW_BATTERY.BAT1.capacity <= 10 ? "resource-critical" :
-                                EWW_BATTERY.BAT1.capacity <= 25 ? "resource-low" :
-                                EWW_BATTERY.BAT1.capacity <= 50 ? "resource-medium" :
-                                EWW_BATTERY.BAT1.capacity <= 75 ? "resource-high" :
+         :class "resource-icon ${EWW_BATTERY.@battery.status == "Charging" ? "system-on" :
+                                EWW_BATTERY.@battery.capacity <= 10 ? "resource-critical" :
+                                EWW_BATTERY.@battery.capacity <= 25 ? "resource-low" :
+                                EWW_BATTERY.@battery.capacity <= 50 ? "resource-medium" :
+                                EWW_BATTERY.@battery.capacity <= 75 ? "resource-high" :
                                 "resource-high"}"
-         :text "${EWW_BATTERY.BAT1.capacity <= 5 ? " " :
-                 EWW_BATTERY.BAT1.capacity <= 25 ? " " :
-                 EWW_BATTERY.BAT1.capacity <= 50 ? " " :
-                 EWW_BATTERY.BAT1.capacity <= 75 ? " " :
+         :text "${EWW_BATTERY.@battery.capacity <= 5 ? " " :
+                 EWW_BATTERY.@battery.capacity <= 25 ? " " :
+                 EWW_BATTERY.@battery.capacity <= 50 ? " " :
+                 EWW_BATTERY.@battery.capacity <= 75 ? " " :
                  " "}")))                          
 
 (defwidget ram []
@@ -112,7 +113,7 @@
            :halign "fill"
            :class {"context-button " + (item.focused ? "focused" : "")}
            :tooltip {item.context.name}
-           :onclick "@pco-client create-or-switch-to-context"
+           :onclick "@pco-client create-or-switch-to-context ${item.context.associated_char}"
            {item.context.associated_char}))
 
        ;; Workspace buttons

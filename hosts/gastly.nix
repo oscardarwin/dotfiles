@@ -1,6 +1,5 @@
 { stylix, importHomeModules, ... }: {
   homeModules = importHomeModules [
-    "uai-keybindings.nix"
     "chrome.nix"
     "nixGL.nix"
 
@@ -31,6 +30,11 @@
       username = "oscar";
       homeDirectory = "/home/oscar";
       stateVersion = "23.11";
+    };
+
+    modules.eww = {
+      networkInterface = "wlp0s20f3";
+      battery = "BAT0";
     };
     programs = {
       home-manager.enable = true;
