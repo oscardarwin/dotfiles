@@ -9,7 +9,7 @@ let
     mapAttrs'
     nameValuePair;
 
-  cfg = config.programs.pcp-sway;
+  cfg = config.programs.pco-sway;
 
   mkModifierString = mods:
     lib.concatStringsSep "+" mods;
@@ -68,7 +68,7 @@ let
 
 in
 {
-  options.programs.pcp-sway = {
+  options.programs.pco-sway = {
 
     enable = mkOption {
       type = types.bool;

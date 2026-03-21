@@ -3,7 +3,7 @@
     inputs.pco.homeManagerModules.pco
   ];
 
-  programs.pcp-sway = {
+  programs.pco-sway = {
     enable = true;
 
     clientPackage = inputs.pco.packages.${pkgs.system}.pco-client;
@@ -30,6 +30,10 @@
         workspaceName = "chat";
         executable = "${pkgs.beeper}/bin/beeper";
       };
+      "1" = {
+        workspaceName = "1";
+        executable = "${pkgs.kitty}/bin/kitty";
+      };
     };
 
     extraKeys = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" "a" "b" "d" "e" "g" "i" "m" "n" "r" "s" "t" "u" "v" "x" "y" "z" ];
@@ -39,9 +43,6 @@
     let
       modifier = config.wayland.windowManager.sway.config.modifier;
       menu = config.wayland.windowManager.sway.config.menu;
-      execute_in_workspace_script_path = pkgs.writeScript "execute_in_workspace.sh" (builtins.readFile ./execute_in_workspace.sh);
-      launch_ncspot = pkgs.writeScript "launch_ncspot.sh" ''kitty -e ncspot'';
-
       volume-notification-id = "2";
 
       volume_set_command = new_volume: "${pkgs.libnotify}/bin/notify-send --hint int:value:${new_volume} --replace-id ${volume-notification-id} \"Volume\"";
