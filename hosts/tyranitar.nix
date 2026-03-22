@@ -25,6 +25,12 @@
           }
         '';
       }
+      {
+        modules.eww = {
+          networkInterface = "wlp2s0";
+          battery = "BAT1";
+        };
+      }
     ];
   };
 
@@ -43,11 +49,6 @@
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
-    };
-
-    modules.eww = {
-      networkInterface = "wlp2s0";
-      battery = "BAT1";
     };
 
     programs.dconf.enable = true;
