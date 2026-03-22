@@ -18,6 +18,12 @@
       "social_media.nix"
     ] ++ [
       stylix.homeModules.stylix
+      {
+        modules.eww = {
+          networkInterface = "wlp2s0";
+          battery = "BAT1";
+        };
+      }
     ];
   };
 
@@ -56,10 +62,6 @@
       extraGroups = [ "networkmanager" "wheel" ];
     };
 
-    modules.eww = {
-      networkInterface = "wlp2s0";
-      battery = "BAT1";
-    };
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
     # on your system were taken. It‘s perfectly fine and recommended to leave
