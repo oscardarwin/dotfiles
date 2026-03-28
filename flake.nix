@@ -59,12 +59,18 @@
       };
 
       specialArgs = { inherit inputs; };
+      nixSettings = {
+        experimental-features = [ "nix-command" "flakes" "auto-allocate-uids" ];
+        http2 = false;
+      };
 
       makeNixosSystem = { config, nixosModules, users, hardware }: nixpkgs.lib.nixosSystem {
 
         inherit system specialArgs pkgs;
         modules = nixosModules ++ [
-          { nix.settings.experimental-features = [ "nix-command" "flakes" ]; }
+          {
+            nix.settings = nixSettings;
+          }
           hardware
           config
           home-manager.nixosModules.home-manager
@@ -102,6 +108,7 @@
           hostModules.homeModules ++
           [
             hostModules.config
+            nixSettings
           ];
       };
     };

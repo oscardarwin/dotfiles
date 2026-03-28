@@ -25,7 +25,6 @@
         pkgs.slack
         pkgs.vscode
         pkgs.openconnect
-
       ];
       username = "oscar";
       homeDirectory = "/home/oscar";
@@ -58,11 +57,6 @@
         '';
       };
 
-      # git = {
-      #   userName = lib.mkForce null;
-      #   userEmail = lib.mkForce null;
-      # };
-
       ssh.matchBlocks."gitlab.com" = {
         hostname = "gitlab.com";
         identityFile = "~/.ssh/uai_gitlab_oscar";
@@ -84,11 +78,6 @@
 
     };
     nix.package = pkgs.nix;
-    nix.settings.experimental-features = [
-      "nix-command"
-      "flakes"
-      "auto-allocate-uids"
-    ];
 
     programs.nixvim.plugins.conform-nvim = {
       enable = true;

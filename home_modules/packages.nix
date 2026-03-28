@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 let
   qutebrowser = "org.qutebrowser.qutebrowser.desktop";
 in
@@ -16,6 +16,7 @@ in
     pkgs.steam
     pkgs.pavucontrol
     pkgs.brightnessctl
+    pkgs.drawio
   ];
 
   xdg.mimeApps.defaultApplications = {
