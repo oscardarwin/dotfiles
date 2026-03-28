@@ -57,6 +57,10 @@
         "<Ctrl-p>" = "mode-enter passthrough";
         "<Ctrl-v>" = "nop";
       };
+      "passthrough" = {
+        "<Ctrl-p>" = "mode-leave";
+        "<Shift-Escape>" = null;
+      };
     };
 
     aliases = {
