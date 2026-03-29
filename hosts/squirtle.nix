@@ -1,4 +1,4 @@
-{ stylix, nixos-hardware, makeNixosSystem, importHomeModules, importNixosModules, ... }: makeNixosSystem {
+{ stylix, nixos-hardware, makeClanMachine, importHomeModules, importNixosModules, ... }: makeClanMachine {
 
   users.oscar = {
     home.stateVersion = "21.11";
@@ -62,6 +62,10 @@
       description = "oscar";
       extraGroups = [ "networkmanager" "wheel" ];
     };
+
+    users.users.root.openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsFoH2UCS1C/jJdBFeJ7F0Zy6FT279tetGUOkM+1Ypa"
+    ];
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

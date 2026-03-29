@@ -1,4 +1,4 @@
-{ stylix, makeNixosSystem, importHomeModules, importNixosModules, ... }: makeNixosSystem {
+{ stylix, makeClanMachine, importHomeModules, importNixosModules, ... }: makeClanMachine {
 
   users.oscar = {
     home.stateVersion = "21.11";

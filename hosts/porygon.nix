@@ -1,4 +1,4 @@
-{ makeNixosSystem, importHomeModules, importNixosModules, ... }: makeNixosSystem {
+{ makeClanMachine, importHomeModules, importNixosModules, ... }: makeClanMachine {
   users.testuser = {
     home.stateVersion = "21.11";
     imports = importHomeModules [

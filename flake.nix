@@ -9,6 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    clan-core = {
+      url = "https://git.clan.lol/clan/clan-core/archive/25.11.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,7 +50,7 @@
     };
   };
 
-  outputs = { nixpkgs, stylix, home-manager, nixos-hardware, ... }@inputs:
+  outputs = { nixpkgs, stylix, home-manager, nixos-hardware, clan-core, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -64,27 +69,24 @@
         http2 = false;
       };
 
-      makeNixosSystem = { config, nixosModules, users, hardware }: nixpkgs.lib.nixosSystem {
-
-        inherit system specialArgs pkgs;
-        modules = nixosModules ++ [
-          {
-            nix.settings = nixSettings;
-          }
+      makeClanMachine = { config, nixosModules, users, hardware }: {
+        nixpkgs.hostPlatform = system;
+        nixpkgs.pkgs = pkgs;
+        imports = nixosModules ++ [
+          { nix.settings = nixSettings; }
           hardware
           config
           home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              inherit users;
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = specialArgs;
-              backupFileExtension = "backup";
-            };
-          }
         ];
+        home-manager = {
+          inherit users;
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = specialArgs;
+          backupFileExtension = "backup";
+        };
       };
+
       importHomeModules = moduleNames: map (name: ./home_modules + "/${name}") moduleNames;
       importNixosModules = moduleNames: map (name: ./nixos_modules + "/${name}") moduleNames;
 
@@ -92,10 +94,23 @@
         let
           makeHost = import (./hosts + "/${hostName}.nix");
         in
-        makeHost { inherit inputs stylix nixos-hardware makeNixosSystem importHomeModules importNixosModules; };
+        makeHost { inherit inputs stylix nixos-hardware makeClanMachine importHomeModules importNixosModules; };
+
+      clan = clan-core.lib.clan {
+        self = inputs.self;
+        inherit specialArgs;
+        meta.name = "dotfiles";
+        meta.domain = "oscar"; # can be anything unique
+        machines = pkgs.lib.genAttrs [ "squirtle" "tyranitar" "porygon" ] (hostName: {
+          imports = [ (makeNixosSystemFromHostName hostName) ];
+          clan.core.networking.targetHost = "${hostName}.local";
+          networking.hostName = hostName;
+        });
+      };
     in
     {
-      nixosConfigurations = pkgs.lib.genAttrs [ "squirtle" "tyranitar" "porygon" ] makeNixosSystemFromHostName;
+      inherit (clan.config) nixosConfigurations clanInternals;
+      clan = clan.config;
 
       homeConfigurations.oscar = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -110,6 +125,9 @@
             hostModules.config
             nixSettings
           ];
+      };
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [ clan-core.packages.${system}.clan-cli ];
       };
     };
 }
