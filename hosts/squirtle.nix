@@ -36,6 +36,7 @@
     "screensharing.nix"
     "docker.nix"
     "greetd.nix"
+    "llm.nix"
   ] ++ [
     nixos-hardware.nixosModules.microsoft-surface-laptop-amd
   ];
