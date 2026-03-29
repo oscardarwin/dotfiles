@@ -126,8 +126,5 @@
             nixSettings
           ];
       };
-      devShells.${system}.default = pkgs.mkShell {
-        packages = [ clan-core.packages.${system}.clan-cli ];
-      };
     };
 }

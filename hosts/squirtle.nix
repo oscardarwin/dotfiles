@@ -16,6 +16,7 @@
       "stylix.nix"
       "wofi.nix"
       "social_media.nix"
+      "llm.nix"
     ] ++ [
       stylix.homeModules.stylix
       {
@@ -36,7 +37,7 @@
     "screensharing.nix"
     "docker.nix"
     "greetd.nix"
-    "llm.nix"
+    "clan.nix"
   ] ++ [
     nixos-hardware.nixosModules.microsoft-surface-laptop-amd
   ];

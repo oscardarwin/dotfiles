@@ -31,6 +31,7 @@
     clipboard.providers.xclip.enable = true;
 
     plugins = {
+      dressing.enable = true;
       image.enable = true;
       hardtime.enable = true;
 

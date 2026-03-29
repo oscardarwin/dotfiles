@@ -17,7 +17,6 @@ in
     pkgs.pavucontrol
     pkgs.brightnessctl
     pkgs.drawio
-    inputs.clan-core.packages.${pkgs.system}.clan-cli
   ];
 
   xdg.mimeApps.defaultApplications = {
