@@ -17,15 +17,13 @@
   services.litellm = {
     enable = true;
     environmentFile = config.clan.core.vars.generators.litellm.files.openrouter_api_key_env.path;
-    environment = {
-      LITELLM_LOG = "DEBUG";
-    };
     settings = {
-      litellm_settings.set_verbose = true;
       model_list = [
         {
           model_name = "openrouter-free";
           litellm_params = {
+            # litellm strips away the first openrouter before sending to openrouter.
+            # The switching end point is actually determined by openrouter/free on the openrouter side, so we need 2..
             model = "openrouter/openrouter/free";
             api_key = "os.environ/OPENROUTER_API_KEY";
           };

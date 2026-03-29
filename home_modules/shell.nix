@@ -16,7 +16,7 @@ in
       shellAliases = {
         sshs = "eval (ssh-agent -c) && ssh-add ~/.ssh/github";
         lg = "lazygit";
-        rb = "sudo nixos-rebuild switch --flake";
+        cmu = "clan machines update";
         gl = "git log --all --decorate --oneline --graph";
         ls = "eza -a";
         cat = "bat";
