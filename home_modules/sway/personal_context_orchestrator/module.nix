@@ -47,6 +47,22 @@ let
       )
       (lib.genAttrs allKeys (_: null));
 
+  moveToOutputBindings =
+    mapAttrs'
+      (key: _: nameValuePair
+        "${mkModifierString cfg.moveToOutputModifiers}+${key}"
+        "${runner} move-to-output ${key}"
+      )
+      (lib.genAttrs allKeys (_: null));
+
+  switchToOutputBindings =
+    mapAttrs'
+      (key: _: nameValuePair
+        "${mkModifierString cfg.switchToOutputModifiers}+${key}"
+        "${runner} switch-to-output ${key}"
+      )
+      (lib.genAttrs allKeys (_: null));
+
   workspaceSwitchBindings =
     mapAttrs'
       (key: _:
@@ -120,9 +136,19 @@ in
       default = [ "Mod1" "Shift" ];
     };
 
+    moveToOutputModifiers = mkOption {
+      type = types.listOf types.str;
+      default = [ "Mod5" "Shift" ];
+    };
+
     workspaceSwitchKeyModifiers = mkOption {
       type = types.listOf types.str;
       default = [ "Mod1" ];
+    };
+
+    switchToOutputModifiers = mkOption {
+      type = types.listOf types.str;
+      default = [ "Mod5" ];
     };
   };
 
@@ -136,6 +162,8 @@ in
           moveToWorkspaceBindings
           workspaceSwitchBindings
           moveToContextBindings
+          moveToOutputBindings
+          switchToOutputBindings
         ];
     };
     systemd.user.services.pco-daemon = {

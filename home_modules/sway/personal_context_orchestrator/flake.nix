@@ -54,6 +54,7 @@
             packages = [
               rustToolchain
               pkgs.socat
+              pkgs.rust-analyzer
             ];
           };
         };

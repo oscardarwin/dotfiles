@@ -27,7 +27,15 @@ pub fn create_or_switch_to_context(letter: char) -> Result<()> {
         .find(|cw| cw.name == focused.name)
         .or(workspaces_with_context.iter().next())
         .cloned()
-        .unwrap_or(ContextWorkspace::new("1".to_string(), selected_context.clone(), true).unwrap());
+        .unwrap_or(
+            ContextWorkspace::new(
+                "1".to_string(),
+                selected_context.clone(),
+                true,
+                focused.output,
+            )
+            .unwrap(),
+        );
 
     let mut conn = Connection::new()?;
     conn.run_command(format!("workspace {}", String::from(&target_workspace)))?;

@@ -127,7 +127,16 @@
                      + item.context.name
                      + ":"
                      + item.name}
-           {item.associated_char}))))
+           {item.associated_char}))
+
+       ;; Output buttons
+       (for item in {context_workspace_info.outputs}
+         (button
+           :hexpand true
+           :halign "fill"
+           :class {"output-button "}
+           :tooltip {item.output}
+           {item.output}))))
 
 (defwidget center-content []
   (box :halign "center"
@@ -151,7 +160,7 @@
        (net)))
 
 (defwindow bar
-  :monitor 0
+  :monitor '[2, 1, 0]' 
   :geometry (geometry
               :x "0%"
               :y "0%"

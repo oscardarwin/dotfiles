@@ -1,28 +1,31 @@
 use anyhow::Result;
-use std::process::Command;
 use swayipc::Connection;
 
 use crate::context_workspace::{ContextWorkspace, ContextWorkspaces};
-use crate::manage_context_daemon::get_context;
 use crate::wofi;
 
 pub fn create_or_switch_to_workspace(letter: char) -> Result<()> {
-    let current_context = get_context()?;
     let workspaces = ContextWorkspaces::read()?;
+    let focused = workspaces.get_focused()?.clone();
+
+    let current_context = &focused.context.name;
 
     let mut matches: Vec<ContextWorkspace> = workspaces
         .items
         .into_iter()
         .filter(|caw| {
-            caw.context.name == current_context && caw.first_letter_of_workspace_matches(&letter)
+            caw.context.name == *current_context && caw.first_letter_of_workspace_matches(&letter)
         })
         .collect();
 
     let mut conn = Connection::new()?;
     match matches.len() {
         0 => {
-            let workspace_name =
-                ContextWorkspace::create_workspace_name(&letter.to_string(), &current_context);
+            let workspace_name = ContextWorkspace::create_workspace_name(
+                &letter.to_string(),
+                current_context,
+                &focused.output,
+            );
 
             conn.run_command(format!("workspace {}", workspace_name))?;
             // Case 1: No matching workspace → select program from PATH

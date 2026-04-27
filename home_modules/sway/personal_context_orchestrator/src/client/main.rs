@@ -59,6 +59,22 @@ fn main() -> Result<()> {
 
             command::create_or_switch_to_set_workspace(workspace_display_name, executable_path)
         }
+        Some("move-to-output") => {
+            let letter_str = args
+                .get(2)
+                .ok_or_else(|| anyhow!("Usage: client move-to-output <number>"))?;
+
+            let character = get_first_character(letter_str)?;
+            command::move_to_output(character)
+        }
+        Some("switch-to-output") => {
+            let letter_str = args
+                .get(2)
+                .ok_or_else(|| anyhow!("Usage: client switch-to-output <letter>"))?;
+
+            let character = get_first_character(letter_str)?;
+            command::switch_to_output(character)
+        }
         Some("get") => manage_context_daemon::get_context().map(|context| {
             println!("Context: {}", &context);
             ()

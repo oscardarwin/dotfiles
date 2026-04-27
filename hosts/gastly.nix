@@ -63,7 +63,7 @@
         forwardAgent = true;
       };
 
-      pcp-sway = {
+      pco-sway = {
         setWorkspaceKeybindings = {
           "w" = lib.mkForce {
             workspaceName = "web";

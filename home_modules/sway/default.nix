@@ -59,7 +59,7 @@
 
       startup = [
         {
-          command = "swaymsg workspace default:1";
+          command = "swaymsg workspace default:1:0";
         }
       ];
     };

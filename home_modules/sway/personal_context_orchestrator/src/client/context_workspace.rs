@@ -35,6 +35,7 @@ pub struct ContextWorkspace {
     pub name: String,
     pub associated_char: char,
     pub focused: bool,
+    pub output: String,
 }
 
 #[derive(Debug)]
@@ -49,6 +50,7 @@ impl ContextWorkspace {
         workspace_display_name: WorkspaceName,
         context_name: ContextName,
         focused: bool,
+        output: String,
     ) -> Result<ContextWorkspace, ContextWorkspaceCreationError> {
         let Some(workspace_associated_char) = workspace_display_name.chars().next() else {
             return Err(ContextWorkspaceCreationError::EmptyWorkspaceDisplayName);
@@ -62,6 +64,7 @@ impl ContextWorkspace {
             name: workspace_display_name,
             associated_char: workspace_associated_char,
             focused,
+            output,
         })
     }
 }
@@ -70,7 +73,7 @@ impl TryFrom<&Workspace> for ContextWorkspace {
     type Error = ContextWorkspaceCreationError;
 
     fn try_from(workspace: &Workspace) -> Result<Self, Self::Error> {
-        let mut parts = workspace.name.splitn(2, ':');
+        let mut parts = workspace.name.splitn(3, ':');
 
         let context_name = parts
             .next()
@@ -82,13 +85,23 @@ impl TryFrom<&Workspace> for ContextWorkspace {
             .ok_or(ContextWorkspaceCreationError::MissingSeparator)?
             .to_string();
 
-        ContextWorkspace::new(workspace_display_name, context_name, workspace.focused)
+        let output = parts
+            .next()
+            .ok_or(ContextWorkspaceCreationError::MissingSeparator)?
+            .to_string();
+
+        ContextWorkspace::new(
+            workspace_display_name,
+            context_name,
+            workspace.focused,
+            output,
+        )
     }
 }
 
 impl From<&ContextWorkspace> for WorkspaceName {
     fn from(caw: &ContextWorkspace) -> Self {
-        ContextWorkspace::create_workspace_name(&caw.name, &caw.context.name)
+        ContextWorkspace::create_workspace_name(&caw.name, &caw.context.name, &caw.output)
     }
 }
 
@@ -100,8 +113,9 @@ impl ContextWorkspace {
     pub fn create_workspace_name(
         workspace_display_name: &String,
         context_name: &ContextName,
+        output: &String,
     ) -> String {
-        format!("{}:{}", context_name, workspace_display_name)
+        format!("{}:{}:{}", context_name, workspace_display_name, output)
     }
 }
 

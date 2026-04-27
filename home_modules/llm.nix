@@ -1,4 +1,4 @@
-{ pkgs, config, osConfig, ... }:
+{ pkgs, osConfig, ... }:
 let
   port = "8080";
   model = "openrouter-free";

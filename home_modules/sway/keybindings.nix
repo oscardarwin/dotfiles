@@ -79,11 +79,6 @@
         ${pkgs.brightnessctl}/bin/brightnessctl set ''${new_brightness}%
         ${pkgs.libnotify}/bin/notify-send --hint int:value:$new_brightness --replace-id ${brightness-notification-id} "Brightness"
       '';
-
-      setup_numbered_workspace = number: {
-        "${modifier}+${number}" = "workspace number ${number}";
-        "${modifier}+Shift+${number}" = "move container to workspace number ${number}";
-      };
     in
     {
       "${modifier}+Return" = "exec ${config.wayland.windowManager.sway.config.terminal}";
