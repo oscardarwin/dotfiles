@@ -3,12 +3,20 @@ TODO:
 uai ubuntu:
  - screen positions
 
+## Short Term
+Fix multi-screen.
+Get tyranitar setup as a full server.
+
 ## Long Term
 ### Home Data Center
 1. NextCloud
     1. Password Manager on Nextcloud
     2. Compressed/Encrypted Backups to Cloud Solution
 2. Matrix Messenging
+3. Litellm
+
+### OneInbox
+Emails, chats and selected news all in one information interface.
 
 #### Plan
 Nix machine runs services on boot. 
