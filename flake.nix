@@ -123,7 +123,7 @@
           hostModules.homeModules ++
           [
             hostModules.config
-            nixSettings
+            { nix.settings = nixSettings; }
           ];
       };
     };
