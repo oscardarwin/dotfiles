@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     inputs.nixvim.homeModules.nixvim
     ./auto-complete.nix
@@ -34,10 +34,12 @@
       dressing.enable = true;
       image.enable = true;
       hardtime.enable = true;
-
+      diagram.enable = true;
       lsp-lines.enable = true;
       illuminate.enable = true;
       leap.enable = true;
+      markdown-preview.enable = true;
+
       telescope = {
         enable = true;
         extensions = {
@@ -91,4 +93,9 @@
       };
     };
   };
+
+  home.packages = [
+    pkgs.plantuml
+    pkgs.graphviz
+  ];
 }

@@ -70,6 +70,7 @@
         jsonls.enable = true;
         pyright.enable = true;
         marksman.enable = true;
+
         ts_ls.enable = true;
       };
     };

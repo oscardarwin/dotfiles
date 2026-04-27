@@ -68,6 +68,13 @@
       f = "spawn --userscript 1password.sh";
     };
 
+    perDomainSettings = {
+      "https://calendar.google.com" = {
+        "content.notifications.enabled" = false;
+        "content.geolocation" = false;
+      };
+    };
+
   };
 
   home.file.".config/qutebrowser/userscripts/1password.sh" = {

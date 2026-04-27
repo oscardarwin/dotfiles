@@ -1,4 +1,4 @@
-{ pkgs, config, osConfig, ... }:
+{ pkgs, osConfig, ... }:
 let
   port = "8080";
   model = "openrouter-free";
@@ -42,7 +42,7 @@ in
   };
 
   home.sessionVariables = {
-    ${dummyLiteLLMApiKey} = "dummy";
+    ${dummyLiteLLMApiKey} = "dummy"; # avante expects an api key
   };
 
   programs.nixvim = {
@@ -57,7 +57,7 @@ in
                 inherit model;
                 __inherited_from = "openai";
                 endpoint = "http://localhost:${port}/v1";
-                api_key_name = dummyLiteLLMApiKey; # see note below
+                api_key_name = dummyLiteLLMApiKey;
               };
           };
         };
