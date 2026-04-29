@@ -63,7 +63,9 @@ impl Space {
 pub struct ContextWorkspace {
     pub context: Context,
     pub space: Space,
+    pub output: String,
     pub focused: bool,
+    pub visible: bool,
 }
 
 #[derive(Debug)]
@@ -77,7 +79,9 @@ impl ContextWorkspace {
     pub fn new(
         workspace_display_name: WorkspaceName,
         context_name: ContextName,
+        output: String,
         focused: bool,
+        visible: bool,
     ) -> Result<ContextWorkspace, ContextWorkspaceCreationError> {
         let context = Context::new(context_name)
             .map_err(|_| ContextWorkspaceCreationError::EmptyContextName)?;
@@ -88,7 +92,9 @@ impl ContextWorkspace {
         Ok(Self {
             context,
             space,
+            output,
             focused,
+            visible,
         })
     }
 }
@@ -109,7 +115,13 @@ impl TryFrom<&Workspace> for ContextWorkspace {
             .ok_or(ContextWorkspaceCreationError::MissingSeparator)?
             .to_string();
 
-        ContextWorkspace::new(workspace_display_name, context_name, workspace.focused)
+        ContextWorkspace::new(
+            workspace_display_name,
+            context_name,
+            workspace.output.clone(),
+            workspace.focused,
+            workspace.visible,
+        )
     }
 }
 

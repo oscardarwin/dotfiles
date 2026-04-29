@@ -107,34 +107,14 @@
        :spacing 2
 
        ;; Context buttons
-       (for item in {context_workspace_info.contexts}
+       (for item in context_workspace_info
          (button
            :hexpand true
            :halign "fill"
-           :class {"context-button " + (item.focused ? "focused" : "")}
-           :tooltip {item.context.name}
-           :onclick "@pco-client create-or-switch-to-context ${item.context.associated_char}"
-           {item.context.associated_char}))
-
-       ;; Workspace buttons
-       (for item in {context_workspace_info.spaces}
-         (button
-           :hexpand true
-           :halign "fill"
-           :class {"workspace-button " + (item.focused ? "focused" : "")}
-           :tooltip {item.space.name}
-           :onclick "@pco-client create-or-switch-to-workspace ${item.space.associated_char}"
-           {item.space.associated_char}))
-
-       ;; Output buttons
-       (for item in {context_workspace_info.outputs}
-         (button
-           :hexpand true
-           :halign "fill"
-           :class {"output-button " + (item.focused ? "focused": "")}
-           :tooltip {item.output.device}
-           :onclick "@pco-client switch-to-output ${item.output.name}"
-           {item.output.name}))))
+           :class {"${item.class} " + (item.highlighted ? "highlighted" : "")}
+           :tooltip {item.tooltip}
+           :onclick "@pco-client ${item.onclick}"
+           {item.text}))))
 
 (defwidget center-content []
   (box :halign "center"

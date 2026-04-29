@@ -15,6 +15,7 @@ in
       '';
       shellAliases = {
         sshs = "eval (ssh-agent -c) && ssh-add ~/.ssh/github";
+        sl = "systemctl suspend";
         lg = "lazygit";
         cmu = "clan machines update";
         gl = "git log --all --decorate --oneline --graph";

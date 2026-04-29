@@ -66,7 +66,7 @@ let
         background: #${contextColorHovered};
       }
 
-      &.focused {
+      &.highlighted {
         background: #${contextColorFocused};
       }
     }
@@ -79,7 +79,7 @@ let
         background: #${workspaceColorHovered};
       }
 
-      &.focused {
+      &.highlighted {
         background: #${workspaceColorFocused};
       }
     }
@@ -91,7 +91,7 @@ let
         background: #${outputColorHovered};
       }
 
-      &.focused {
+      &.highlighted {
         background: #${outputColorFocused};
       }
     }

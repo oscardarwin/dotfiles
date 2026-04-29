@@ -1,10 +1,12 @@
 use anyhow::Result;
+use itertools::Itertools;
 use serde::Serialize;
+use std::collections::VecDeque;
 use swayipc::{Connection, EventType};
 
 use crate::context_workspace::{Context, ContextWorkspace, ContextWorkspaces, Output, Space};
 use serde_json::json;
-use std::collections::BTreeSet;
+use std::collections::{BTreeSet, HashMap};
 
 #[derive(Serialize, Ord, Eq, PartialEq, PartialOrd)]
 struct ContextWithFocus {
@@ -16,19 +18,22 @@ struct ContextWithFocus {
 struct OutputWithFocus {
     pub output: Output,
     pub focused: bool,
+    pub spaces: Vec<SpaceWithFocus>,
 }
 
 #[derive(Serialize, Ord, Eq, PartialEq, PartialOrd)]
 struct SpaceWithFocus {
     pub space: Space,
-    pub focused: bool,
+    pub visible: bool,
 }
 
-#[derive(Serialize)]
-struct ContextWorkspacesInfo {
-    contexts: BTreeSet<ContextWithFocus>,
-    outputs: Vec<OutputWithFocus>,
-    spaces: BTreeSet<SpaceWithFocus>,
+#[derive(Serialize, Ord, Eq, PartialEq, PartialOrd)]
+struct Label {
+    pub tooltip: String,
+    pub text: String,
+    pub highlighted: bool,
+    pub onclick: String,
+    pub class: String,
 }
 
 fn print_context_workspaces_info() -> Result<()> {
@@ -38,62 +43,75 @@ fn print_context_workspaces_info() -> Result<()> {
 
     let ContextWorkspaces { mut items } = workspaces;
 
-    let mut contexts: BTreeSet<Context> = BTreeSet::new();
+    let mut contexts_containing_workspaces: BTreeSet<Context> = BTreeSet::new();
 
     items.sort_by_key(|context_workspace| String::from(context_workspace));
 
     let workspaces_in_context: Vec<ContextWorkspace> = items
         .into_iter()
         .map(|caw| {
-            contexts.insert(caw.context.clone());
+            contexts_containing_workspaces.insert(caw.context.clone());
             caw
         })
         .filter(|caw| caw.context.name == focused_workspace.context.name)
         .collect();
 
-    let contexts_with_focus = contexts
+    let mut context_labels: Vec<Label> = contexts_containing_workspaces
         .into_iter()
-        .map(|context| ContextWithFocus {
-            focused: context.name == focused_workspace.context.name,
-            context,
+        .map(|context| Label {
+            highlighted: context.name == focused_workspace.context.name,
+            tooltip: context.name,
+            text: context.associated_char.to_string(),
+            onclick: format!("create-or-switch-to-context {}", context.associated_char),
+            class: "context-button".to_string(),
         })
         .collect();
 
-    let mut conn = Connection::new()?;
+    let spaces: HashMap<String, Vec<ContextWorkspace>> = workspaces_in_context
+        .into_iter()
+        .into_group_map_by(|caw| caw.output.clone());
 
-    let mut outputs: Vec<OutputWithFocus> = conn
+    let mut conn = Connection::new()?;
+    let output_labels: Vec<Label> = conn
         .get_outputs()?
         .into_iter()
         .enumerate()
-        .map(|(index, output)| OutputWithFocus {
-            output: Output::new((index + 1).to_string(), output.name),
-            focused: output.focused,
+        .filter_map(|(index, output)| {
+            let mut labels: VecDeque<Label> = spaces
+                .get(&output.name)?
+                .iter()
+                .map(|caw| Label {
+                    tooltip: caw.space.name.clone(),
+                    text: caw.space.associated_char.to_string(),
+                    highlighted: caw.visible,
+                    onclick: format!(
+                        "create-or-switch-to-workspace {}",
+                        caw.space.associated_char
+                    ),
+                    class: "workspace-button".to_string(),
+                })
+                .collect();
+
+            let output_id = (index + 1).to_string();
+
+            let output_label = Label {
+                tooltip: output.name,
+                onclick: format!("switch-to-output {}", output_id),
+                text: output_id,
+                highlighted: output.focused,
+                class: "output-button".to_string(),
+            };
+
+            labels.push_front(output_label);
+
+            Some(labels)
         })
+        .flatten()
         .collect();
 
-    outputs.sort_by_key(|output| output.output.name.clone());
+    context_labels.extend(output_labels);
 
-    let spaces_set: BTreeSet<Space> = workspaces_in_context
-        .into_iter()
-        .map(|workspace| workspace.space.clone())
-        .collect();
-
-    let spaces = spaces_set
-        .into_iter()
-        .map(|space| SpaceWithFocus {
-            focused: space.name == focused_workspace.space.name,
-            space,
-        })
-        .collect();
-
-    println!(
-        "{}",
-        json!(ContextWorkspacesInfo {
-            contexts: contexts_with_focus,
-            outputs,
-            spaces,
-        })
-    );
+    println!("{}", json!(context_labels));
 
     Ok(())
 }
