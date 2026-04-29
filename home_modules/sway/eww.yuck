@@ -134,7 +134,7 @@
          (button
            :hexpand true
            :halign "fill"
-           :class {"output-button "}
+           :class "output-button"
            :tooltip {item.output}
            {item.output}))))
 
