@@ -17,7 +17,7 @@ pub struct Context {
 struct EmptyNameError;
 
 impl Context {
-    pub fn new(name: String) -> Result<Context, EmptyNameError> {
+    fn new(name: String) -> Result<Context, EmptyNameError> {
         let Some(associated_char) = name.chars().next() else {
             return Err(EmptyNameError);
         };
@@ -29,18 +29,6 @@ impl Context {
     }
 }
 
-#[derive(Serialize, Eq, Debug, Ord, PartialEq, PartialOrd, Clone)]
-pub struct Output {
-    pub device: String,
-    pub name: String,
-}
-
-impl Output {
-    pub fn new(name: String, device: String) -> Output {
-        Self { device, name }
-    }
-}
-
 #[derive(Serialize, Debug, Eq, Ord, PartialEq, PartialOrd, Clone)]
 pub struct Space {
     pub associated_char: char,
@@ -48,7 +36,7 @@ pub struct Space {
 }
 
 impl Space {
-    pub fn new(name: String) -> Result<Space, EmptyNameError> {
+    fn new(name: String) -> Result<Space, EmptyNameError> {
         let Some(associated_char) = name.chars().next() else {
             return Err(EmptyNameError);
         };

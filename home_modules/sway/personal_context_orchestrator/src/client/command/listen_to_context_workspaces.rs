@@ -4,28 +4,9 @@ use serde::Serialize;
 use std::collections::VecDeque;
 use swayipc::{Connection, EventType};
 
-use crate::context_workspace::{Context, ContextWorkspace, ContextWorkspaces, Output, Space};
+use crate::context_workspace::{Context, ContextWorkspace, ContextWorkspaces};
 use serde_json::json;
 use std::collections::{BTreeSet, HashMap};
-
-#[derive(Serialize, Ord, Eq, PartialEq, PartialOrd)]
-struct ContextWithFocus {
-    pub context: Context,
-    pub focused: bool,
-}
-
-#[derive(Serialize, Ord, Eq, PartialEq, PartialOrd)]
-struct OutputWithFocus {
-    pub output: Output,
-    pub focused: bool,
-    pub spaces: Vec<SpaceWithFocus>,
-}
-
-#[derive(Serialize, Ord, Eq, PartialEq, PartialOrd)]
-struct SpaceWithFocus {
-    pub space: Space,
-    pub visible: bool,
-}
 
 #[derive(Serialize, Ord, Eq, PartialEq, PartialOrd)]
 struct Label {
