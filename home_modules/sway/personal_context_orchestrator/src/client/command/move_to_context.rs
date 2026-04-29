@@ -19,8 +19,7 @@ pub fn move_to_context(letter: char) -> Result<()> {
         _ => wofi::select_from_list("Workspace:", &target_contexts)?,
     };
 
-    let workspace =
-        ContextWorkspace::create_workspace_name(&focused.name, &context_name, &focused.output);
+    let workspace = ContextWorkspace::create_workspace_name(&focused.space.name, &context_name);
 
     let mut conn = Connection::new()?;
     conn.run_command(format!("move container to workspace {}", &workspace))?;

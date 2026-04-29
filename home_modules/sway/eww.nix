@@ -26,7 +26,7 @@ let
   contextColorFocused = colorTheme.base0E;
   contextColorHovered = colorTheme.base0E;
 
-  outputColor = "7851FF";
+  outputColor = "74342E";
   outputColorFocused = colorTheme.base0F;
   outputColorHovered = colorTheme.base0F;
 

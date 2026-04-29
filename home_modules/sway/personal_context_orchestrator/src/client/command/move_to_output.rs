@@ -1,26 +1,22 @@
-use anyhow::Result;
+use std::collections::HashMap;
+
+use anyhow::{anyhow, Result};
 use swayipc::Connection;
 
-use crate::context_workspace::{ContextWorkspace, ContextWorkspaces};
-
-pub fn move_to_output(letter: char) -> Result<()> {
-    let workspaces = ContextWorkspaces::read()?;
-
-    let focused = workspaces.get_focused()?.clone();
-
-    let workspace = ContextWorkspace::create_workspace_name(
-        &focused.name,
-        &focused.context.name,
-        &letter.to_string(),
-    );
-
+pub fn move_to_output(id: usize) -> Result<()> {
     let mut conn = Connection::new()?;
+    let outputs = conn
+        .get_outputs()?
+        .into_iter()
+        .enumerate()
+        .map(|(index, output)| (index + 1, output.name.clone()))
+        .collect::<HashMap<usize, String>>();
 
-    conn.run_command(format!(
-        "move container to workspace {} output {}",
-        &workspace, letter
-    ))?;
-    conn.run_command(format!("workspace {}", workspace))?;
+    let output_name = outputs
+        .get(&id)
+        .ok_or(anyhow!("Could not find output with id {}", id))?;
+
+    conn.run_command(format!("move workspace to output {}", output_name))?;
 
     Ok(())
 }

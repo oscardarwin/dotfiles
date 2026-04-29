@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ./eww.nix
     ./keybindings.nix
@@ -59,7 +59,11 @@
 
       startup = [
         {
-          command = "swaymsg workspace default:1:0";
+          command =
+            let
+              pcoClientPackage = inputs.pco.packages.${pkgs.system}.pco-client;
+            in
+            "${pcoClientPackage}/bin/client create-or-switch-to-workspace 1";
         }
       ];
     };

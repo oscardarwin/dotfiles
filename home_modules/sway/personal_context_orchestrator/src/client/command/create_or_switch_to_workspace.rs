@@ -10,25 +10,18 @@ pub fn create_or_switch_to_workspace(letter: char) -> Result<()> {
 
     let current_context = &focused.context.name;
 
-    let mut matches: Vec<ContextWorkspace> = workspaces
-        .items
-        .into_iter()
-        .filter(|caw| {
-            caw.context.name == *current_context && caw.first_letter_of_workspace_matches(&letter)
-        })
-        .collect();
+    let matches: Option<ContextWorkspace> = workspaces.items.into_iter().find(|caw| {
+        caw.context.name == *current_context && caw.first_letter_of_workspace_matches(&letter)
+    });
 
     let mut conn = Connection::new()?;
-    match matches.len() {
-        0 => {
-            let workspace_name = ContextWorkspace::create_workspace_name(
-                &letter.to_string(),
-                current_context,
-                &focused.output,
-            );
+    match matches {
+        None => {
+            let workspace_name =
+                ContextWorkspace::create_workspace_name(&letter.to_string(), current_context);
 
             conn.run_command(format!("workspace {}", workspace_name))?;
-            // Case 1: No matching workspace → select program from PATH
+
             let program = wofi::select_program_from_path(letter)?;
 
             conn.run_command(format!(
@@ -37,25 +30,11 @@ pub fn create_or_switch_to_workspace(letter: char) -> Result<()> {
             ))?;
         }
 
-        1 => {
-            let singleton_result = matches.remove(0);
+        Some(singleton_result) => {
             let workspace_label = String::from(&singleton_result);
 
             println!("switching to workspace {}", workspace_label);
             conn.run_command(format!("workspace {}", workspace_label))?;
-        }
-
-        _ => {
-            let option_names: Vec<String> = matches.iter().map(|caw| caw.name.clone()).collect();
-
-            let selected = wofi::select_from_list("Workspace:", &option_names)?;
-
-            let selected_option = matches
-                .into_iter()
-                .find(|caw| caw.name == selected)
-                .unwrap();
-
-            conn.run_command(format!("workspace {}", String::from(&selected_option)))?;
         }
     };
 

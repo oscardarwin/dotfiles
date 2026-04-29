@@ -11,20 +11,15 @@ pub fn create_or_switch_to_set_workspace(
 
     let focused = workspaces.get_focused()?.clone();
     let current_context = &focused.context.name;
-    let current_output = &focused.output;
 
-    let matches: Option<ContextWorkspace> = workspaces
-        .items
-        .into_iter()
-        .find(|caw| caw.context.name == *current_context && caw.name == *workspace_display_name);
+    let matches: Option<ContextWorkspace> = workspaces.items.into_iter().find(|caw| {
+        caw.context.name == *current_context && caw.space.name == *workspace_display_name
+    });
 
     let mut conn = Connection::new()?;
 
-    let workspace_name = ContextWorkspace::create_workspace_name(
-        workspace_display_name,
-        current_context,
-        current_output,
-    );
+    let workspace_name =
+        ContextWorkspace::create_workspace_name(workspace_display_name, current_context);
 
     match matches {
         Some(_) => {

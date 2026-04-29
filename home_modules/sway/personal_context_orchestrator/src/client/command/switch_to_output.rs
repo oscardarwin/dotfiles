@@ -1,20 +1,23 @@
-use crate::context_workspace::{ContextWorkspace, ContextWorkspaces};
-use anyhow::Result;
+use std::collections::HashMap;
+
+use anyhow::{anyhow, Result};
 use swayipc::Connection;
 
-pub fn switch_to_output(letter: char) -> Result<()> {
-    let workspaces = ContextWorkspaces::read()?;
-
-    let focused = workspaces.get_focused()?.clone();
-
-    let workspace = ContextWorkspace::create_workspace_name(
-        &focused.name,
-        &focused.context.name,
-        &letter.to_string(),
-    );
-
+pub fn switch_to_output(id: usize) -> Result<()> {
     let mut conn = Connection::new()?;
-    conn.run_command(format!("workspace {}", workspace))?;
+
+    let outputs = conn
+        .get_outputs()?
+        .into_iter()
+        .enumerate()
+        .map(|(index, output)| (index + 1, output.name.clone()))
+        .collect::<HashMap<usize, String>>();
+
+    let output_name = outputs
+        .get(&id)
+        .ok_or(anyhow!("Could not find output with id {}", id))?;
+
+    conn.run_command(format!("focus output {}", output_name))?;
 
     Ok(())
 }

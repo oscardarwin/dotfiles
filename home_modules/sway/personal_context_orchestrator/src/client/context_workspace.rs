@@ -8,18 +8,18 @@ use swayipc::{Connection, Workspace};
 pub type WorkspaceName = String;
 pub type ContextName = String;
 
-#[derive(Serialize, Eq, Ord, PartialEq, PartialOrd, Clone)]
+#[derive(Serialize, Eq, Ord, Debug, PartialEq, PartialOrd, Clone)]
 pub struct Context {
     pub associated_char: char,
     pub name: String,
 }
 
-struct EmptyContextNameError;
+struct EmptyNameError;
 
 impl Context {
-    pub fn new(name: String) -> Result<Context, EmptyContextNameError> {
+    pub fn new(name: String) -> Result<Context, EmptyNameError> {
         let Some(associated_char) = name.chars().next() else {
-            return Err(EmptyContextNameError);
+            return Err(EmptyNameError);
         };
 
         Ok(Self {
@@ -29,13 +29,41 @@ impl Context {
     }
 }
 
-#[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Serialize)]
+#[derive(Serialize, Eq, Debug, Ord, PartialEq, PartialOrd, Clone)]
+pub struct Output {
+    pub device: String,
+    pub name: String,
+}
+
+impl Output {
+    pub fn new(name: String, device: String) -> Output {
+        Self { device, name }
+    }
+}
+
+#[derive(Serialize, Debug, Eq, Ord, PartialEq, PartialOrd, Clone)]
+pub struct Space {
+    pub associated_char: char,
+    pub name: String,
+}
+
+impl Space {
+    pub fn new(name: String) -> Result<Space, EmptyNameError> {
+        let Some(associated_char) = name.chars().next() else {
+            return Err(EmptyNameError);
+        };
+        Ok(Self {
+            associated_char,
+            name,
+        })
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize)]
 pub struct ContextWorkspace {
     pub context: Context,
-    pub name: String,
-    pub associated_char: char,
+    pub space: Space,
     pub focused: bool,
-    pub output: String,
 }
 
 #[derive(Debug)]
@@ -50,21 +78,17 @@ impl ContextWorkspace {
         workspace_display_name: WorkspaceName,
         context_name: ContextName,
         focused: bool,
-        output: String,
     ) -> Result<ContextWorkspace, ContextWorkspaceCreationError> {
-        let Some(workspace_associated_char) = workspace_display_name.chars().next() else {
-            return Err(ContextWorkspaceCreationError::EmptyWorkspaceDisplayName);
-        };
-
         let context = Context::new(context_name)
             .map_err(|_| ContextWorkspaceCreationError::EmptyContextName)?;
 
+        let space = Space::new(workspace_display_name)
+            .map_err(|_| ContextWorkspaceCreationError::EmptyWorkspaceDisplayName)?;
+
         Ok(Self {
             context,
-            name: workspace_display_name,
-            associated_char: workspace_associated_char,
+            space,
             focused,
-            output,
         })
     }
 }
@@ -85,37 +109,26 @@ impl TryFrom<&Workspace> for ContextWorkspace {
             .ok_or(ContextWorkspaceCreationError::MissingSeparator)?
             .to_string();
 
-        let output = parts
-            .next()
-            .ok_or(ContextWorkspaceCreationError::MissingSeparator)?
-            .to_string();
-
-        ContextWorkspace::new(
-            workspace_display_name,
-            context_name,
-            workspace.focused,
-            output,
-        )
+        ContextWorkspace::new(workspace_display_name, context_name, workspace.focused)
     }
 }
 
 impl From<&ContextWorkspace> for WorkspaceName {
     fn from(caw: &ContextWorkspace) -> Self {
-        ContextWorkspace::create_workspace_name(&caw.name, &caw.context.name, &caw.output)
+        ContextWorkspace::create_workspace_name(&caw.space.name, &caw.context.name)
     }
 }
 
 impl ContextWorkspace {
     pub fn first_letter_of_workspace_matches(&self, letter: &char) -> bool {
-        letter.eq_ignore_ascii_case(&self.associated_char)
+        letter.eq_ignore_ascii_case(&self.space.associated_char)
     }
 
     pub fn create_workspace_name(
-        workspace_display_name: &String,
+        workspace_display_name: &WorkspaceName,
         context_name: &ContextName,
-        output: &String,
     ) -> String {
-        format!("{}:{}:{}", context_name, workspace_display_name, output)
+        format!("{}:{}", context_name, workspace_display_name)
     }
 }
 

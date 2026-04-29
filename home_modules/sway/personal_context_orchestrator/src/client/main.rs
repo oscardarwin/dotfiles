@@ -1,4 +1,4 @@
-use anyhow::{anyhow, Ok, Result};
+use anyhow::{anyhow, Context, Ok, Result};
 use std::env;
 
 mod command;
@@ -10,6 +10,11 @@ fn get_first_character(arg: &String) -> Result<char> {
     arg.chars()
         .next()
         .ok_or_else(|| anyhow!("Letter argument cannot be empty"))
+}
+
+fn get_output_id(arg: &String) -> Result<usize> {
+    arg.parse::<usize>()
+        .with_context(|| format!("failed to parse '{}' as usize", arg))
 }
 
 fn main() -> Result<()> {
@@ -64,16 +69,16 @@ fn main() -> Result<()> {
                 .get(2)
                 .ok_or_else(|| anyhow!("Usage: client move-to-output <number>"))?;
 
-            let character = get_first_character(letter_str)?;
-            command::move_to_output(character)
+            let id = get_output_id(letter_str)?;
+            command::move_to_output(id)
         }
         Some("switch-to-output") => {
             let letter_str = args
                 .get(2)
                 .ok_or_else(|| anyhow!("Usage: client switch-to-output <letter>"))?;
 
-            let character = get_first_character(letter_str)?;
-            command::switch_to_output(character)
+            let id = get_output_id(letter_str)?;
+            command::switch_to_output(id)
         }
         Some("get") => manage_context_daemon::get_context().map(|context| {
             println!("Context: {}", &context);
