@@ -3,7 +3,6 @@ use std::env;
 
 mod command;
 mod context_workspace;
-mod manage_context_daemon;
 mod wofi;
 
 fn get_first_character(arg: &String) -> Result<char> {
@@ -79,16 +78,6 @@ fn main() -> Result<()> {
 
             let id = get_output_id(letter_str)?;
             command::switch_to_output(id)
-        }
-        Some("get") => manage_context_daemon::get_context().map(|context| {
-            println!("Context: {}", &context);
-            ()
-        }),
-        Some("set") => {
-            let value = args
-                .get(2)
-                .ok_or_else(|| anyhow!("Usage: client set <value>"))?;
-            manage_context_daemon::set_context(value)
         }
         Some("listen-to-context-workspaces") => loop {
             _ = command::listen_to_context_workspaces();
