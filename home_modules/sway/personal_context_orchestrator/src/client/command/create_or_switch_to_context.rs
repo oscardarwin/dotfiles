@@ -1,7 +1,6 @@
 use crate::context_workspace::{ContextWorkspace, ContextWorkspaces};
-use crate::manage_context_daemon::set_context;
 use crate::wofi;
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 use swayipc::Connection;
 
 pub fn create_or_switch_to_context(letter: char) -> Result<()> {
@@ -24,15 +23,22 @@ pub fn create_or_switch_to_context(letter: char) -> Result<()> {
 
     let target_workspace = workspaces_with_context
         .iter()
-        .find(|cw| cw.name == focused.name)
+        .find(|cw| cw.space.name == focused.space.name)
         .or(workspaces_with_context.iter().next())
         .cloned()
-        .unwrap_or(ContextWorkspace::new("1".to_string(), selected_context.clone(), true).unwrap());
+        .unwrap_or(
+            ContextWorkspace::new(
+                "1".to_string(),
+                selected_context.clone(),
+                focused.output.clone(),
+                true,
+                true,
+            )
+            .unwrap(),
+        );
 
     let mut conn = Connection::new()?;
     conn.run_command(format!("workspace {}", String::from(&target_workspace)))?;
-
-    set_context(&selected_context)?;
 
     Ok(())
 }

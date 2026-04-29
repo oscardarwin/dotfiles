@@ -26,6 +26,10 @@ let
   contextColorFocused = colorTheme.base0E;
   contextColorHovered = colorTheme.base0E;
 
+  outputColor = "74342E";
+  outputColorFocused = colorTheme.base0F;
+  outputColorHovered = colorTheme.base0F;
+
   healthy = colorTheme.base0B;
   used = colorTheme.base0A;
   warning = colorTheme.base09;
@@ -62,7 +66,7 @@ let
         background: #${contextColorHovered};
       }
 
-      &.focused {
+      &.highlighted {
         background: #${contextColorFocused};
       }
     }
@@ -75,8 +79,20 @@ let
         background: #${workspaceColorHovered};
       }
 
-      &.focused {
+      &.highlighted {
         background: #${workspaceColorFocused};
+      }
+    }
+
+    .output-button {
+      background: #${outputColor};
+
+      &:hover {
+        background: #${outputColorHovered};
+      }
+
+      &.highlighted {
+        background: #${outputColorFocused};
       }
     }
 

@@ -2,7 +2,7 @@
   :interval "5s"
   "@date +%H:%M")
 
-(deflisten context_workspace_info :initial '{"contexts":[],"workspaces":[]}'
+(deflisten context_workspace_info :initial '{"contexts":[],"spaces":[], "outputs": []}'
   "@pco-client listen-to-context-workspaces")
 
 (deflisten services_info :initial '[]'
@@ -107,27 +107,14 @@
        :spacing 2
 
        ;; Context buttons
-       (for item in {context_workspace_info.contexts}
+       (for item in context_workspace_info
          (button
            :hexpand true
            :halign "fill"
-           :class {"context-button " + (item.focused ? "focused" : "")}
-           :tooltip {item.context.name}
-           :onclick "@pco-client create-or-switch-to-context ${item.context.associated_char}"
-           {item.context.associated_char}))
-
-       ;; Workspace buttons
-       (for item in {context_workspace_info.workspaces}
-         (button
-           :hexpand true
-           :halign "fill"
-           :class {"workspace-button " + (item.focused ? "focused" : "")}
-           :tooltip {item.name}
-           :onclick {"sway workspace "
-                     + item.context.name
-                     + ":"
-                     + item.name}
-           {item.associated_char}))))
+           :class {"${item.class} " + (item.highlighted ? "highlighted" : "")}
+           :tooltip {item.tooltip}
+           :onclick "@pco-client ${item.onclick}"
+           {item.text}))))
 
 (defwidget center-content []
   (box :halign "center"

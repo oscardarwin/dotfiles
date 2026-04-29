@@ -3,11 +3,15 @@ mod create_or_switch_to_set_workspace;
 mod create_or_switch_to_workspace;
 mod listen_to_context_workspaces;
 mod move_to_context;
+mod move_to_output;
 mod move_to_workspace;
+mod switch_to_output;
 
 pub use create_or_switch_to_context::create_or_switch_to_context;
 pub use create_or_switch_to_set_workspace::create_or_switch_to_set_workspace;
 pub use create_or_switch_to_workspace::create_or_switch_to_workspace;
 pub use listen_to_context_workspaces::listen_to_context_workspaces;
 pub use move_to_context::move_to_context;
+pub use move_to_output::move_to_output;
 pub use move_to_workspace::move_to_workspace;
+pub use switch_to_output::switch_to_output;

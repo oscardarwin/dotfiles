@@ -1,15 +1,19 @@
-use anyhow::{anyhow, Ok, Result};
+use anyhow::{anyhow, Context, Ok, Result};
 use std::env;
 
 mod command;
 mod context_workspace;
-mod manage_context_daemon;
 mod wofi;
 
 fn get_first_character(arg: &String) -> Result<char> {
     arg.chars()
         .next()
         .ok_or_else(|| anyhow!("Letter argument cannot be empty"))
+}
+
+fn get_output_id(arg: &String) -> Result<usize> {
+    arg.parse::<usize>()
+        .with_context(|| format!("failed to parse '{}' as usize", arg))
 }
 
 fn main() -> Result<()> {
@@ -59,15 +63,21 @@ fn main() -> Result<()> {
 
             command::create_or_switch_to_set_workspace(workspace_display_name, executable_path)
         }
-        Some("get") => manage_context_daemon::get_context().map(|context| {
-            println!("Context: {}", &context);
-            ()
-        }),
-        Some("set") => {
-            let value = args
+        Some("move-to-output") => {
+            let letter_str = args
                 .get(2)
-                .ok_or_else(|| anyhow!("Usage: client set <value>"))?;
-            manage_context_daemon::set_context(value)
+                .ok_or_else(|| anyhow!("Usage: client move-to-output <number>"))?;
+
+            let id = get_output_id(letter_str)?;
+            command::move_to_output(id)
+        }
+        Some("switch-to-output") => {
+            let letter_str = args
+                .get(2)
+                .ok_or_else(|| anyhow!("Usage: client switch-to-output <letter>"))?;
+
+            let id = get_output_id(letter_str)?;
+            command::switch_to_output(id)
         }
         Some("listen-to-context-workspaces") => loop {
             _ = command::listen_to_context_workspaces();

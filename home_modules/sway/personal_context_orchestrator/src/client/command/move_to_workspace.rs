@@ -1,37 +1,40 @@
 use anyhow::Result;
+use std::collections::BTreeSet;
 use swayipc::Connection;
 
-use crate::context_workspace::{ContextWorkspace, ContextWorkspaces};
-use crate::manage_context_daemon::get_context;
+use crate::context_workspace::{ContextWorkspace, ContextWorkspaces, WorkspaceName};
 use crate::wofi;
 
 pub fn move_to_workspace(letter: char) -> Result<()> {
-    let current_context = get_context()?;
     let workspaces = ContextWorkspaces::read()?;
+    let focused = workspaces.get_focused()?.clone();
 
-    let mut matches: Vec<ContextWorkspace> = workspaces
+    let mut matches: BTreeSet<WorkspaceName> = workspaces
         .items
         .into_iter()
         .filter(|caw| {
-            caw.context.name == current_context && caw.first_letter_of_workspace_matches(&letter)
+            caw.context.name == focused.context.name
+                && caw.first_letter_of_workspace_matches(&letter)
         })
+        .map(|caw| caw.space.name.clone())
         .collect();
 
-    let workspace_name = match matches.len() {
-        0 => {
-            let workspace_display_name = wofi::select_from_list("New Workspace:", &Vec::new())?;
-            ContextWorkspace::create_workspace_name(&workspace_display_name, &current_context)
-        }
+    let space_name = match matches.len() {
+        0 => wofi::select_from_list("New Workspace:", &Vec::new())?,
 
-        1 => String::from(&matches.remove(0)),
+        1 => matches
+            .pop_first()
+            .expect("set should contain exactly one element"),
 
         _ => {
-            let option_names: Vec<String> = matches.iter().map(|caw| caw.name.clone()).collect();
+            let option_names = matches.into_iter().collect();
 
-            let workspace_display_name = wofi::select_from_list("Workspace:", &option_names)?;
-            ContextWorkspace::create_workspace_name(&workspace_display_name, &current_context)
+            wofi::select_from_list("Workspace:", &option_names)?
         }
     };
+
+    let workspace_name =
+        ContextWorkspace::create_workspace_name(&space_name, &focused.context.name);
 
     let mut conn = Connection::new()?;
     conn.run_command(format!("move container to workspace {}", workspace_name))?;

@@ -47,6 +47,22 @@ let
       )
       (lib.genAttrs allKeys (_: null));
 
+  moveToOutputBindings =
+    mapAttrs'
+      (key: _: nameValuePair
+        "${mkModifierString cfg.moveToOutputModifiers}+${key}"
+        "${runner} move-to-output ${key}"
+      )
+      (lib.genAttrs allKeys (_: null));
+
+  switchToOutputBindings =
+    mapAttrs'
+      (key: _: nameValuePair
+        "${mkModifierString cfg.switchToOutputModifiers}+${key}"
+        "${runner} switch-to-output ${key}"
+      )
+      (lib.genAttrs allKeys (_: null));
+
   workspaceSwitchBindings =
     mapAttrs'
       (key: _:
@@ -124,6 +140,16 @@ in
       type = types.listOf types.str;
       default = [ "Mod1" ];
     };
+
+    switchToOutputModifiers = mkOption {
+      type = types.listOf types.str;
+      default = [ "Mod4" "Mod1" ];
+    };
+
+    moveToOutputModifiers = mkOption {
+      type = types.listOf types.str;
+      default = [ "Mod4" "Mod1" "Shift" ];
+    };
   };
 
   config = mkIf cfg.enable {
@@ -136,24 +162,9 @@ in
           moveToWorkspaceBindings
           workspaceSwitchBindings
           moveToContextBindings
+          moveToOutputBindings
+          switchToOutputBindings
         ];
-    };
-    systemd.user.services.pco-daemon = {
-      Unit = {
-        Description = "PCO Personal Context Orchestrator daemon";
-        After = [ "graphical-session.target" ];
-        PartOf = [ "graphical-session.target" ];
-      };
-
-      Service = {
-        ExecStart = "${cfg.daemonPackage}/bin/daemon";
-        Restart = "on-failure";
-        RestartSec = 2;
-      };
-
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
     };
   };
 }

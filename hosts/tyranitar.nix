@@ -27,8 +27,7 @@
       }
       {
         modules.eww = {
-          networkInterface = "wlp2s0";
-          battery = "BAT1";
+          networkInterface = "wlo1";
         };
       }
     ];
@@ -43,6 +42,7 @@
     "locale.nix"
     "screensharing.nix"
     "docker.nix"
+    "clan.nix"
   ];
 
   config = { pkgs, ... }: {
