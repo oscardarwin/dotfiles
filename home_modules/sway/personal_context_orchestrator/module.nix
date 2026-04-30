@@ -123,12 +123,12 @@ in
 
     contextSwitchKeyModifiers = mkOption {
       type = types.listOf types.str;
-      default = [ "Mod4" ];
+      default = [ "Mod5" ];
     };
 
     moveToContextModifiers = mkOption {
       type = types.listOf types.str;
-      default = [ "Mod4" "Shift" ];
+      default = [ "Mod5" "Shift" ];
     };
 
     moveToWorkspaceModifiers = mkOption {
@@ -143,12 +143,12 @@ in
 
     switchToOutputModifiers = mkOption {
       type = types.listOf types.str;
-      default = [ "Mod4" "Mod1" ];
+      default = [ "Mod4" ];
     };
 
     moveToOutputModifiers = mkOption {
       type = types.listOf types.str;
-      default = [ "Mod4" "Mod1" "Shift" ];
+      default = [ "Mod4" "Shift" ];
     };
   };
 
