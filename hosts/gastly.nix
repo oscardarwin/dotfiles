@@ -17,6 +17,16 @@
     "wofi.nix"
   ] ++ [
     stylix.homeModules.stylix
+    {
+      wayland.windowManager.sway.config.output = {
+        "DP-1" = {
+          position = "0 -1440";
+        };
+        "eDP-1" = {
+          position = "0 0";
+        };
+      };
+    }
   ];
 
   config = { pkgs, lib, ... }: {
