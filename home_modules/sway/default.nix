@@ -63,7 +63,7 @@
             let
               pcoClientPackage = inputs.pco.packages.${pkgs.system}.pco-client;
             in
-            "${pcoClientPackage}/bin/client create-or-switch-to-workspace 1";
+            "${pcoClientPackage}/bin/client start";
         }
       ];
     };

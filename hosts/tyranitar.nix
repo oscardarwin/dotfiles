@@ -16,6 +16,7 @@
       "stylix.nix"
       "wofi.nix"
       "social_media.nix"
+      "devices.nix"
     ] ++ [
       stylix.homeModules.stylix
       {
@@ -43,6 +44,7 @@
     "screensharing.nix"
     "docker.nix"
     "clan.nix"
+    "devices.nix"
   ];
 
   config = { pkgs, ... }: {
