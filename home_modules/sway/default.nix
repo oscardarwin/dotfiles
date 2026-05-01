@@ -49,24 +49,24 @@
     wrapperFeatures.gtk = true;
     systemd.enable = true;
 
-    config = {
-      menu = "wofi --show run";
-      modifier = "Mod1";
-      terminal = "kitty";
-      bars = [ ];
-      defaultWorkspace = "default:1";
-      window.titlebar = false;
+    config =
+      let
+        defaultWorkspace = "start:1";
+      in
+      {
+        inherit defaultWorkspace;
+        menu = "wofi --show run";
+        modifier = "Mod1";
+        terminal = "kitty";
+        bars = [ ];
+        window.titlebar = false;
 
-      startup = [
-        {
-          command =
-            let
-              pcoClientPackage = inputs.pco.packages.${pkgs.system}.pco-client;
-            in
-            "${pcoClientPackage}/bin/client start";
-        }
-      ];
-    };
+        startup = [
+          {
+            command = "swaymsg 'workspace ${defaultWorkspace}'";
+          }
+        ];
+      };
   };
 
 

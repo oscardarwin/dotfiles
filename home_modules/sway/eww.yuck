@@ -2,7 +2,7 @@
   :interval "5s"
   "@date +%H:%M")
 
-(deflisten context_workspace_info :initial '{"contexts":[],"spaces":[], "outputs": []}'
+(deflisten context_workspace_info :initial '[]'
   "@pco-client listen-to-context-workspaces")
 
 (deflisten services_info :initial '[]'

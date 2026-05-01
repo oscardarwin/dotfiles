@@ -83,9 +83,6 @@ fn main() -> Result<()> {
             _ = command::listen_to_context_workspaces();
             std::thread::sleep(std::time::Duration::from_secs(1));
         },
-        Some("start") => loop {
-            _ = command::start();
-        },
         _ => {
             eprintln!("Usage:");
             eprintln!("  TODO");
