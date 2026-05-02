@@ -25,26 +25,22 @@
 
 (defvar NET_IFACE "@networkinterface")
 
-(defwidget battery []
+(defwidget battery [status capacity]
   (box :class "battery"
-       :spacing 5
-       (label :text "${EWW_BATTERY.@battery.capacity}%")))
-
-(defwidget battery []
-  (box :class "battery"
-       :tooltip "${EWW_BATTERY.@battery.status} - ${EWW_BATTERY.@battery.capacity}%"
+       :visible {EWW_BATTERY != ""}
+       :tooltip "${status} - ${capacity}%"
        (label
-         :class "resource-icon ${EWW_BATTERY.@battery.status == "Charging" ? "system-on" :
-                                EWW_BATTERY.@battery.capacity <= 10 ? "resource-critical" :
-                                EWW_BATTERY.@battery.capacity <= 25 ? "resource-low" :
-                                EWW_BATTERY.@battery.capacity <= 50 ? "resource-medium" :
-                                EWW_BATTERY.@battery.capacity <= 75 ? "resource-high" :
+         :class "resource-icon ${status == "Charging" ? "system-on" :
+                                capacity <= 10 ? "resource-critical" :
+                                capacity <= 25 ? "resource-low" :
+                                capacity <= 50 ? "resource-medium" :
+                                capacity <= 75 ? "resource-high" :
                                 "resource-high"}"
-         :text "${EWW_BATTERY.@battery.capacity <= 5 ? " " :
-                 EWW_BATTERY.@battery.capacity <= 25 ? " " :
-                 EWW_BATTERY.@battery.capacity <= 50 ? " " :
-                 EWW_BATTERY.@battery.capacity <= 75 ? " " :
-                 " "}")))                          
+         :text "${capacity <= 5 ? " " :
+                 capacity <= 25 ? " " :
+                 capacity <= 50 ? " " :
+                 capacity <= 75 ? " " :
+                 " "}")))
 
 (defwidget ram []
   (box :class "ram"
@@ -134,7 +130,9 @@
        (cpu)
        (ram)
        (disk)
-       (battery)
+       (battery
+         :status {EWW_BATTERY != "" ? EWW_BATTERY.@battery.status : "Charging"}
+         :capacity {EWW_BATTERY != "" ? EWW_BATTERY.@battery.capacity : 100})
        (net)))
 
 (defwindow bar
