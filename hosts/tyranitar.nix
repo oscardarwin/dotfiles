@@ -31,6 +31,16 @@
           networkInterface = "wlo1";
         };
       }
+      {
+        wayland.windowManager.sway.config.output = {
+          "DP-2" = {
+            position = "0 -1440";
+          };
+          "DP-1" = {
+            position = "0 0";
+          };
+        };
+      }
     ];
   };
 
