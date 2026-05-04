@@ -17,6 +17,8 @@ in
     pkgs.pavucontrol
     pkgs.brightnessctl
     pkgs.drawio
+    pkgs.polymc
+    pkgs.glfw
   ];
 
   xdg.mimeApps.defaultApplications = {
