@@ -34,10 +34,10 @@
       {
         wayland.windowManager.sway.config.output = {
           "DP-2" = {
-            position = "0 -1440";
+            position = "0 0";
           };
           "DP-1" = {
-            position = "0 0";
+            position = "320 1440";
           };
         };
       }
