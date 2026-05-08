@@ -38,11 +38,13 @@
     "docker.nix"
     "greetd.nix"
     "clan.nix"
+    "ollama.nix"
   ] ++ [
     nixos-hardware.nixosModules.microsoft-surface-laptop-amd
   ];
 
   config = {
+
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
