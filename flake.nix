@@ -48,6 +48,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
       flake = true;
     };
+
+    polymc.url = "github:PolyMC/PolyMC";
   };
 
   outputs = { nixpkgs, stylix, home-manager, nixos-hardware, clan-core, ... }@inputs:
@@ -56,6 +58,9 @@
 
       pkgs = (import nixpkgs) {
         inherit system;
+        overlays = [
+          inputs.polymc.overlay
+        ];
         config = {
           allowUnfree = true;
           allowUnfreePredicate = (_: true);
