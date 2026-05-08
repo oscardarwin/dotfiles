@@ -98,7 +98,10 @@
       isNormalUser = true;
       description = "Oscar";
       extraGroups = [ "networkmanager" "wheel" ];
+      hashedPassword = "$6$.PzdYbCD9pl6UWLW$cEEKjuxoesTh8bj9GyVkcFtlp8Ng742bnjSZsrWkpa1HUZpxw/r9u1MmN5EOjbjMkxjWil00mx/w1Y7gCNLbI/";
     };
+
+    users.mutableUsers = true;
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
@@ -166,7 +169,7 @@
 
     fileSystems."/boot" =
       {
-        device = "/dev/disk/by-uuid/62CF-D4CC";
+        device = "/dev/disk/by-uuid/0DE8-A9A0";
         fsType = "vfat";
         options = [ "fmask=0077" "dmask=0077" ];
       };
