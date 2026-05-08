@@ -11,7 +11,5 @@ in
   services.ollama = {
     enable = true;
     loadModels = [ ollamaModel ];
-    acceleration = "rocm";
-    rocmOverrideGfx = "9.0.0";
   };
 }

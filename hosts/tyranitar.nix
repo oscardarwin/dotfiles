@@ -17,6 +17,7 @@
       "wofi.nix"
       "social_media.nix"
       "devices.nix"
+      "llm.nix"
     ] ++ [
       stylix.homeModules.stylix
       {
@@ -55,9 +56,10 @@
     "docker.nix"
     "clan.nix"
     "devices.nix"
+    "ollama.nix"
   ];
 
-  config = { pkgs, ... }: {
+  config = { pkgs, config, ... }: {
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
@@ -73,18 +75,21 @@
       qpwgraph
     ];
 
-    hardware.graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
 
     security.polkit.enable = true;
 
     # Configure console keymap
     console.keyMap = "uk";
 
-    # Enable CUPS to print documents.
-    services.printing.enable = true;
+    services = {
+      # Enable CUPS to print documents.
+      printing.enable = true;
+      xserver.videoDrivers = [ "nvidia" ];
+
+      ollama = {
+        acceleration = "cuda";
+      };
+    };
 
     # Enable touchpad support (enabled default in most desktopManager).
     # services.xserver.libinput.enable = true;
@@ -117,8 +122,15 @@
     boot = {
       initrd = {
         availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-        kernelModules = [ "amdgpu" ];
+        kernelModules = [
+          "amdgpu"
+          "nvidia"
+          "nvidia_modeset"
+          "nvidia_uvm"
+          "nvidia_drm"
+        ];
       };
+
       kernelModules = [ "kvm-amd" ];
       extraModulePackages = [ ];
       loader = {
@@ -130,7 +142,20 @@
         "loglevel=3"
         "rd.systemd.show_status=false"
         "udev.log_level=3"
+        "nvidia-drm.modeset=1"
       ];
+    };
+
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+
+    hardware.nvidia = {
+      modesetting.enable = true;
+      open = true;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
     fileSystems."/" =
