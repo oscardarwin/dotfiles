@@ -654,15 +654,14 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-ae8uW/A8WyIBjN4aoVqEJbuZy6yjfpPy1MrRxnwICv0=",
         "path": "./home_modules/sway/personal_context_orchestrator",
         "type": "path"
       },
       "original": {
         "path": "./home_modules/sway/personal_context_orchestrator",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "polymc": {
       "inputs": {
@@ -691,15 +690,14 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-tceKeG5QdQLOHTX4EPIk7yzxZxBc87jQaJYNHRFxAZQ=",
         "path": "./dev_flakes/python",
         "type": "path"
       },
       "original": {
         "path": "./dev_flakes/python",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "root": {
       "inputs": {
