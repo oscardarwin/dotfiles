@@ -1,7 +1,4 @@
 { pkgs, ... }:
-let
-  ollamaModel = "gemma3:1b";
-in
 {
 
   environment.systemPackages = [
@@ -10,6 +7,6 @@ in
 
   services.ollama = {
     enable = true;
-    loadModels = [ ollamaModel ];
+    loadModels = [ "gemma3:1b" "qwen2.5-coder:7b" "deepseek-r1:8b" ];
   };
 }

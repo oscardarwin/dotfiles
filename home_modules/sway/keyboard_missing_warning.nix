@@ -49,9 +49,18 @@ let
 in
 {
   home.packages = [ pkgs.inotify-tools ];
-
   systemd.user.services.keyboard-monitor = {
-    Unit.Description = "update border size on no keyboard";
+    Unit = {
+      Description = "update border size on no keyboard";
+
+      After = [
+        "graphical-session.target"
+      ];
+
+      PartOf = [
+        "graphical-session.target"
+      ];
+    };
 
     Service = {
       ExecStart = keyboard-monitor-script;
@@ -60,7 +69,7 @@ in
     };
 
     Install = {
-      WantedBy = [ "default.target" ];
+      WantedBy = [ "graphical-session.target" ];
     };
   };
 }

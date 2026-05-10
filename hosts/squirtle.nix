@@ -38,7 +38,6 @@
     "docker.nix"
     "greetd.nix"
     "clan.nix"
-    "ollama.nix"
   ] ++ [
     nixos-hardware.nixosModules.microsoft-surface-laptop-amd
   ];

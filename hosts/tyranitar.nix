@@ -59,7 +59,7 @@
     "ollama.nix"
   ];
 
-  config = { pkgs, config, ... }: {
+  config = { pkgs, ... }: {
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
