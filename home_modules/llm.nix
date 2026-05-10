@@ -1,6 +1,5 @@
 { osConfig, ... }:
 let
-  openrouterModel = "openrouter/free"; # Standardized model name
   ollamaModel = "gemma3:1b";
 in
 {
@@ -18,9 +17,5 @@ in
         };
       };
     };
-  };
-
-  home.sessionVariables = {
-    OPENROUTER_API_KEY = "$(cat ${osConfig.clan.core.vars.generators.openrouter_api_key.files.openrouter_api_key.path})";
   };
 }
