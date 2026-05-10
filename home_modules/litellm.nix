@@ -43,6 +43,12 @@ in
     pkgs.litellm
   ];
 
+  options.my.litellm.port = lib.mkOption {
+    type = lib.types.port;
+    default = 8080;
+    description = "LiteLLM proxy port";
+  };
+
   systemd.user.services.litellm = {
     Unit = {
       Description = "LiteLLM Proxy Server";
