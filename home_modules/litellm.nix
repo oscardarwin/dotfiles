@@ -43,6 +43,12 @@ in
     description = "LiteLLM proxy port";
   };
 
+  options.my.litellm.models = lib.mkOption {
+    type = lib.types.listOf lib.types.str;
+    default = map (model: model.model_name) model_list;
+    description = "LiteLLM model list";
+  };
+
   config = {
     home.packages = [
       pkgs.litellm

@@ -26,26 +26,19 @@ let
       (map mkProvider config.my.litellm.models);
 
   defaultProvider = mkName (builtins.elemAt config.my.litellm.models 0);
-
-  model = "openrouter-free";
-
 in
 {
+  home.sessionVariables = {
+    ${dummyLiteLLMApiKey} = "dummy"; # avante expects an api key
+  };
+
   programs.nixvim = {
     plugins = {
       avante = {
         enable = true;
         settings = {
-          provider = "litellm";
-          providers = {
-            litellm =
-              {
-                inherit model;
-                __inherited_from = "openai";
-                endpoint = "http://localhost:${port}/v1";
-                api_key_name = dummyLiteLLMApiKey;
-              };
-          };
+          provider = defaultProvider;
+          providers = providers;
         };
       };
     };
