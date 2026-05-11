@@ -8,7 +8,7 @@ let
     model_name = model;
 
     litellm_params = {
-      model = "ollama_chat/${model}";
+      model = "ollama/${model}";
       api_base = "http://127.0.0.1:${toString osConfig.services.ollama.port}";
     };
   });
