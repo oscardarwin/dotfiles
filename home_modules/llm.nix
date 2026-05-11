@@ -27,7 +27,7 @@ let
 
   defaultProvider = mkName (builtins.elemAt config.my.litellm.models 0);
 
-  model = "";
+  model = "openrouter-free";
 
 in
 {
