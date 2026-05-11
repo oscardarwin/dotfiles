@@ -27,15 +27,27 @@ let
 
   defaultProvider = mkName (builtins.elemAt config.my.litellm.models 0);
 
+  model = "";
+
 in
 {
-  programs.nixvim.plugins.avante = {
-    enable = true;
-
-    settings = {
-      provider = defaultProvider;
-
-      providers = providers;
+  programs.nixvim = {
+    plugins = {
+      avante = {
+        enable = true;
+        settings = {
+          provider = "litellm";
+          providers = {
+            litellm =
+              {
+                inherit model;
+                __inherited_from = "openai";
+                endpoint = "http://localhost:${port}/v1";
+                api_key_name = dummyLiteLLMApiKey;
+              };
+          };
+        };
+      };
     };
   };
 }
