@@ -8,7 +8,7 @@ let
     model_name = model;
 
     litellm_params = {
-      model = "ollama/${model}";
+      model = "ollama_chat/${model}";
       api_base = "http://127.0.0.1:${toString osConfig.services.ollama.port}";
     };
   });
@@ -24,11 +24,11 @@ let
     }
   ];
 
+  model_list = openrouterEntries ++ ollamaEntries;
+
   litellmConfig =
     (pkgs.formats.yaml { }).generate "litellm-config.yaml" {
-      model_list =
-        openrouterEntries
-        ++ ollamaEntries;
+      inherit model_list;
 
       extra_body = {
         provider.sort = "throughput";
@@ -41,12 +41,6 @@ in
     type = lib.types.port;
     default = 8080;
     description = "LiteLLM proxy port";
-  };
-
-  options.my.ollama.default_model = lib.mkOption {
-    type = lib.types.str;
-    default = builtins.elemAt ollamaModels 0;
-    description = "Default Ollama Model.";
   };
 
   config = {
