@@ -17,6 +17,7 @@
       "wofi.nix"
       "social_media.nix"
       "llm.nix"
+      "devices.nix"
     ] ++ [
       stylix.homeModules.stylix
       {
@@ -38,7 +39,7 @@
     "docker.nix"
     "greetd.nix"
     "clan.nix"
-    "ollama.nix"
+    "devices.nix"
   ] ++ [
     nixos-hardware.nixosModules.microsoft-surface-laptop-amd
   ];
