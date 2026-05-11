@@ -4,8 +4,8 @@
     inputs.clan-core.packages.${pkgs.system}.clan-cli
   ];
 
-  clan.core.vars.generators.openrouter_api_key = {
-    files.openrouter_api_key = {
+  clan.core.vars.generators.litellm = {
+    files.openrouter_api_key_env = {
       secret = true;
       owner = "oscar";
     };
