@@ -76,6 +76,10 @@
       qpwgraph
     ];
 
+    users.users.root.openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsFoH2UCS1C/jJdBFeJ7F0Zy6FT279tetGUOkM+1Ypa hallayus@gmail.com"
+    ];
+
 
     security.polkit.enable = true;
 

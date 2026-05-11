@@ -1,11 +1,10 @@
 TODO:
 
-uai ubuntu:
- - screen positions
-
 ## Short Term
-Fix multi-screen.
 Get tyranitar setup as a full server.
+Fix models in nixvim.
+USBs in bar
+
 
 ## Long Term
 ### Home Data Center
