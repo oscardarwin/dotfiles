@@ -58,6 +58,7 @@
     "clan.nix"
     "devices.nix"
     "ollama.nix"
+    "librechat.nix"
   ];
 
   config = { pkgs, ... }: {
