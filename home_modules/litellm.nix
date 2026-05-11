@@ -1,8 +1,6 @@
-{ pkgs, lib, osConfig, ... }:
+{ pkgs, lib, osConfig, config, ... }:
 
 let
-  port = "8080";
-
 
   ollamaModels = osConfig.services.ollama.loadModels or [ ];
 
@@ -11,7 +9,7 @@ let
 
     litellm_params = {
       model = "ollama/${model}";
-      api_base = "http://127.0.0.1:${osConfig.services.ollama.port}";
+      api_base = "http://127.0.0.1:${toString osConfig.services.ollama.port}";
     };
   });
 
@@ -39,55 +37,49 @@ let
 
 in
 {
-  home.packages = [
-    pkgs.litellm
-  ];
-
   options.my.litellm.port = lib.mkOption {
     type = lib.types.port;
     default = 8080;
     description = "LiteLLM proxy port";
   };
 
-  systemd.user.services.litellm = {
-    Unit = {
-      Description = "LiteLLM Proxy Server";
-      After = [
-        "network.target"
-        "ollama.service"
-      ];
-    };
+  options.my.ollama.default_model = lib.mkOption {
+    type = lib.types.str;
+    default = builtins.elemAt ollamaModels 0;
+    description = "Default Ollama Model.";
+  };
 
-    Service = {
-      Type = "simple";
+  config = {
+    home.packages = [
+      pkgs.litellm
+    ];
 
-      ExecStart =
-        "${pkgs.litellm}/bin/litellm --config ${litellmConfig} --port ${port}";
+    systemd.user.services.litellm = {
+      Unit = {
+        Description = "LiteLLM Proxy Server";
+        After = [
+          "network.target"
+          "ollama.service"
+        ];
+      };
 
-      EnvironmentFile =
-        osConfig.clan.core.vars.generators.litellm.files.openrouter_api_key_env.path;
+      Service = {
+        Type = "simple";
 
-      Restart = "on-failure";
-      RestartSec = "5s";
-    };
+        ExecStart =
+          "${pkgs.litellm}/bin/litellm --config ${litellmConfig} --port ${toString config.my.litellm.port}";
 
-    Install = {
-      WantedBy = [ "default.target" ];
+        EnvironmentFile =
+          osConfig.clan.core.vars.generators.litellm.files.openrouter_api_key_env.path;
+
+        Restart = "on-failure";
+        RestartSec = "5s";
+      };
+
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
     };
   };
 
-  clan.core.vars.generators.litellm = {
-    files.openrouter_api_key_env = {
-      secret = true;
-      owner = "oscar";
-    };
-    prompts.openrouter_api_key = {
-      description = "OpenRouter API key (from openrouter.ai/keys)";
-      persist = true;
-    };
-    script = ''
-      echo "OPENROUTER_API_KEY=$(cat $prompts/openrouter_api_key)" \
-        > $out/openrouter_api_key_env
-    '';
-  };
 }

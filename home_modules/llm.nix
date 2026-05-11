@@ -1,7 +1,8 @@
 { config, ... }:
 let
   dummyLiteLLMApiKey = "DUMMY";
-  port = config.my.litellm.port;
+  port = toString config.my.litellm.port;
+  model = config.my.ollama.default_model;
 in
 {
   programs.nixvim = {
