@@ -18,6 +18,7 @@
       "social_media.nix"
       "llm.nix"
       "devices.nix"
+      "litellm.nix"
     ] ++ [
       stylix.homeModules.stylix
       {

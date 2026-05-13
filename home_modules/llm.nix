@@ -8,10 +8,10 @@ let
   mkName = model: lib.replaceStrings [ ":" "." "-" ] [ "_" "_" "_" ] model;
 
   mkProvider = model: {
-    name = mkName model;
+    name = mkName model.model_name;
 
     value = {
-      model = model;
+      model = model.model_name;
 
       __inherited_from = "openai";
 
@@ -21,11 +21,9 @@ let
     };
   };
 
-  providers =
-    builtins.listToAttrs
-      (map mkProvider config.my.litellm.models);
-
-  defaultProvider = mkName (builtins.elemAt config.my.litellm.models 0);
+  providersList = map mkProvider config.my.litellm.models;
+  providers = builtins.listToAttrs providersList;
+  defaultProvider = (builtins.elemAt providersList 0).name;
 in
 {
   home.sessionVariables = {
@@ -37,8 +35,8 @@ in
       avante = {
         enable = true;
         settings = {
+          inherit providers;
           provider = defaultProvider;
-          providers = providers;
         };
       };
     };
