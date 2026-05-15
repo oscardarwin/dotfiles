@@ -43,6 +43,17 @@
           };
         };
       }
+      ({ lib, osConfig, ... }: {
+
+        my.litellm.models = lib.forEach osConfig.services.ollama.loadModels (model: {
+          model_name = model;
+
+          litellm_params = {
+            model = "ollama/${model}";
+            api_base = "http://127.0.0.1:${toString osConfig.services.ollama.port}";
+          };
+        });
+      })
     ];
   };
 
@@ -147,7 +158,6 @@
         "rd.systemd.show_status=false"
         "udev.log_level=3"
         "mem_sleep_default=deep"
-        "nvidia-drm.fbdev=0"
       ];
     };
 

@@ -22,12 +22,16 @@
               model = lib.mkOption {
                 type = lib.types.str;
                 description = "The provider-specific model string.";
-                example = "openrouter/openrouter/free";
               };
               api_key = lib.mkOption {
-                type = lib.types.str;
+                type = lib.types.nullOr lib.types.str;
+                default = null;
                 description = "The API key or environment variable reference.";
-                example = "os.environ/OPENROUTER_API_KEY";
+              };
+              api_base = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "The endpoint of the model";
               };
             };
           };
