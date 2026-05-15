@@ -132,10 +132,6 @@
         availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
         kernelModules = [
           "amdgpu"
-          "nvidia"
-          "nvidia_modeset"
-          "nvidia_uvm"
-          "nvidia_drm"
         ];
       };
 
@@ -150,7 +146,8 @@
         "loglevel=3"
         "rd.systemd.show_status=false"
         "udev.log_level=3"
-        "nvidia-drm.modeset=1"
+        "mem_sleep_default=deep"
+        "nvidia-drm.fbdev=0"
       ];
     };
 
@@ -161,9 +158,11 @@
 
     hardware.nvidia = {
       modesetting.enable = true;
-      open = true;
+      open = false;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
+      powerManagement.enable = true;
+      powerManagement.finegrained = false;
     };
 
     fileSystems."/" =
