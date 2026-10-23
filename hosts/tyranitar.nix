@@ -19,6 +19,7 @@
       "devices.nix"
       "llm.nix"
       "litellm.nix"
+      "opencode.nix"
     ] ++ [
       stylix.homeModules.stylix
       {
@@ -49,7 +50,7 @@
           model_name = model;
 
           litellm_params = {
-            model = "ollama/${model}";
+            model = "ollama_chat/${model}";
             api_base = "http://127.0.0.1:${toString osConfig.services.ollama.port}";
           };
         });
@@ -85,6 +86,7 @@
       ardour
       autotalent
       qpwgraph
+      opencode
     ];
 
     users.users.root.openssh.authorizedKeys.keys = [
@@ -101,10 +103,6 @@
       # Enable CUPS to print documents.
       printing.enable = true;
       xserver.videoDrivers = [ "nvidia" ];
-
-      ollama = {
-        acceleration = "cuda";
-      };
     };
 
     # Enable touchpad support (enabled default in most desktopManager).

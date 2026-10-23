@@ -8,6 +8,7 @@ in
   ];
 
   services.ollama = {
+    package = pkgs.ollama-cuda;
     inherit loadModels;
     enable = true;
   };
