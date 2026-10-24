@@ -9,13 +9,24 @@
       secret = true;
       owner = "oscar";
     };
-    prompts.openrouter_api_key = {
-      description = "OpenRouter API key (from openrouter.ai/keys)";
-      persist = true;
+
+    prompts = {
+      openrouter_api_key = {
+        description = "OpenRouter API key (from openrouter.ai/keys)";
+        persist = true;
+      };
+
+      openai_api_key = {
+        description = "OpenAI API key (from platform.openai.com/api-keys)";
+        persist = true;
+      };
     };
+
     script = ''
-      echo "OPENROUTER_API_KEY=$(cat $prompts/openrouter_api_key)" \
-        > $out/openrouter_api_key_env
+      {
+        echo "OPENROUTER_API_KEY=$(cat "$prompts/openrouter_api_key")"
+        echo "OPENAI_API_KEY=$(cat "$prompts/openai_api_key")"
+      } > "$out/openrouter_api_key_env"
     '';
   };
 }

@@ -50,6 +50,10 @@
           extra_body = {
             provider.sort = "throughput";
           };
+
+          litellm_settings = {
+            drop_params = true;
+          };
         };
     in
     {
@@ -63,6 +67,13 @@
           litellm_params = {
             model = "openrouter/openrouter/free";
             api_key = "os.environ/OPENROUTER_API_KEY";
+          };
+        }
+        {
+          model_name = "openai_model";
+          litellm_params = {
+            model = "openai/gpt-4.1-mini";
+            api_key = "os.environ/OPENAI_API_KEY";
           };
         }
       ];
