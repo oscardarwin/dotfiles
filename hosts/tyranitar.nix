@@ -87,6 +87,7 @@
       autotalent
       qpwgraph
       opencode
+      discord
     ];
 
     users.users.root.openssh.authorizedKeys.keys = [
