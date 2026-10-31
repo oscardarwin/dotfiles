@@ -19,7 +19,7 @@
       "devices.nix"
       "llm.nix"
       "litellm.nix"
-      "opencode.nix"
+      "opencode"
     ] ++ [
       stylix.homeModules.stylix
       {

@@ -22,12 +22,10 @@ in
     settings = {
       "$schema" = "https://opencode.ai/config.json";
 
-      # Choose your default LiteLLM model alias.
-      # Replace this with one of your configured model_name values.
       model =
         if cfg.models == [ ]
         then null
-        else "litellm/${(builtins.head cfg.models).model_name}";
+        else "$litellm/${cfg.default_model}";
 
       provider.litellm = {
         name = "LiteLLM";
@@ -40,7 +38,7 @@ in
         inherit models;
       };
     };
+
+    context = ./coding_guidelines.md;
   };
 }
-
-
