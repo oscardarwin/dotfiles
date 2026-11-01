@@ -3,9 +3,14 @@
     git = {
       enable = true;
       lfs.enable = true;
-      settings.user = {
-        name = "oscardarwin";
-        email = "6627886+oscardarwin@users.noreply.github.com";
+      settings = {
+        user = {
+          name = "oscardarwin";
+          email = "6627886+oscardarwin@users.noreply.github.com";
+        };
+        init = {
+          defaultBranch = "main";
+        };
       };
     };
     lazygit = {
