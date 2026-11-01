@@ -60,11 +60,6 @@
         layout = "us";
         variant = "";
       };
-
-      ollama = {
-        acceleration = "rocm";
-        rocmOverrideGfx = "9.0.0";
-      };
     };
 
 
